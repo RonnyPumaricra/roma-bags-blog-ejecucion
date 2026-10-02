@@ -1,7 +1,456 @@
 ---
 import Layout from '../layouts/Layout.astro';
+import StatusIcon from '../components/status-icon.vue';
+import { formatearFecha } from '../data/fechas';
+import { AREAS, ESTADOS, PROCESOS, procesoPorId } from '../data/procesos';
+
+const completados = PROCESOS.filter((p) => p.estado === 'ok').length;
+
+// Procesos con fecha de edición en su .md, del más reciente al más antiguo
+const paginas = import.meta.glob<{ frontmatter: { id: string; editado?: Date | string } }>('./proceso/*.md', {
+  eager: true,
+});
+const recientes = Object.values(paginas)
+  .filter(({ frontmatter }) => frontmatter.editado)
+  .map(({ frontmatter }) => ({ proceso: procesoPorId(frontmatter.id)!, editado: new Date(frontmatter.editado!) }))
+  .sort((a, b) => b.editado.getTime() - a.editado.getTime());
+
+// Fases separadas por sus gates (capítulo 7)
+const fecha = (iso: string) => new Date(`${iso}T00:00:00Z`);
+const INICIO = fecha('2026-09-21');
+const fases = [
+  {
+    nombre: 'Cimentar',
+    detalle: 'Diagnóstico AS-IS/TO-BE, conectividad, gobierno de datos y piloto controlado',
+    inicio: INICIO,
+    gate: 'Gate 1',
+    fin: fecha('2026-11-17'),
+  },
+  {
+    nombre: 'Integrar',
+    detalle: 'Odoo Community, roles, migración conciliada y UAT por rol',
+    inicio: fecha('2026-11-18'),
+    gate: 'Gate 2',
+    fin: fecha('2027-03-08'),
+  },
+  {
+    nombre: 'Optimizar y cerrar',
+    detalle: 'Reportes, capacitación, salida en vivo, conformidad y archivo (26/04/2027)',
+    inicio: fecha('2027-03-09'),
+    gate: 'Gate 3',
+    fin: fecha('2027-04-21'),
+  },
+];
+const dias = (a: Date, b: Date) => (b.getTime() - a.getTime()) / 86_400_000;
+// La franja va del inicio al Gate 3; el archivo final (26/04/2027) se menciona en el texto
+const total = dias(INICIO, fases[fases.length - 1].fin);
+
+const hoy = new Date();
+const posicionHoy = Math.min(100, Math.max(0, (dias(INICIO, hoy) / total) * 100));
+const faseActual = fases.find((f) => hoy <= f.fin);
 ---
 
 <Layout title="Inicio">
-  <h1>Documentación del proyecto</h1>
+  <h1>Transformación Digital Roma Bag's</h1>
+  <p class="lead">
+    Roma Bag's S.A.C. es una microempresa de producción artesanal de bolsos y carteras, con venta mayorista y
+    minorista. El proyecto integra y estandariza su información operativa y comercial mediante reglas de datos, un
+    piloto controlado y Odoo Community, con datos confiables al cierre. Aquí se documentan la ejecución, el monitoreo
+    y control, y el cierre según la Guía del PMBOK® 8.ª edición.
+  </p>
+
+  <div class="banner">
+    <span class="badge"><StatusIcon estado="cur" size={11} />Etapa actual: Ejecución</span>
+    <span class="small"><b>{completados} de {PROCESOS.length}</b> procesos completados</span>
+    <a class="btn" href="/mapa">Ver mapa de procesos →</a>
+  </div>
+
+  <h2>El problema, en cifras</h2>
+  <p>
+    La información operativa y comercial está fragmentada y no estandarizada: inventario en cuadernos, ventas en seis
+    celulares sin sincronizar y conciliación manual en Excel. Eso impide controlar el negocio a tiempo.
+  </p>
+  <div class="cifras">
+    <div class="cifra">
+      <b>70,8 %</b>
+      <span>de los registros de despacho de 2026 sin información financiera o logística</span>
+    </div>
+    <div class="cifra">
+      <b>1 día</b>
+      <span>laborable a la semana que la gerencia dedica a conciliar a mano</span>
+    </div>
+    <div class="cifra">
+      <b>9 pedidos</b>
+      <span>incompletos al mes, con sobrecosto por doble envío</span>
+    </div>
+  </div>
+
+  <h2>Metas del proyecto</h2>
+  <p class="muted small">Lo que se mide durante el monitoreo y se verifica al cierre.</p>
+  <div class="tabla">
+    <table>
+      <thead>
+        <tr><th>Indicador</th><th>Línea base</th><th>Meta</th><th>Se verifica en</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Registros de despacho incompletos</td><td>70,8 %</td><td>≤ 5 % tras la salida en vivo</td><td>REQ-04</td></tr>
+        <tr><td>Tiempo de conciliación semanal</td><td>1 día</td><td>&lt; 1 hora</td><td>REQ-03</td></tr>
+        <tr><td>Pedidos incompletos</td><td>9 al mes</td><td>≤ 1 al mes</td><td>Viabilidad financiera</td></tr>
+        <tr><td>Consulta de stock desde el celular</td><td>—</td><td>&lt; 2 minutos</td><td>REQ-02</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h2>Plan por fases</h2>
+  <p class="muted small">
+    Del 21/09/2026 al 26/04/2027. Cada fase termina en un gate que aprueba la Gerencia.{' '}
+    {faseActual && <>Hoy ({formatearFecha(hoy)}) el proyecto está en <b>{faseActual.nombre}</b>.{' '}</>}
+    <a href="/lineas-base/cronograma">Ver línea base del cronograma</a>
+  </p>
+  <div class="fases">
+    {
+      fases.map((f) => (
+        <div class="fase" style={`flex-grow: ${dias(f.inicio, f.fin) + 1}`}>
+          <h3>{f.nombre}</h3>
+          <p>{f.detalle}</p>
+          <span class="gate">
+            {f.gate} · {formatearFecha(f.fin)}
+          </span>
+        </div>
+      ))
+    }
+    <span class="hoy" style={`left: ${posicionHoy}%`} title={`Hoy: ${formatearFecha(hoy)}`}></span>
+  </div>
+
+  <h2>Áreas de foco</h2>
+  <div class="grid">
+    {
+      AREAS.map((a) => {
+        const procesos = PROCESOS.filter((p) => p.area === a.id);
+        const hechos = procesos.filter((p) => p.estado === 'ok').length;
+        return (
+          <a class="card" href={`/area/${a.id}`}>
+            <h3>{a.nombre}</h3>
+            <div class="stack">
+              {procesos.map((p) => (
+                <i
+                  class:list={{ pen: p.estado === 'pen' }}
+                  style={`--c: var(--d-${p.dominio})`}
+                  title={`${p.id} ${p.nombre}`}
+                />
+              ))}
+            </div>
+            <span class="muted small">
+              {hechos} de {procesos.length} completados
+            </span>
+          </a>
+        );
+      })
+    }
+  </div>
+  <p class="muted small nota">Cada segmento es un proceso, con el color de su dominio. Los segmentos claros siguen pendientes.</p>
+
+  <h2>Actualizados recientemente</h2>
+  <div class="plist">
+    {
+      recientes.map(({ proceso: p, editado }) => (
+        <a class="prow" href={`/proceso/${p.id}`} style={`--c: var(--d-${p.dominio})`}>
+          <span class="bar" />
+          <span class="num">{p.id}</span>
+          <span>{p.nombre}</span>
+          <time datetime={editado.toISOString().slice(0, 10)}>{formatearFecha(editado)}</time>
+          <span class="badge">
+            <StatusIcon estado={p.estado} size={11} />
+            {ESTADOS[p.estado]}
+          </span>
+        </a>
+      ))
+    }
+  </div>
 </Layout>
+
+<style>
+  h1 {
+    margin: 4px 0 8px;
+  }
+
+  h2 {
+    font-size: 18px;
+    margin: 30px 0 10px;
+  }
+
+  h3 {
+    font-size: 15px;
+    margin: 6px 0;
+  }
+
+  p {
+    margin-bottom: 10px;
+  }
+
+  .lead {
+    color: var(--muted);
+    font-size: 16px;
+    max-width: 72ch;
+  }
+
+  .muted {
+    color: var(--muted);
+  }
+
+  .small {
+    font-size: 13px;
+  }
+
+  .badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 11px;
+    font-weight: 700;
+    padding: 2px 8px;
+    border-radius: 6px;
+    text-transform: uppercase;
+    letter-spacing: .03em;
+    white-space: nowrap;
+    border: 1px solid var(--line);
+    background: var(--surface);
+    color: var(--text);
+  }
+
+  .banner {
+    display: flex;
+    gap: 14px;
+    align-items: center;
+    flex-wrap: wrap;
+    padding: 14px 18px;
+    border-radius: 12px;
+    background: var(--surface);
+    border: 1px solid var(--line);
+    margin: 16px 0 22px;
+  }
+
+  .btn {
+    margin-left: auto;
+    font-size: 12px;
+    font-weight: 600;
+    padding: 3px 10px;
+    border-radius: 8px;
+    background: var(--text);
+    color: var(--bg);
+    border: 1px solid var(--text);
+  }
+
+  .btn:hover {
+    text-decoration: none;
+    opacity: .88;
+  }
+
+  .cifras {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 12px;
+  }
+
+  .cifra {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    padding: 14px 16px;
+    font-size: 14px;
+    color: var(--muted);
+  }
+
+  .cifra b {
+    font-size: 26px;
+    line-height: 1.1;
+    color: var(--text);
+  }
+
+  .tabla {
+    overflow-x: auto;
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 14px;
+    background: var(--surface);
+    border: 1px solid var(--line);
+  }
+
+  th,
+  td {
+    text-align: left;
+    padding: 10px 12px;
+    border-bottom: 1px solid var(--line);
+  }
+
+  th {
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: .04em;
+    color: var(--muted);
+    background: var(--bg);
+  }
+
+  .fases {
+    position: relative;
+    display: flex;
+    gap: 4px;
+  }
+
+  .fase {
+    flex-basis: 0;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-top: 4px solid var(--tab);
+    border-radius: 8px;
+    padding: 10px 12px;
+  }
+
+  .fase p {
+    font-size: 13px;
+    color: var(--muted);
+    flex: 1;
+  }
+
+  .gate {
+    align-self: flex-start;
+    font-size: 11px;
+    font-weight: 700;
+    padding: 2px 8px;
+    border-radius: 6px;
+    background: color-mix(in srgb, var(--tab) 14%, transparent);
+    color: var(--tab);
+  }
+
+  .hoy {
+    position: absolute;
+    top: -6px;
+    bottom: -6px;
+    width: 2px;
+    margin-left: -1px;
+    background: var(--d-rec);
+    border-radius: 1px;
+  }
+
+  .hoy::before {
+    content: "Hoy";
+    position: absolute;
+    top: -16px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 10px;
+    font-weight: 800;
+    color: var(--d-rec);
+  }
+
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 12px;
+  }
+
+  .card {
+    display: block;
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    padding: 16px;
+    color: var(--text);
+  }
+
+  .card:hover {
+    text-decoration: none;
+    border-color: var(--accent);
+  }
+
+  .stack {
+    display: flex;
+    gap: 2px;
+    height: 8px;
+    margin: 10px 0 6px;
+  }
+
+  .stack i {
+    flex: 1;
+    border-radius: 2px;
+    background: var(--c);
+  }
+
+  .stack i.pen {
+    opacity: .25;
+  }
+
+  .nota {
+    margin-top: 8px;
+  }
+
+  .plist {
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    overflow: hidden;
+  }
+
+  .prow {
+    display: grid;
+    grid-template-columns: 4px 34px 1fr auto auto;
+    gap: 10px;
+    align-items: center;
+    padding: 10px 14px;
+    border-bottom: 1px solid var(--line);
+    color: var(--text);
+  }
+
+  .prow:last-child {
+    border-bottom: 0;
+  }
+
+  .prow:hover {
+    background: var(--bg);
+    text-decoration: none;
+  }
+
+  .prow .bar {
+    align-self: stretch;
+    border-radius: 2px;
+    background: var(--c);
+  }
+
+  .prow .num {
+    font-weight: 700;
+    color: var(--muted);
+    font-size: 13px;
+  }
+
+  .prow time {
+    font-size: 12px;
+    color: var(--muted);
+  }
+
+  @media (max-width: 860px) {
+    .fases {
+      flex-direction: column;
+    }
+
+    .hoy {
+      display: none;
+    }
+
+    .prow {
+      grid-template-columns: 4px 30px 1fr auto;
+    }
+
+    .prow time {
+      display: none;
+    }
+  }
+</style>

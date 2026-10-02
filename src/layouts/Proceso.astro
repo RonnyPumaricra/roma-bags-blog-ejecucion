@@ -3,13 +3,14 @@ import '../css/contenido.css';
 import Layout from './Layout.astro';
 import Paginacion from '../components/paginacion.astro';
 import StatusIcon from '../components/status-icon.vue';
+import { formatearFecha } from '../data/fechas';
 import { ESTADOS, NOMBRE_AREA, NOMBRE_DOMINIO, PROCESOS, procesoPorId, type Proceso } from '../data/procesos';
 
 interface Props {
   frontmatter: {
     id: string;
-    /** Fecha de la última edición, p. ej. "14 sep 2026" */
-    editado?: string;
+    /** Fecha de la última edición, p. ej. 2026-09-14 */
+    editado?: Date | string;
   };
 }
 
@@ -30,7 +31,7 @@ const colores = `--c: var(--d-${proceso.dominio}); --o: var(--o-${proceso.domini
     <span class="num-chip" style={colores}>{proceso.id}</span>
     <span class="dom-chip" style={colores}>{NOMBRE_DOMINIO[proceso.dominio]}</span>
     <span class="badge"><StatusIcon estado={proceso.estado} size={11} />{ESTADOS[proceso.estado]}</span>
-    {editado && <span class="editado">Editado el {editado}</span>}
+    {editado && <span class="editado">Editado el {formatearFecha(editado)}</span>}
     <a class="ver-mapa" href={`/mapa#${proceso.id}`}>Ver en el mapa</a>
   </div>
 
