@@ -1,0 +1,119 @@
+/* Contenido escrito en markdown (páginas de proceso y de líneas base) */
+.contenido {
+  margin-top: 22px;
+  padding-top: 6px;
+  border-top: 1px solid var(--line);
+}
+
+.contenido h2 {
+  font-size: 18px;
+  margin: 30px 0 10px;
+}
+
+.contenido h3 {
+  font-size: 15px;
+  margin: 20px 0 6px;
+}
+
+.contenido p,
+.contenido ul,
+.contenido ol {
+  margin-bottom: 10px;
+}
+
+.contenido img {
+  border-radius: 8px;
+  border: 1px solid var(--line);
+  margin: 6px 0 12px;
+}
+
+.contenido table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 14px;
+  background: var(--surface);
+  margin-bottom: 12px;
+}
+
+.contenido th,
+.contenido td {
+  text-align: left;
+  vertical-align: top;
+  padding: 10px 12px;
+  border: 1px solid var(--line);
+}
+
+.contenido th {
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: .04em;
+  color: var(--muted);
+  background: var(--bg);
+}
+
+/* Listas de documentos: cada elemento es una tarjeta con la extensión del archivo */
+.contenido ul:has(> li > a[href^="/documentos/"]) {
+  list-style: none;
+  padding: 0;
+}
+
+.contenido li:has(> a[href^="/documentos/"]) {
+  padding: 10px 12px;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  margin-bottom: 8px;
+}
+
+.contenido li > a[href^="/documentos/"] {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-weight: 600;
+  color: var(--text);
+}
+
+.contenido li > a[href^="/documentos/"]::before {
+  content: "DOC";
+  font-size: 10px;
+  font-weight: 800;
+  padding: 4px 6px;
+  border-radius: 5px;
+  color: #fff;
+  background: #777;
+  min-width: 42px;
+  text-align: center;
+}
+
+.contenido li > a[href$=".pdf"]::before {
+  content: "PDF";
+  background: #c62d22;
+}
+
+.contenido li > a[href$=".xlsx"]::before {
+  content: "XLSX";
+  background: #14874a;
+}
+
+.contenido li > a[href$=".csv"]::before {
+  content: "CSV";
+  background: #14874a;
+}
+
+.contenido li > a[href$=".docx"]::before {
+  content: "DOCX";
+  background: #2b579a;
+}
+
+.contenido li > a[href$=".mpp"]::before {
+  content: "MPP";
+  background: #2e6fd8;
+}
+
+@media (max-width: 860px) {
+  /* Las tablas anchas se desplazan en horizontal en lugar de desbordar la página */
+  .contenido table {
+    display: block;
+    overflow-x: auto;
+  }
+}

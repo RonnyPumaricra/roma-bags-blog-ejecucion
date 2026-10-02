@@ -1,0 +1,76 @@
+:root {
+  --sans-serif: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+
+  --bg: #f5f5f2;
+  --surface: #ffffff;
+  --surface2: #fafaf7;
+  --text: #1c1c1e;
+  --muted: #6b6b72;
+  --line: #e2e2dc;
+  --accent: #2747a8;
+  --tab: #5b2d9e;
+  --tabtext: #ffffff;
+
+  /* Dominios: --d-* es el color, --o-* el color del texto sobre él */
+  --d-gob: #1c1c1f; --o-gob: #ffffff;
+  --d-alc: #26418f; --o-alc: #ffffff;
+  --d-cro: #0b9fc6; --o-cro: #05242d;
+  --d-fin: #12733c; --o-fin: #ffffff;
+  --d-int: #8a3b87; --o-int: #ffffff;
+  --d-rec: #c95c5c; --o-rec: #ffffff;
+  --d-rie: #d99a1c; --o-rie: #2a1d00;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #141416; --surface: #1c1c20; --surface2: #212126; --text: #ececf0; --muted: #9a9aa4;
+    --line: #2f2f36; --accent: #8fb0ff; --tab: #a37ee8; --tabtext: #16091f;
+    --d-gob: #e4e4e7; --o-gob: #18181b;
+    --d-alc: #7f9dff; --o-alc: #0b1430;
+    --d-cro: #3cc8ec; --o-cro: #05242d;
+    --d-fin: #4cc983; --o-fin: #04200f;
+    --d-int: #cf86cb; --o-int: #2a0a28;
+    --d-rec: #f09393; --o-rec: #2c0b0b;
+    --d-rie: #f2bd4a; --o-rie: #2a1d00;
+  }
+}
+
+:root[data-theme="dark"] {
+  --bg: #141416; --surface: #1c1c20; --surface2: #212126; --text: #ececf0; --muted: #9a9aa4;
+  --line: #2f2f36; --accent: #8fb0ff; --tab: #a37ee8; --tabtext: #16091f;
+  --d-gob: #e4e4e7; --o-gob: #18181b;
+  --d-alc: #7f9dff; --o-alc: #0b1430;
+  --d-cro: #3cc8ec; --o-cro: #05242d;
+  --d-fin: #4cc983; --o-fin: #04200f;
+  --d-int: #cf86cb; --o-int: #2a0a28;
+  --d-rec: #f09393; --o-rec: #2c0b0b;
+  --d-rie: #f2bd4a; --o-rie: #2a1d00;
+}
+
+body {
+  font-family: var(--sans-serif);
+  font-size: 15px;
+  background: var(--bg);
+  color: var(--text);
+}
+
+a {
+  color: var(--accent);
+  text-decoration: none;
+  cursor: pointer;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+button {
+  color: inherit;
+  cursor: pointer;
+}
+
+h1 {
+  font-size: 28px;
+  line-height: 1.2;
+  letter-spacing: -.01em;
+}

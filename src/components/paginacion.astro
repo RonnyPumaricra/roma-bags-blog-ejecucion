@@ -1,0 +1,75 @@
+---
+interface Enlace {
+  href: string;
+  /** Texto pequeño sobre el título, p. ej. el área de foco */
+  contexto: string;
+  texto: string;
+}
+
+interface Props {
+  anterior?: Enlace;
+  siguiente?: Enlace;
+}
+
+const { anterior, siguiente } = Astro.props;
+---
+
+<nav>
+  {
+    anterior ? (
+      <a href={anterior.href}>
+        <small>← Anterior · {anterior.contexto}</small>
+        {anterior.texto}
+      </a>
+    ) : (
+      <span />
+    )
+  }
+  {
+    siguiente && (
+      <a class="nx" href={siguiente.href}>
+        <small>Siguiente · {siguiente.contexto} →</small>
+        {siguiente.texto}
+      </a>
+    )
+  }
+</nav>
+
+<style>
+  nav {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin-top: 36px;
+  }
+
+  a {
+    display: block;
+    padding: 12px 14px;
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    background: var(--surface);
+    color: var(--text);
+  }
+
+  a:hover {
+    text-decoration: none;
+    border-color: var(--accent);
+  }
+
+  small {
+    display: block;
+    color: var(--muted);
+    font-size: 12px;
+  }
+
+  .nx {
+    text-align: right;
+  }
+
+  @media (max-width: 860px) {
+    nav {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

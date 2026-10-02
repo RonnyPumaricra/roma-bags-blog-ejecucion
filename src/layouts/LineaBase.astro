@@ -1,0 +1,81 @@
+---
+import '../css/contenido.css';
+import Layout from './Layout.astro';
+import Paginacion from '../components/paginacion.astro';
+import { LINEAS_BASE, VERSION_LINEAS_BASE, lineaBasePorId } from '../data/lineas-base';
+import { procesoPorId } from '../data/procesos';
+
+interface Props {
+  frontmatter: {
+    id: string;
+  };
+}
+
+const lineaBase = lineaBasePorId(Astro.props.frontmatter.id);
+if (!lineaBase) throw new Error(`Línea base desconocida en el frontmatter: ${Astro.props.frontmatter.id}`);
+const control = procesoPorId(lineaBase.control)!;
+
+const i = LINEAS_BASE.indexOf(lineaBase);
+const enlace = (l: (typeof LINEAS_BASE)[number] | undefined) =>
+  l && { href: `/lineas-base/${l.id}`, contexto: 'Líneas base', texto: `Línea base de ${l.nombre.toLowerCase()}` };
+---
+
+<Layout title={`Línea base de ${lineaBase.nombre.toLowerCase()}`}>
+  <div class="crumbs"><a href="/">Inicio</a> › <a href="/lineas-base">Líneas base</a></div>
+
+  <div class="ptop">
+    <span class="badge-lock">Congeladas · {VERSION_LINEAS_BASE}</span>
+    <span class="control">
+      Se controla en: <a href={`/proceso/${control.id}`}>{control.id} {control.nombre}</a>
+    </span>
+  </div>
+
+  <h1 style={`--c: var(--d-${lineaBase.dominio})`}>Línea base de {lineaBase.nombre.toLowerCase()}</h1>
+
+  <div class="contenido">
+    <slot />
+  </div>
+
+  <Paginacion anterior={enlace(LINEAS_BASE[i - 1])} siguiente={enlace(LINEAS_BASE[i + 1])} />
+</Layout>
+
+<style>
+  .crumbs {
+    font-size: 13px;
+    color: var(--muted);
+    margin-bottom: 10px;
+  }
+
+  .crumbs a {
+    color: var(--muted);
+  }
+
+  .ptop {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+    flex-wrap: wrap;
+  }
+
+  .badge-lock {
+    font-size: 11px;
+    font-weight: 700;
+    padding: 2px 8px;
+    border-radius: 6px;
+    text-transform: uppercase;
+    letter-spacing: .03em;
+    background: color-mix(in srgb, var(--accent) 13%, transparent);
+    color: var(--accent);
+  }
+
+  .control {
+    font-size: 13px;
+    color: var(--muted);
+  }
+
+  h1 {
+    margin: 12px 0 8px;
+    padding-left: 12px;
+    border-left: 4px solid var(--c);
+  }
+</style>

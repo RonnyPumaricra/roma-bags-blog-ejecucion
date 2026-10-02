@@ -1,0 +1,56 @@
+---
+import '../css/index.css';
+import Header from '../components/header.astro';
+import Sidebar from '../components/sidebar.vue';
+
+interface Props {
+  title: string;
+  /** Limita el ancho del contenido; el mapa usa todo el ancho disponible */
+  narrow?: boolean;
+}
+
+const { title, narrow = true } = Astro.props;
+---
+
+<html lang="es">
+  <head>
+    <meta charset="utf-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="icon" href="/favicon.ico" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <meta name="generator" content={Astro.generator} />
+    <title>{title} · Documentación PMBOK 8</title>
+  </head>
+  <body>
+    <Header />
+    <div class="layout">
+      <Sidebar client:load actual={Astro.url.pathname} />
+      <main class:list={{ narrow }}>
+        <slot />
+      </main>
+    </div>
+  </body>
+</html>
+
+<style>
+  .layout {
+    display: flex;
+    min-height: calc(100vh - 56px);
+  }
+
+  main {
+    flex: 1;
+    min-width: 0;
+    padding: 28px 36px 60px;
+  }
+
+  main.narrow {
+    max-width: 940px;
+  }
+
+  @media (max-width: 860px) {
+    main {
+      padding: 20px 16px 50px;
+    }
+  }
+</style>

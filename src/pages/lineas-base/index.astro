@@ -1,0 +1,193 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import { LINEAS_BASE, VERSION_LINEAS_BASE, type LineaBaseId } from '../../data/lineas-base';
+import { procesoPorId } from '../../data/procesos';
+
+const datosClave: Record<LineaBaseId, [string, string][]> = {
+  alcance: [
+    ['Entregables EDT', '17 paquetes'],
+    ['Requisitos', 'REQ-01 a REQ-10'],
+    ['Gates', '3'],
+  ],
+  cronograma: [
+    ['Inicio', '21/09/2026'],
+    ['Fin', '26/04/2027'],
+    ['Días hábiles', '149'],
+  ],
+  costos: [
+    ['BAC', 'S/ 43.594,20'],
+    ['Reserva de contingencia', 'S/ 3.229,20'],
+    ['Reserva de gestión', 'S/ 2.179,71'],
+  ],
+};
+---
+
+<Layout title="Líneas base">
+  <div class="crumbs"><a href="/">Inicio</a> › Líneas base</div>
+  <div class="row">
+    <span class="badge-lock">Congeladas · {VERSION_LINEAS_BASE}</span>
+    <span class="muted">Aprobadas al cierre de la planificación</span>
+  </div>
+  <h1>Líneas base del proyecto</h1>
+  <p class="lead">
+    Se mantienen tal como se aprobaron en la formulación del proyecto. Cualquier ajuste pasa por
+    <a href="/proceso/1.8">1.8 Evaluar e Implementar Cambios</a>.
+  </p>
+
+  <div class="grid">
+    {
+      LINEAS_BASE.map((l) => {
+        const control = procesoPorId(l.control)!;
+        return (
+          <div class="card" style={`--c: var(--d-${l.dominio})`}>
+            <h3><a href={`/lineas-base/${l.id}`}>Línea base de {l.nombre.toLowerCase()}</a></h3>
+            <dl>
+              {datosClave[l.id].map(([k, v]) => (
+                <div>
+                  <dt>{k}</dt>
+                  <dd>{v}</dd>
+                </div>
+              ))}
+            </dl>
+            <p>
+              <span class="muted">Se controla en:</span>
+              <a href={`/proceso/${control.id}`}>{control.id} {control.nombre}</a>
+            </p>
+          </div>
+        );
+      })
+    }
+  </div>
+
+  <h2>Registro de cambios</h2>
+  <table>
+    <thead>
+      <tr><th>ID</th><th>Cambio</th><th>Afecta</th><th>Estado</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>—</td><td class="muted">Sin solicitudes de cambio aprobadas hasta la fecha</td><td></td><td></td></tr>
+    </tbody>
+  </table>
+</Layout>
+
+<style>
+  .crumbs {
+    font-size: 13px;
+    color: var(--muted);
+    margin-bottom: 10px;
+  }
+
+  .crumbs a {
+    color: var(--muted);
+  }
+
+  .row {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+    flex-wrap: wrap;
+    font-size: 13px;
+  }
+
+  .muted {
+    color: var(--muted);
+  }
+
+  .badge-lock {
+    font-size: 11px;
+    font-weight: 700;
+    padding: 2px 8px;
+    border-radius: 6px;
+    text-transform: uppercase;
+    letter-spacing: .03em;
+    background: color-mix(in srgb, var(--accent) 13%, transparent);
+    color: var(--accent);
+  }
+
+  h1 {
+    margin: 4px 0 8px;
+  }
+
+  .lead {
+    color: var(--muted);
+    font-size: 16px;
+    max-width: 72ch;
+  }
+
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 12px;
+    margin-top: 16px;
+  }
+
+  .card {
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-top: 3px solid var(--c);
+    border-radius: 12px;
+    padding: 16px;
+    font-size: 14px;
+  }
+
+  h3 {
+    font-size: 15px;
+    margin: 6px 0;
+  }
+
+  h3 a {
+    color: var(--text);
+  }
+
+  dl {
+    margin: 10px 0;
+  }
+
+  dl div {
+    display: flex;
+    justify-content: space-between;
+    gap: 8px;
+    padding: 4px 0;
+    border-bottom: 1px dashed var(--line);
+  }
+
+  dt {
+    color: var(--muted);
+  }
+
+  dd {
+    font-weight: 700;
+  }
+
+  .card p {
+    font-size: 13px;
+  }
+
+  h2 {
+    font-size: 18px;
+    margin: 30px 0 10px;
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 14px;
+    background: var(--surface);
+    border: 1px solid var(--line);
+  }
+
+  th,
+  td {
+    text-align: left;
+    padding: 10px 12px;
+    border-bottom: 1px solid var(--line);
+  }
+
+  th {
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: .04em;
+    color: var(--muted);
+    background: var(--bg);
+  }
+</style>

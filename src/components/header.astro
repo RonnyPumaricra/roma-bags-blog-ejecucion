@@ -1,0 +1,72 @@
+---
+import MenuButton from './menu-button.vue';
+---
+
+<header>
+  <MenuButton client:load />
+  <a class="brand" href="/"><i></i>Documentación del proyecto</a>
+  <span class="ed">PMBOK® 8.ª ed.</span>
+  <span class="now">Etapa actual: <b>Ejecución</b></span>
+</header>
+
+<style>
+  header {
+    position: sticky;
+    top: 0;
+    z-index: 20;
+    height: 56px;
+    background: var(--surface);
+    border-bottom: 1px solid var(--line);
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 0 20px;
+  }
+
+  .brand {
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: var(--text);
+  }
+
+  .brand:hover {
+    text-decoration: none;
+  }
+
+  .brand i {
+    width: 22px;
+    height: 22px;
+    border-radius: 6px;
+    background: conic-gradient(
+      var(--d-gob) 0 14%, var(--d-alc) 0 28%, var(--d-cro) 0 42%, var(--d-fin) 0 57%,
+      var(--d-int) 0 71%, var(--d-rec) 0 85%, var(--d-rie) 0
+    );
+  }
+
+  .ed {
+    font-size: 12px;
+    color: var(--muted);
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    padding: 2px 10px;
+  }
+
+  .now {
+    margin-left: auto;
+    font-size: 13px;
+    color: var(--muted);
+  }
+
+  .now b {
+    color: var(--text);
+  }
+
+  @media (max-width: 860px) {
+    .now,
+    .ed {
+      display: none;
+    }
+  }
+</style>
