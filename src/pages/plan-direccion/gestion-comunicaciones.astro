@@ -1,0 +1,567 @@
+---
+import PlanDireccion from '../../layouts/PlanDireccion.astro';
+import PlanPanel from '../../components/plan-panel.astro';
+---
+
+<PlanDireccion
+  id="gestion-comunicaciones"
+  lead="Proyecto de transformación digital y gobierno de datos de Roma Bag's: cómo, cuándo, con qué medio y quién hará llegar la información del proyecto a cada persona que la necesita."
+  meta={["Roma Bag's S.A.C.", 'Equipo UNTELS', '21/09/2026–26/04/2027', 'Versión 1.0 · Pendiente de validación con la Gerencia']}
+>
+  <PlanPanel id="entradas" n={1} titulo="Entradas" sub="Información de base utilizada para planificar las comunicaciones.">
+    <article class="card">
+      <h3>1.1 Acta de Constitución del Proyecto</h3>
+      <p>
+        El acta (actividades 1.1.1 y 1.1.2, firmada el 25/09/2026) establece como objetivo integrar y estandarizar la
+        información operativa y comercial mediante reglas de datos, un piloto controlado y Odoo Community, con patrocinio
+        de la Gerencia General. Legitima al equipo UNTELS para convocar reuniones, solicitar información y emitir
+        comunicados a nombre del proyecto.
+      </p>
+    </article>
+
+    <article class="card">
+      <h3>1.2 Plan para la Dirección del Proyecto</h3>
+      <div class="grid">
+        <div class="mini">
+          <strong>Plan de Gestión del Alcance (Cap. 06)</strong>La EDT tiene 5 ramas y 17 paquetes de entregables
+          (EDT-1.1.01 a EDT-1.5.04). Cada paquete genera comunicaciones propias, listadas en la sección 3.4. Tres gates
+          fijan los hitos de aprobación.
+        </div>
+        <div class="mini">
+          <strong>Plan de Gestión del Cronograma (Cap. 07)</strong>92 actividades e hitos en 149 días hábiles. La
+          actividad 1.1.5 ya define el informe de avance y el comité de seguimiento semanales (28/09/2026 – 20/04/2027);
+          la 1.1.6, el registro de cambios, incidentes y decisiones.
+        </div>
+        <div class="mini">
+          <strong>Plan de Gestión de Costos (Cap. 08)</strong>No existe una partida propia de comunicaciones. El esfuerzo
+          se absorbe en las horas de las actividades 1.1.5–1.1.7 y en la partida de impresiones dentro de los S/ 685,00
+          de materiales.
+        </div>
+        <div class="mini">
+          <strong>Plan de Involucramiento (Cap. 02)</strong>Define niveles actual y deseado de participación y la cadencia
+          base por interesado. Este plan la concreta en medios, formatos y responsables.
+        </div>
+      </div>
+    </article>
+
+    <article class="card">
+      <h3>1.3 Documentos del Proyecto</h3>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Documento</th><th>Contenido relevante para las comunicaciones</th><th>Referencia</th></tr></thead>
+          <tbody>
+            <tr><td><strong>Registro de Interesados</strong></td><td>Seis interesados formales (SH-01 a SH-06) con expectativas; se suman el taller alterno / proveedores y, desde la actividad 1.3.5, el Comité de Datos, que no figura entre SH-01 y SH-06: falta confirmar quiénes lo integran y su canal de contacto.</td><td>Cap. 01, 1.3.3</td></tr>
+            <tr><td><strong>Plan de Involucramiento</strong></td><td>Brecha entre nivel actual y deseado; Empaque (SH-04) parte como "Desconocedor" y el Socio (SH-02) como "Reacio". Define la cadencia base de contacto.</td><td>Cap. 02, 2.3.2 y 2.3.6</td></tr>
+            <tr><td><strong>EDT y Diccionario</strong></td><td>17 paquetes con responsable y resultado comprobable. Es la base para asignar una comunicación a cada entregable.</td><td>Cap. 06, 6.2 y 6.3</td></tr>
+            <tr><td><strong>Lista de Actividades y Gates</strong></td><td>Fechas de los gates (17/11/2026, 08/03/2027, 21/04/2027), UAT, capacitaciones (17–24/03/2027) y salida en vivo (31/03/2027).</td><td>Cap. 07, lista de actividades</td></tr>
+            <tr><td><strong>Registro de Riesgos</strong></td><td>R-01 veto del Socio ante un fallo, R-02 temor de la Gerencia a perder información, R-03 percepción de vigilancia.</td><td>Cap. 01, 1.4.4 y Cap. 02, 2.3.7</td></tr>
+            <tr><td><strong>Requisitos REQ-01 a REQ-10</strong></td><td>Operación en celulares (REQ-06), permisos por rol (REQ-08) y reportes con acceso por rol (REQ-05): condicionan qué información ve cada audiencia.</td><td>Cap. 06, 6.0</td></tr>
+            <tr><td><strong>Registro de Cambios, Incidentes y Decisiones</strong></td><td>Se alimenta con las comunicaciones del proyecto (actividad 1.1.6) y mantiene la trazabilidad de acuerdos.</td><td>Cap. 07 actividad 1.1.6</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </article>
+
+    <article class="card">
+      <h3>1.4 Factores Ambientales de la Empresa (EEFs)</h3>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Factor</th><th>Situación real en Roma Bag's</th><th>Implicancia para las comunicaciones</th></tr></thead>
+          <tbody>
+            <tr><td><strong>Conectividad</strong></td><td>Fibra con zonas muertas; el personal usa datos móviles propios. (Cap. 01, 1.1.2)</td><td>Los canales deben funcionar con datos móviles; no depender del Wi-Fi del taller.</td></tr>
+            <tr><td><strong>Dispositivo principal</strong></td><td>Seis celulares para ventas; la Gerencia exige consumir todo en celular. (Cap. 02, 2.1.4)</td><td>Mensajes cortos, legibles en pantalla pequeña y archivos livianos (formato mobile-first).</td></tr>
+            <tr><td><strong>Sin soporte de TI</strong></td><td>Las incidencias las resuelve la Gerencia de forma empírica.</td><td>Comunicados y guías autosuficientes; el equipo UNTELS actúa como soporte y canal de escalamiento.</td></tr>
+            <tr><td><strong>Estructura y decisión</strong></td><td>Horizontal, 19 personas; decisiones centralizadas en la Gerencia; el Socio puede vetar herramientas del taller.</td><td>Toda decisión importante pasa por la Gerencia; el Socio se comunica en persona y de forma preventiva.</td></tr>
+            <tr><td><strong>Carga de la Gerencia</strong></td><td>Asume finanzas, marketing, almacén y logística; dedica un día semanal (sábado) al cuadre.</td><td>Informes de una página, reuniones de 30 minutos y no convocar en el día de cuadre.</td></tr>
+            <tr><td><strong>Estacionalidad</strong></td><td>Venta minorista intensa de septiembre a enero; mayorista de febrero a mayo.</td><td>Comunicación mínima y breve con Ventas durante el pico; más espacio de capacitación en marzo de 2027.</td></tr>
+            <tr><td><strong>Cultura de adopción</strong></td><td>Rechazo previo a un chatbot "muy robótico"; trauma por la pérdida del Excel 2024.</td><td>Lenguaje cercano y sin tecnicismos; mostrar siempre el estado del respaldo y la coexistencia con Excel.</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="fuente">Fuente: Cap. 01, 1.1–1.4 y Cap. 02, 2.1.4–2.1.5 (Sesiones 01, 02 y 03).</p>
+    </article>
+
+    <article class="card">
+      <h3>1.5 Activos de los Procesos de la Organización (OPAs)</h3>
+      <div class="grid">
+        <div class="mini">
+          <strong>WhatsApp</strong>Canal ya usado con proveedores, mayoristas y motorizado. Es el único con respuesta
+          rápida garantizada; pasa a ser el canal primario con la Gerencia.
+        </div>
+        <div class="mini">
+          <strong>Google Drive</strong>Repositorio actual de las hojas de ventas y base natural para guardar informes,
+          actas y plantillas con historial de versiones.
+        </div>
+        <div class="mini">
+          <strong>Google Meet</strong>Usado en la Sesión 01; sirve para reuniones virtuales cuando alguien no pueda estar
+          en el taller.
+        </div>
+        <div class="mini">
+          <strong>Material de las Sesiones 01–03</strong>Guiones, transcripciones y fotografías (Anexos 1, 2 y 3) como
+          referencia de tono y vocabulario de los interesados.
+        </div>
+      </div>
+    </article>
+  </PlanPanel>
+
+  <PlanPanel id="herramientas" n={2} titulo="Herramientas y técnicas" sub="Métodos empleados para analizar las necesidades de información y elegir canales.">
+    <article class="card">
+      <h3>2.1 Recopilación de Datos</h3>
+      <p>
+        No se repiten las entrevistas: se reutilizan las tres sesiones ya ejecutadas (Cap. 02, 2.2.1), de las que se
+        extrajeron canales, horarios y preferencias. Se agregan dos acciones breves y de bajo costo:
+      </p>
+      <div class="grid">
+        <div class="mini">
+          <strong>Validación de requisitos de comunicación</strong>En la firma de requisitos (actividad 1.2.8,
+          15–16/10/2026) cada responsable confirma qué información necesita, en qué medio y con qué frecuencia.
+        </div>
+        <div class="mini">
+          <strong>Mini-encuesta de percepción</strong>Tres preguntas por WhatsApp (claridad, utilidad y oportunidad,
+          escala 1–5) al finalizar cada gate para medir si la comunicación funciona.
+        </div>
+      </div>
+    </article>
+
+    <article class="card">
+      <h3>2.2 Análisis de Requisitos de Comunicación</h3>
+      <div class="table-wrap">
+        <table class="ancha">
+          <thead><tr><th>Interesado</th><th>Qué necesita saber</th><th>Nivel de detalle y lenguaje</th><th>Medio preferido</th><th>Evidencia</th></tr></thead>
+          <tbody>
+            <tr><td><strong>Gerencia General SH-01</strong> <span class="badge riesgo">Gestionar de cerca</span></td><td>Avance real, ahorro de tiempo, estado del respaldo, riesgos y decisiones pendientes; ganancia neta cuando exista reporte.</td><td>Resumen visual de una página; cifras de su propio negocio; sin tecnicismos.</td><td>WhatsApp + reunión semanal</td><td>Sesión 01: prefiere ver todo en celular y teme perder información.</td></tr>
+            <tr><td><strong>Socio / Jefe de Producción SH-02</strong> <span class="badge riesgo">Gestionar de cerca</span></td><td>Qué debe producir, cómo afecta su ritmo diario y qué se probó antes de usarlo.</td><td>Muy concreto y breve; solo versiones estables y ya probadas.</td><td>Conversación presencial en el taller</td><td>Sesión 02: "Basta que vea un error, ya no lo usaría."</td></tr>
+            <tr><td><strong>Personal de Ventas SH-03</strong> <span class="badge acuerdo">Mantener informados</span></td><td>Stock en tiempo real, metas diarias, cómo registrar una venta desde el celular.</td><td>Instrucciones cortas, con capturas; ejemplos de su día a día.</td><td>Celular y demostración en sitio</td><td>Sesión 02: nativos digitales, ven el sistema como motivación.</td></tr>
+            <tr><td><strong>Personal de Empaque SH-04</strong> <span class="badge acuerdo">Mantener informados</span></td><td>Qué es el proyecto, cómo recibirán las órdenes y por qué no es un control individual.</td><td>Explicación oral corta y guía con imágenes; sin términos de sistemas.</td><td>Taller presencial</td><td>Cap. 02, 2.3.1: hoy es "Desconocedor".</td></tr>
+            <tr><td><strong>Clientes Mayoristas SH-05</strong> <span class="badge acuerdo">Mantener informados</span></td><td>Disponibilidad de stock y pedidos completos y a tiempo.</td><td>Mensaje comercial de 3–4 líneas; sin detalles técnicos.</td><td>Atención habitual (WhatsApp) vía Gerencia</td><td>Sesión 03: 9 pedidos incompletos por mes.</td></tr>
+            <tr><td><strong>Logística / Motorizado SH-06</strong> <span class="badge positivo">Monitorear</span></td><td>Pedido correcto al primer recojo; cambios en cómo se entrega la orden de despacho.</td><td>Instrucción operativa de una o dos líneas.</td><td>Comunicación operativa habitual vía Gerencia</td><td>Sesión 03: viaje doble de S/ 19–24.</td></tr>
+            <tr><td><strong>Taller alterno / Proveedores</strong> <span class="badge positivo">Monitorear</span></td><td>Cómo se consolidarán sus registros de producción y cuándo.</td><td>Mensaje puntual y claro.</td><td>WhatsApp vía Gerencia</td><td>Sesión 02: la hermana de la Gerencia lleva su propio Excel.</td></tr>
+            <tr><td><strong>Comité de Datos / Data Owners</strong> <span class="badge info">Responsables</span></td><td>SOP, diccionario de datos, reglas de calidad, permisos y control de cambios.</td><td>Documentos formales y versionados; reuniones de entrega.</td><td>Presencial + carpeta en Drive</td><td>Actividades 1.3.5 y 1.5.18.</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </article>
+
+    <article class="card">
+      <h3>2.3 Modelo y Métodos de Comunicación</h3>
+      <p>
+        Se adopta el modelo emisor–mensaje–receptor con retroalimentación. El "ruido" identificado en Roma Bag's es la
+        conectividad deficiente, los tecnicismos y los mensajes mezclados en chats. Se mitiga con canales por datos
+        móviles, lenguaje sencillo y un solo tema por mensaje; el receptor confirma recepción cuando el mensaje exige
+        acción.
+      </p>
+      <div class="grid">
+        <div class="mini info">
+          <strong>Interactiva</strong>Reuniones, demostraciones, talleres y gates. Se usa cuando se requiere decidir,
+          validar o capacitar.
+        </div>
+        <div class="mini acuerdo">
+          <strong>Push (enviada)</strong>Informe semanal, comunicados, convocatorias y avisos. Se envía por WhatsApp con
+          enlace a Drive.
+        </div>
+        <div class="mini positivo">
+          <strong>Pull (de consulta)</strong>Carpeta en Drive con actas, plantillas, guías y manuales; luego, reportes de
+          Odoo en celular.
+        </div>
+      </div>
+    </article>
+
+    <article class="card">
+      <h3>2.4 Tecnología y Selección de Canales</h3>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Canal</th><th>Uso en el proyecto</th><th>Justificación</th><th>Regla de uso</th></tr></thead>
+          <tbody>
+            <tr><td><strong>WhatsApp</strong> <span class="badge positivo">Primario</span></td><td>Avisos, resúmenes, convocatorias, alertas e incidentes.</td><td>Funciona con datos móviles y ya forma parte del trabajo diario.</td><td>Máximo 10 líneas; un tema por mensaje; sin datos financieros; las decisiones se confirman en acta.</td></tr>
+            <tr><td><strong>Presencial en el taller</strong></td><td>Socio, Empaque, capacitaciones, gates y comunicado de corte.</td><td>Es el único medio efectivo para el Socio y el personal operativo.</td><td>Sesiones de 10 a 30 minutos, sin detener la producción.</td></tr>
+            <tr><td><strong>Google Meet</strong></td><td>Comité semanal cuando la Gerencia o el equipo no puedan reunirse en persona.</td><td>Usado en la Sesión 01 y compatible con datos móviles.</td><td>Convocatoria con enlace; duración máxima 30 minutos.</td></tr>
+            <tr><td><strong>Google Drive</strong></td><td>Informes, actas, plantillas, guías y expediente.</td><td>Repositorio ya conocido; guarda historial de versiones.</td><td>Carpetas 01_Dirección, 02_Diagnóstico, 03_Cimentar, 04_Integrar y 05_Cierre; nombre de archivo AAAA-MM-DD_tipo_vN; solo el equipo borra y hay copia semanal.</td></tr>
+            <tr><td><strong>Odoo (reportes y avisos)</strong> <span class="badge">Desde 31/03/2027</span></td><td>Reportes gerenciales y alertas de calidad de datos.</td><td>Cumple REQ-05 y REQ-08: acceso móvil y por rol.</td><td>Cada rol ve solo la información autorizada.</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </article>
+
+    <article class="card">
+      <h3>2.5 Representación de Datos</h3>
+      <p>Se reutiliza la matriz Poder / Interés (Cap. 02, 2.2.4) para fijar la intensidad de contacto de cada grupo.</p>
+      <div class="grid">
+        <div class="mini riesgo">
+          <strong>Gestionar de cerca</strong>Gerencia (SH-01) y Socio (SH-02): contacto semanal y quincenal o por hito,
+          con decisión y acta.
+        </div>
+        <div class="mini acuerdo">
+          <strong>Mantener informados</strong>Ventas, Empaque y Mayoristas (SH-03, SH-04, SH-05): contacto por iteración,
+          por necesidad o según avance.
+        </div>
+        <div class="mini positivo">
+          <strong>Monitorear</strong>Motorizado (SH-06) y taller alterno: avisos puntuales a través de la Gerencia.
+        </div>
+      </div>
+    </article>
+
+    <article class="card">
+      <h3>2.6 Reuniones</h3>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Reunión</th><th>Objetivo</th><th>Participantes</th><th>Duración</th><th>Frecuencia</th><th>Medio</th></tr></thead>
+          <tbody>
+            <tr><td><strong>Comité de seguimiento</strong></td><td>Revisar avance, decidir y aprobar cambios.</td><td>Gerencia, Líder, analista según tema</td><td>30 min</td><td>Semanal</td><td>Taller o Meet</td></tr>
+            <tr><td><strong>Validación operativa con el Socio</strong></td><td>Probar versiones estables y recoger observaciones.</td><td>Socio, Líder</td><td>10–15 min</td><td>Quincenal o por hito</td><td>Presencial</td></tr>
+            <tr><td><strong>Demostración a Ventas</strong></td><td>Probar consulta de stock y registro desde el celular.</td><td>Ventas, Analista de Sistemas</td><td>20 min</td><td>Por iteración</td><td>Celular en sitio</td></tr>
+            <tr><td><strong>Taller corto de Empaque</strong></td><td>Explicar órdenes claras y el sentido del proyecto.</td><td>Empaque, Analista de Calidad</td><td>15–20 min</td><td>Por necesidad</td><td>Presencial</td></tr>
+            <tr><td><strong>Reunión de gate</strong></td><td>Revisar evidencias y firmar la aprobación.</td><td>Gerencia, Socio, equipo</td><td>60 min</td><td>17/11/2026, 08/03/2027 y 21/04/2027</td><td>Presencial</td></tr>
+            <tr><td><strong>Capacitación por rol</strong></td><td>Formar en el uso de Odoo.</td><td>Ventas, Producción y Gerencia</td><td>Según actividad 1.5.7–1.5.9</td><td>17–24/03/2027</td><td>Presencial</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </article>
+  </PlanPanel>
+
+  <PlanPanel id="salidas" n={3} titulo="Salidas" sub="Plan de gestión de las comunicaciones y procedimientos asociados.">
+    <article class="card">
+      <h3>3.1 Objetivos del Plan</h3>
+      <p>
+        Garantizar que cada interesado reciba la información que necesita, en el medio que realmente usa, en el momento
+        oportuno y con un lenguaje que entienda, de modo que se sostenga el avance hacia los tres gates y se reduzca el
+        riesgo de rechazo del Socio y de pérdida de confianza de la Gerencia.
+      </p>
+      <div class="note">
+        <strong>Metas propuestas:</strong> informe semanal entregado en al menos 90 % de las semanas; actas emitidas en un
+        día hábil; respuesta a la Gerencia en un día hábil; asistencia de Gerencia y Socio de al menos 80 % a las
+        reuniones programadas (meta coherente con el Cap. 02, 2.3.8).
+      </div>
+    </article>
+
+    <article class="card">
+      <h3>3.2 Roles y Responsabilidades de Comunicación</h3>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Rol</th><th>Responsabilidades de comunicación</th></tr></thead>
+          <tbody>
+            <tr><td><strong>Gerencia General (patrocinadora, SH-01)</strong></td><td>Aprueba el plan y los cambios, firma los gates, comunica con mayoristas, motorizado y taller alterno usando los textos preparados por el equipo.</td></tr>
+            <tr><td><strong>Socio / Jefe de Producción (SH-02)</strong></td><td>Valida lo que afecta al taller, acuerda el protocolo de validación y participa en UAT y gates.</td></tr>
+            <tr><td><strong>Líder del Proyecto</strong></td><td>Dueño del plan: informe semanal, convocatoria del comité, informes de gate, escalamiento y trato directo con el Socio.</td></tr>
+            <tr><td><strong>Analista de Sistemas</strong></td><td>Demostraciones a Ventas, guías de una página, administración de los grupos de WhatsApp y soporte intensivo posterior a la salida en vivo.</td></tr>
+            <tr><td><strong>Analista de Calidad</strong></td><td>Actas, registro de decisiones, cambios e incidentes; plantillas; convocatorias UAT; mini-encuestas y archivo del expediente.</td></tr>
+            <tr><td><strong>Analista de Infraestructura</strong></td><td>Avisos técnicos de red y servidor, ventanas de mantenimiento y reporte de incidentes de conectividad.</td></tr>
+            <tr><td><strong>Comité de Datos / Data Owners</strong></td><td>Reciben y mantienen SOP, diccionario y canales de comunicación de datos tras la actividad 1.5.18.</td></tr>
+            <tr><td><strong>Ventas y Empaque (SH-03, SH-04)</strong></td><td>Dan retroalimentación y reportan dudas o incidencias al Analista de Sistemas por el canal operativo.</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="fuente">
+        Los roles coinciden con los usados en el presupuesto (Cap. 08). La asignación nominal de cada integrante la
+        confirma el equipo en el acta.
+      </p>
+    </article>
+
+    <article class="card">
+      <h3>3.3 Matriz de Comunicaciones</h3>
+      <div class="table-wrap">
+        <table class="ancha ids">
+          <thead><tr><th>ID</th><th>Comunicación</th><th>Objetivo</th><th>Emisor → Receptor</th><th>Medio y formato</th><th>Frecuencia o momento</th><th>Cronograma</th></tr></thead>
+          <tbody>
+            <tr><td>COM-01</td><td><strong>Informe semanal de avance</strong></td><td>Informar avance, riesgos, estado del respaldo y decisiones pendientes.</td><td>Líder → Gerencia</td><td>WhatsApp (resumen de 10 líneas) + PDF de una página en Drive</td><td>Semanal</td><td>1.1.5</td></tr>
+            <tr><td>COM-02</td><td><strong>Comité de seguimiento</strong></td><td>Decidir y aprobar.</td><td>Líder → Gerencia</td><td>Taller o Meet; acta breve</td><td>Semanal, 30 min</td><td>1.1.5</td></tr>
+            <tr><td>COM-03</td><td><strong>Validación operativa</strong></td><td>Validar solo versiones estables y evitar sorpresas.</td><td>Líder ↔ Socio</td><td>Conversación presencial de 10–15 min; resumen de tres líneas en acta</td><td>Quincenal o por hito</td><td>1.3.11, 1.4.22, 1.4.24</td></tr>
+            <tr><td>COM-04</td><td><strong>Demostraciones a Ventas</strong></td><td>Probar consulta de stock y registro; recoger opinión.</td><td>Analista de Sistemas → Ventas</td><td>Celular en sitio; formulario de tres preguntas por WhatsApp</td><td>Por iteración</td><td>1.3.18–1.3.21, 1.4.23</td></tr>
+            <tr><td>COM-05</td><td><strong>Inducción a Empaque</strong></td><td>Dar claridad sobre las órdenes y aclarar que no es control individual.</td><td>Analista de Calidad → Empaque</td><td>Taller corto presencial; guía con imágenes</td><td>Por necesidad</td><td>1.5.5, 1.5.8</td></tr>
+            <tr><td>COM-06</td><td><strong>Mensaje a mayoristas</strong></td><td>Informar mejora en exactitud de stock y puntualidad.</td><td>Gerencia → Mayoristas</td><td>WhatsApp habitual; mensaje de 3–4 líneas</td><td>Según avance, tras la salida en vivo</td><td>1.5.12–1.5.14</td></tr>
+            <tr><td>COM-07</td><td><strong>Instrucción al motorizado</strong></td><td>Informar cambios en la orden de despacho.</td><td>Gerencia → Motorizado</td><td>Comunicación operativa habitual</td><td>Según operación</td><td>1.4.19, 1.5.12</td></tr>
+            <tr><td>COM-08</td><td><strong>Aviso al taller alterno</strong></td><td>Informar cómo se consolidarán sus registros.</td><td>Gerencia → Taller alterno</td><td>WhatsApp; mensaje corto</td><td>Puntual</td><td>1.4.14–1.4.15</td></tr>
+            <tr><td>COM-09</td><td><strong>Acta y registro de decisiones</strong></td><td>Dejar constancia de acuerdos.</td><td>Analista de Calidad → Participantes</td><td>PDF en Drive + enlace por WhatsApp</td><td>Hasta 1 día hábil tras la reunión</td><td>1.1.6</td></tr>
+            <tr><td>COM-10</td><td><strong>Solicitud de cambio</strong></td><td>Evaluar impacto y obtener aprobación.</td><td>Líder → Gerencia</td><td>Formato de una página; WhatsApp + Drive</td><td>Cuando surja</td><td>1.1.6, 1.1.7</td></tr>
+            <tr><td>COM-11</td><td><strong>Reporte de incidentes</strong></td><td>Escalar fallas y alertas.</td><td>Integrante → Líder → Gerencia</td><td>WhatsApp inmediato; registro semanal</td><td>Crítico: de inmediato</td><td>1.1.6, 1.5.14</td></tr>
+            <tr><td>COM-12</td><td><strong>Informe de gate y acta de conformidad</strong></td><td>Aprobar formalmente cada fase.</td><td>Líder → Gerencia y Socio</td><td>Reunión presencial + PDF firmado en Drive</td><td>17/11/2026, 08/03/2027 y 21/04/2027</td><td>1.3.24, 1.4.29, 1.5.21</td></tr>
+            <tr><td>COM-13</td><td><strong>Convocatoria a capacitación</strong></td><td>Citar y registrar asistencia.</td><td>Líder → Ventas, Producción, Gerencia</td><td>WhatsApp + presencial; lista de asistencia</td><td>17–24/03/2027</td><td>1.5.7–1.5.9</td></tr>
+            <tr><td>COM-14</td><td><strong>Comunicado de corte y salida en vivo</strong></td><td>Explicar qué cambia, cuándo, qué pasa con el piloto y a quién acudir.</td><td>Líder y Gerencia → Todo el personal</td><td>Reunión breve + comunicado de una página por WhatsApp</td><td>Antes del 24/03/2027; recordatorio 31/03/2027</td><td>1.5.10–1.5.13</td></tr>
+            <tr><td>COM-15</td><td><strong>Informe final y cierre</strong></td><td>Entregar el expediente y transferir el control.</td><td>Líder → Gerencia y Comité de Datos</td><td>Reunión presencial + expediente en Drive</td><td>15–26/04/2027</td><td>1.5.18, 1.5.20–1.5.23</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p>
+        Cada gate termina con una decisión explícita de la Gerencia: <strong>aprobado</strong>, <strong>aprobado con
+        pendientes que no bloquean</strong> u <strong>observado</strong>, con responsables y fechas de corrección
+        registrados en el acta.
+      </p>
+    </article>
+
+    <article class="card">
+      <h3>3.4 Comunicaciones por Paquete de la EDT</h3>
+      <p>
+        Cada entregable de la EDT del Capítulo 06 tiene una comunicación asociada, de modo que ningún paquete cierre sin
+        que sus interesados estén informados.
+      </p>
+      <div class="table-wrap">
+        <table class="ancha">
+          <thead><tr><th>Paquete EDT</th><th>Comunicación clave</th><th>Audiencia</th><th>Medio</th><th>Momento</th></tr></thead>
+          <tbody>
+            <tr><td><strong>EDT-1.1.01</strong> Dirección y líneas base</td><td>Acta firmada y aprobación de los planes, incluido este.</td><td>Gerencia</td><td>Presencial + PDF en Drive</td><td>25/09/2026; aprobación de planes tras 1.1.4</td></tr>
+            <tr><td><strong>EDT-1.1.02</strong> Seguimiento y control</td><td>Informe semanal, actas, cambios e incidentes.</td><td>Gerencia</td><td>WhatsApp + Drive</td><td>Semanal, 28/09/2026 – 20/04/2027</td></tr>
+            <tr><td><strong>EDT-1.2.01</strong> Diagnóstico AS-IS</td><td>Validar el flujo actual y las fuentes auditadas.</td><td>Gerencia, Ventas, Producción</td><td>Presencial o Meet</td><td>05–07/10/2026 (1.2.5)</td></tr>
+            <tr><td><strong>EDT-1.2.02</strong> Diseño TO-BE y requisitos</td><td>Presentar el TO-BE y firmar REQ-01 a REQ-10 junto con los requisitos de comunicación.</td><td>Responsables por área</td><td>Presencial</td><td>15–16/10/2026 (1.2.8)</td></tr>
+            <tr><td><strong>EDT-1.3.01</strong> Conectividad operativa</td><td>Aviso de trabajos de red y resultado de pruebas.</td><td>Gerencia, Ventas, Producción</td><td>WhatsApp + aviso en el taller</td><td>14–22/10/2026 (1.3.3–1.3.4)</td></tr>
+            <tr><td><strong>EDT-1.3.02</strong> Gobierno inicial y calidad</td><td>Comité de Datos, SOP y política de respaldo.</td><td>Gerencia, Socio, Data Owners</td><td>Presencial + Drive</td><td>05–27/10/2026</td></tr>
+            <tr><td><strong>EDT-1.3.03</strong> Piloto controlado</td><td>Guía de una página, demos y resultados de consulta de stock.</td><td>Usuarios del piloto, Ventas</td><td>Celular en sitio</td><td>10–16/11/2026</td></tr>
+            <tr><td><strong>EDT-1.3.04</strong> Aprobación Cimentar</td><td>Informe y acta del Gate 1.</td><td>Gerencia, Socio</td><td>Presencial + Drive</td><td>17/11/2026</td></tr>
+            <tr><td><strong>EDT-1.4.01</strong> Servidor y Odoo de prueba</td><td>Estado y ventanas de mantenimiento.</td><td>Gerencia</td><td>WhatsApp</td><td>18/11 – 14/12/2026</td></tr>
+            <tr><td><strong>EDT-1.4.02</strong> Roles y permisos</td><td>Explicar a cada usuario qué verá y qué no.</td><td>Ventas, Producción, Gerencia</td><td>Presencial + guía</td><td>15–23/12/2026</td></tr>
+            <tr><td><strong>EDT-1.4.03</strong> Catálogo y migración</td><td>Confirmar catálogo y resultado de conciliación.</td><td>Data Owners, Gerencia</td><td>Presencial o WhatsApp + Drive</td><td>18/11/2026 – 15/01/2027 y 04/03/2027</td></tr>
+            <tr><td><strong>EDT-1.4.04</strong> Flujo operativo Odoo</td><td>Demos cortas de Venta–Stock–Despacho y vista de despacho.</td><td>Ventas, Producción; motorizado vía Gerencia</td><td>Demostración en sitio</td><td>18/01 – 18/02/2027</td></tr>
+            <tr><td><strong>EDT-1.4.05</strong> Pruebas y aceptación</td><td>Convocatorias UAT, resultados, certificado y Gate 2.</td><td>Ventas, Socio, Gerencia</td><td>Presencial + Drive</td><td>19/02 – 08/03/2027</td></tr>
+            <tr><td><strong>EDT-1.5.01</strong> Reportes y calidad</td><td>Presentar reportes y validar cifras.</td><td>Gerencia</td><td>Reunión + celular</td><td>09–23/03/2027 y 12–14/04/2027</td></tr>
+            <tr><td><strong>EDT-1.5.02</strong> Manuales y capacitación</td><td>Guías por rol y convocatoria.</td><td>Ventas, Producción, Gerencia</td><td>Presencial + guía impresa o PDF</td><td>26/02 – 24/03/2027</td></tr>
+            <tr><td><strong>EDT-1.5.03</strong> Salida a producción</td><td>Comunicado de corte y soporte intensivo.</td><td>Todo el personal; mayoristas y motorizado vía Gerencia</td><td>Presencial + WhatsApp</td><td>24/03 – 12/04/2027</td></tr>
+            <tr><td><strong>EDT-1.5.04</strong> Conformidad y cierre</td><td>Transferencia al Comité de Datos, informe final, Gate 3 y archivo.</td><td>Gerencia, Comité de Datos</td><td>Presencial + Drive</td><td>15–26/04/2027</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </article>
+
+    <article class="card">
+      <h3>3.5 Calendario de Comunicaciones por Fase</h3>
+      <div class="fases">
+        <div class="fase" style="--c: var(--d-alc)">
+          <div class="fase-nombre">1.1 Dirección y planificación</div>
+          <div class="fase-cuerpo">
+            <strong>21/09/2026 – 26/04/2027</strong> (transversal)
+            <ul>
+              <li>Informe y comité semanales</li>
+              <li>Actas, cambios e incidentes</li>
+              <li>Revisión del plan en cada gate</li>
+            </ul>
+          </div>
+          <div class="fase-gate">Gerencia: canal permanente</div>
+        </div>
+        <div class="fase" style="--c: var(--d-fin)">
+          <div class="fase-nombre">1.2 Diagnóstico AS-IS/TO-BE</div>
+          <div class="fase-cuerpo">
+            <strong>28/09 – 20/10/2026</strong>
+            <ul>
+              <li>Validación del AS-IS con la Gerencia</li>
+              <li>Firma de requisitos y de requisitos de comunicación</li>
+            </ul>
+          </div>
+          <div class="fase-gate">Hito: 15–16/10/2026</div>
+        </div>
+        <div class="fase" style="--c: var(--d-rie)">
+          <div class="fase-nombre">1.3 Cimentar</div>
+          <div class="fase-cuerpo">
+            <strong>05/10 – 17/11/2026</strong>
+            <ul>
+              <li>Comunicado de arranque a Empaque y Producción</li>
+              <li>Protocolo con el Socio</li>
+              <li>Piloto limitado con usuarios designados</li>
+            </ul>
+          </div>
+          <div class="fase-gate">Gate 1: 17/11/2026</div>
+        </div>
+        <div class="fase" style="--c: var(--d-int)">
+          <div class="fase-nombre">1.4 Integrar</div>
+          <div class="fase-cuerpo">
+            <strong>18/11/2026 – 08/03/2027</strong>
+            <ul>
+              <li>Comunicación mínima en temporada alta</li>
+              <li>Demos y UAT por rol</li>
+              <li>Certificado de cero defectos</li>
+            </ul>
+          </div>
+          <div class="fase-gate">Gate 2: 08/03/2027</div>
+        </div>
+        <div class="fase" style="--c: var(--d-cro)">
+          <div class="fase-nombre">1.5 Optimizar y cerrar</div>
+          <div class="fase-cuerpo">
+            <strong>26/02 – 26/04/2027</strong>
+            <ul>
+              <li>Capacitación 17–24/03</li>
+              <li>Comunicado de corte y salida en vivo 31/03</li>
+              <li>Transferencia al Comité de Datos</li>
+            </ul>
+          </div>
+          <div class="fase-gate">Gate 3: 21/04/2027 · Archivo: 26/04/2027</div>
+        </div>
+      </div>
+    </article>
+
+    <article class="card">
+      <h3>3.6 Mensajes Clave y Guía de Estilo</h3>
+      <div class="grid">
+        <div class="mini riesgo">
+          <strong>Tus datos están respaldados</strong>Cada informe a la Gerencia incluye una línea fija con el estado del
+          respaldo. Se mantiene la coexistencia con Excel hasta el corte controlado. (Responde a R-02)
+        </div>
+        <div class="mini riesgo">
+          <strong>Primero se prueba, luego se usa</strong>Al Socio solo se le muestran versiones ya probadas, con
+          evidencia de la prueba. (Responde a R-01)
+        </div>
+        <div class="mini acuerdo">
+          <strong>Es una ayuda, no una vigilancia</strong>Con Ventas y Empaque se habla de menos errores y menos
+          reprocesos, nunca de control individual ni de rankings. (Responde a R-03)
+        </div>
+        <div class="mini positivo">
+          <strong>Más tiempo para vender</strong>Se vincula cada avance con recuperar el día de cuadre y con el objetivo
+          de crecimiento de la Gerencia.
+        </div>
+      </div>
+      <div class="note">
+        <strong>Reglas de estilo:</strong> lenguaje sencillo y sin tecnicismos; ejemplos con datos de Roma Bag's; nunca
+        presentar la solución como "inteligencia artificial"; mensajes de WhatsApp de máximo 10 líneas, un tema por
+        mensaje y con pedido de confirmación cuando se espera una acción; información visual y legible en celular.
+      </div>
+    </article>
+
+    <article class="card">
+      <h3>3.7 Procedimientos de Escalamiento, Cambios y Confidencialidad</h3>
+      <div class="grid">
+        <div class="mini">
+          <strong>Escalamiento</strong>
+          <ol class="pasos">
+            <li>La persona que detecta el problema avisa al analista responsable (respuesta en un día hábil).</li>
+            <li>Si no se resuelve o afecta al cronograma, pasa al Líder, quien analiza el impacto.</li>
+            <li>Si altera un gate, el presupuesto o el alcance, decide la Gerencia (hasta dos días hábiles).</li>
+            <li>Una falla que detenga la operación se avisa de inmediato por WhatsApp al Líder y a la Gerencia.</li>
+          </ol>
+        </div>
+        <div class="mini">
+          <strong>Cambios en el plan de comunicaciones</strong>
+          <p>
+            Cualquier cambio de canal, frecuencia o responsable se registra como solicitud de cambio (actividad 1.1.6),
+            se aprueba con la Gerencia y se publica una nueva versión en Drive. El plan se revisa de forma ordinaria al
+            cierre de cada gate.
+          </p>
+        </div>
+        <div class="mini">
+          <strong>Confidencialidad y seguridad</strong>
+          <p>
+            La información financiera (ganancia neta, costos) solo se comunica a la Gerencia. Ventas ve únicamente stock y
+            metas; los mayoristas no reciben información interna. Los archivos del proyecto no se borran sin autorización
+            y se respaldan cada semana, en coherencia con REQ-08.
+          </p>
+        </div>
+      </div>
+    </article>
+
+    <article class="card">
+      <h3>3.8 Riesgos de Comunicación y Respuesta</h3>
+      <div class="table-wrap">
+        <table class="ids">
+          <thead><tr><th>ID</th><th>Riesgo</th><th>Respuesta</th><th>Responsable</th></tr></thead>
+          <tbody>
+            <tr><td>CR-01</td><td>El Socio pierde la confianza por mostrarle información prematura o con errores (R-01).</td><td>Mostrar solo versiones estables, validarlas antes con la Gerencia y resumir en pocas líneas.</td><td>Líder</td></tr>
+            <tr><td>CR-02</td><td>La Gerencia teme perder información (R-02).</td><td>Línea fija de estado del respaldo en cada informe; coexistencia con Excel.</td><td>Líder</td></tr>
+            <tr><td>CR-03</td><td>Ventas o Empaque perciben vigilancia (R-03).</td><td>Mensajes centrados en apoyo y claridad; sin rankings individuales.</td><td>Analista de Calidad</td></tr>
+            <tr><td>CR-04</td><td>Mensajes que no llegan por conectividad deficiente.</td><td>Canales por datos móviles y confirmación de recepción en los mensajes con acción.</td><td>Analista de Infraestructura</td></tr>
+            <tr><td>CR-05</td><td>Saturación del personal en temporada alta (septiembre a enero).</td><td>Mensajes breves, sesiones cortas y agenda pactada previamente con Ventas.</td><td>Líder</td></tr>
+            <tr><td>CR-06</td><td>Acuerdos que se pierden entre chats.</td><td>Un tema por mensaje; todo acuerdo se registra en acta en Drive con enlace único.</td><td>Analista de Calidad</td></tr>
+            <tr><td>CR-07</td><td>Sobrecarga de la Gerencia, que asume múltiples roles.</td><td>Informe de una página, comité de 30 minutos y decisiones preparadas con opciones y recomendación.</td><td>Líder</td></tr>
+            <tr><td>CR-08</td><td>Rechazo por lenguaje técnico o "robótico".</td><td>Lenguaje sencillo, ejemplos propios y demostraciones en persona.</td><td>Analista de Sistemas</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </article>
+
+    <article class="card">
+      <h3>3.9 Supuestos, Restricciones y Recursos</h3>
+      <div class="grid">
+        <div class="mini">
+          <strong>Supuestos</strong>La Gerencia mantiene disponibilidad semanal; el personal responde por WhatsApp con sus
+          datos móviles; el equipo UNTELS cubre los cuatro roles descritos.
+        </div>
+        <div class="mini">
+          <strong>Restricciones</strong>No hay personal de TI en la empresa; el espacio y el tiempo del taller son
+          limitados; el sábado es el día de cuadre manual de la Gerencia (hasta el corte a Odoo).
+        </div>
+        <div class="mini">
+          <strong>Recursos</strong>Herramientas ya disponibles y sin costo (WhatsApp, Meet, Drive). El esfuerzo se absorbe
+          en las actividades 1.1.5–1.1.7; las impresiones salen de la partida de materiales del Cap. 08. No se solicita
+          presupuesto adicional.
+        </div>
+      </div>
+    </article>
+
+    <article class="card">
+      <h3>3.10 Indicadores de Monitoreo (proceso 5.7)</h3>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Indicador</th><th>Meta propuesta</th><th>Fuente</th><th>Frecuencia</th><th>Responsable</th></tr></thead>
+          <tbody>
+            <tr><td><strong>Informes semanales entregados a tiempo</strong></td><td>≥ 90 %</td><td>Carpeta de informes en Drive</td><td>Mensual</td><td>Líder</td></tr>
+            <tr><td><strong>Asistencia de Gerencia y Socio a reuniones programadas</strong></td><td>≥ 80 %</td><td>Actas y lista de asistencia</td><td>Por gate</td><td>Analista de Calidad</td></tr>
+            <tr><td><strong>Actas emitidas en un día hábil</strong></td><td>100 %</td><td>Registro de decisiones</td><td>Mensual</td><td>Analista de Calidad</td></tr>
+            <tr><td><strong>Consultas de la Gerencia respondidas en un día hábil</strong></td><td>≥ 90 %</td><td>Historial de WhatsApp</td><td>Mensual</td><td>Líder</td></tr>
+            <tr><td><strong>Incidentes críticos escalados en 2 horas</strong></td><td>100 %</td><td>Registro de incidentes</td><td>Por incidente</td><td>Líder</td></tr>
+            <tr><td><strong>Percepción de la comunicación (escala 1–5)</strong></td><td>Promedio ≥ 4</td><td>Mini-encuesta por WhatsApp</td><td>Por gate</td><td>Analista de Calidad</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p>
+        Si un indicador queda por debajo de la meta durante dos mediciones consecutivas, se registra un cambio y se
+        ajusta el canal, la frecuencia o el formato antes del siguiente gate.
+      </p>
+    </article>
+  </PlanPanel>
+</PlanDireccion>
+
+<style>
+  /* Calendario por fase: un color por rama de la EDT, fijado con --c en cada .fase */
+  .fases {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 10px;
+    margin: 12px 0 0;
+  }
+
+  .fase {
+    display: flex;
+    flex-direction: column;
+    font-size: 14px;
+    border: 1px solid var(--line);
+    border-top: 3px solid var(--c);
+    border-radius: 10px;
+    background: var(--surface2);
+    overflow: hidden;
+  }
+
+  .fase-nombre {
+    padding: 8px 12px 0;
+    font-size: 12px;
+    font-weight: 800;
+    letter-spacing: .04em;
+    text-transform: uppercase;
+    color: var(--c);
+  }
+
+  .fase-cuerpo {
+    flex: 1;
+    padding: 6px 12px 10px;
+  }
+
+  .fase-cuerpo ul {
+    margin: 6px 0 0;
+    padding-left: 18px;
+  }
+
+  .fase-gate {
+    padding: 6px 12px;
+    font-size: 12px;
+    font-weight: 700;
+    border-top: 1px dashed var(--line);
+    background: color-mix(in srgb, var(--c) 8%, var(--surface));
+  }
+
+  .pasos {
+    margin: 6px 0 0;
+    padding-left: 18px;
+  }
+
+  .pasos li + li {
+    margin-top: 4px;
+  }
+
+  @media (max-width: 860px) {
+    .fases {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

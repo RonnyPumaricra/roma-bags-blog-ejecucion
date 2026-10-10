@@ -1,750 +1,479 @@
 ---
-import '../../css/contenido.css';
-import Layout from '../../layouts/Layout.astro';
-
-const secciones = [
-  { id: 'entradas', texto: 'Entradas' },
-  { id: 'herramientas', texto: 'Herramientas y técnicas' },
-  { id: 'salidas', texto: 'Salidas' },
-];
+import PlanDireccion from '../../layouts/PlanDireccion.astro';
+import PlanPanel from '../../components/plan-panel.astro';
 ---
 
-<Layout title="Plan de involucramiento de los interesados">
-  <div class="crumbs"><a href="/">Inicio</a> › Plan de dirección</div>
+<PlanDireccion
+  id="involucramiento-interesados"
+  lead="Proyecto de transformación digital de Roma Bag's: planificación de estrategias y acciones para promover la participación efectiva de los interesados durante las fases Cimentar, Integrar y Optimizar."
+  meta={["Roma Bag's S.A.C.", 'Equipo UNTELS', '21/09/2026–26/04/2027']}
+>
+  <PlanPanel id="entradas" n={1} titulo="Entradas" sub="Información de base utilizada para planificar el involucramiento.">
+    <div class="note">
+      El proceso se sustenta exclusivamente en información documentada en el blog: acta, planes subsidiarios,
+      registros del proyecto, acuerdos, factores ambientales, activos organizacionales, entrevistas y evidencias.
+    </div>
 
-  <h1>Plan de involucramiento de los interesados</h1>
-  <p class="lead">
-    Proyecto de transformación digital de Roma Bag's: planificación de estrategias y acciones para promover la
-    participación efectiva de los interesados durante las fases Cimentar, Integrar y Optimizar.
-  </p>
-  <div class="meta">
-    <span>Roma Bag's S.A.C.</span>
-    <span>Equipo UNTELS</span>
-    <span>21/09/2026–26/04/2027</span>
-  </div>
+    <article class="card">
+      <h3>1.1 Acta de Constitución del Proyecto</h3>
+      <p>
+        El Acta formaliza la existencia del proyecto y autoriza al equipo UNTELS a utilizar los recursos previstos.
+        Establece como objetivo central integrar y estandarizar la información operativa y comercial mediante reglas de
+        datos, un piloto controlado y Odoo Community.
+      </p>
+      <ul>
+        <li>Proporciona legitimidad y dirección al proyecto.</li>
+        <li>Reconoce el patrocinio operativo de la Gerencia General.</li>
+        <li>Autoriza entrevistas, validaciones y pruebas con los interesados.</li>
+        <li>Orienta la implementación progresiva mediante Cimentar, Integrar y Optimizar.</li>
+      </ul>
+      <p>
+        La Gerencia General es el patrocinador operativo y principal decisor. El Socio de Producción es un actor
+        crítico por su autoridad en el taller y su capacidad para bloquear la adopción.
+      </p>
+    </article>
 
-  <nav class="tabs" role="tablist" aria-label="Secciones del plan">
-    {
-      secciones.map((s, i) => (
-        <button
-          class="tab"
-          id={`tab-${s.id}`}
-          type="button"
-          role="tab"
-          aria-selected={i === 0 ? 'true' : 'false'}
-          aria-controls={s.id}
-          data-panel={s.id}
-          tabindex={i === 0 ? 0 : -1}
-        >
-          <span class="tab-num">{i + 1}</span>
-          <span class="tab-txt">{s.texto}</span>
-        </button>
-      ))
-    }
-  </nav>
-
-  <div class="contenido">
-    <section class="panel" id="entradas" role="tabpanel" aria-labelledby="tab-entradas" tabindex="0">
-      <h2>1. Entradas</h2>
-      <p class="sub">Información de base utilizada para planificar el involucramiento.</p>
-
-      <div class="note">
-        El proceso se sustenta exclusivamente en información documentada en el blog: acta, planes subsidiarios,
-        registros del proyecto, acuerdos, factores ambientales, activos organizacionales, entrevistas y evidencias.
+    <article class="card">
+      <h3>1.2 Plan para la Dirección del Proyecto</h3>
+      <div class="grid">
+        <div class="mini">
+          <strong>Plan de Gestión de los Recursos</strong>
+          <p>
+            Roma Bag's no cuenta con personal de TI. El equipo UNTELS asume el soporte técnico y organiza el
+            levantamiento, análisis, demostración, validación y capacitación.
+          </p>
+          <p>
+            Los roles documentados incluyen líder del proyecto, apoyo técnico, apoyo metodológico, auditor de hardware,
+            equipo funcional y registro de evidencias.
+          </p>
+        </div>
+        <div class="mini">
+          <strong>Plan de Gestión de las Comunicaciones</strong>
+          <p>
+            WhatsApp es el canal principal con la Gerencia y el taller. Las comunicaciones formales se realizan
+            mediante Google Meet, reuniones presenciales, demostraciones móviles y validaciones asociadas a hitos y
+            gates.
+          </p>
+        </div>
+        <div class="mini riesgo">
+          <strong>Plan de Gestión de los Riesgos</strong>
+          <p>
+            Integra los riesgos R-01, R-02 y R-03 relacionados con el veto del Socio, la pérdida de confianza de la
+            Gerencia y la percepción de vigilancia del personal.
+          </p>
+        </div>
       </div>
 
-      <article class="card">
-        <h3>1.1 Acta de Constitución del Proyecto</h3>
-        <p>
-          El Acta formaliza la existencia del proyecto y autoriza al equipo UNTELS a utilizar los recursos previstos.
-          Establece como objetivo central integrar y estandarizar la información operativa y comercial mediante reglas de
-          datos, un piloto controlado y Odoo Community.
-        </p>
-        <ul>
-          <li>Proporciona legitimidad y dirección al proyecto.</li>
-          <li>Reconoce el patrocinio operativo de la Gerencia General.</li>
-          <li>Autoriza entrevistas, validaciones y pruebas con los interesados.</li>
-          <li>Orienta la implementación progresiva mediante Cimentar, Integrar y Optimizar.</li>
-        </ul>
-        <p>
-          La Gerencia General es el patrocinador operativo y principal decisor. El Socio de Producción es un actor
-          crítico por su autoridad en el taller y su capacidad para bloquear la adopción.
-        </p>
-      </article>
+      <h4>R-01 · Resistencia del Socio de Producción</h4>
+      <p>
+        Puede rechazar la solución ante el primer error visible. Se responderá con pruebas previas, versiones estables,
+        implementación progresiva, evidencias de confiabilidad y validaciones operativas concretas.
+      </p>
 
-      <article class="card">
-        <h3>1.2 Plan para la Dirección del Proyecto</h3>
-        <div class="grid">
-          <div class="mini">
-            <strong>Plan de Gestión de los Recursos</strong>
-            <p>
-              Roma Bag's no cuenta con personal de TI. El equipo UNTELS asume el soporte técnico y organiza el
-              levantamiento, análisis, demostración, validación y capacitación.
-            </p>
-            <p>
-              Los roles documentados incluyen líder del proyecto, apoyo técnico, apoyo metodológico, auditor de hardware,
-              equipo funcional y registro de evidencias.
-            </p>
-          </div>
-          <div class="mini">
-            <strong>Plan de Gestión de las Comunicaciones</strong>
-            <p>
-              WhatsApp es el canal principal con la Gerencia y el taller. Las comunicaciones formales se realizan
-              mediante Google Meet, reuniones presenciales, demostraciones móviles y validaciones asociadas a hitos y
-              gates.
-            </p>
-          </div>
-          <div class="mini riesgo">
-            <strong>Plan de Gestión de los Riesgos</strong>
-            <p>
-              Integra los riesgos R-01, R-02 y R-03 relacionados con el veto del Socio, la pérdida de confianza de la
-              Gerencia y la percepción de vigilancia del personal.
-            </p>
-          </div>
-        </div>
+      <h4>R-02 · Pérdida de confianza de la Gerencia</h4>
+      <p>
+        La pérdida del archivo histórico de 2024 genera temor ante la migración. Se mostrarán respaldos visibles, se
+        mantendrá coexistencia temporal con Excel y se realizarán validaciones progresivas de integridad.
+      </p>
 
-        <h4>R-01 · Resistencia del Socio de Producción</h4>
-        <p>
-          Puede rechazar la solución ante el primer error visible. Se responderá con pruebas previas, versiones estables,
-          implementación progresiva, evidencias de confiabilidad y validaciones operativas concretas.
-        </p>
+      <h4>R-03 · Percepción de vigilancia</h4>
+      <p>
+        La visualización de metas podría interpretarse como fiscalización. La comunicación se enfocará en el apoyo al
+        trabajo colectivo, la claridad operativa y la reducción de reprocesos.
+      </p>
+    </article>
 
-        <h4>R-02 · Pérdida de confianza de la Gerencia</h4>
-        <p>
-          La pérdida del archivo histórico de 2024 genera temor ante la migración. Se mostrarán respaldos visibles, se
-          mantendrá coexistencia temporal con Excel y se realizarán validaciones progresivas de integridad.
-        </p>
+    <article class="card">
+      <h3>1.3 Documentos del Proyecto</h3>
 
-        <h4>R-03 · Percepción de vigilancia</h4>
-        <p>
-          La visualización de metas podría interpretarse como fiscalización. La comunicación se enfocará en el apoyo al
-          trabajo colectivo, la claridad operativa y la reducción de reprocesos.
-        </p>
-      </article>
+      <h4>Registro de Supuestos</h4>
+      <ul>
+        <li>La Gerencia mantendrá disponibilidad semanal para validaciones.</li>
+        <li>El Socio no vetará la solución si las pruebas previas demuestran estabilidad.</li>
+        <li>Ventas conservará su predisposición favorable hacia las herramientas móviles.</li>
+        <li>Los interesados clave participarán en las validaciones de los gates.</li>
+      </ul>
 
-      <article class="card">
-        <h3>1.3 Documentos del Proyecto</h3>
+      <h4>Registro de Cambios</h4>
+      <p>
+        El cambio documentado más relevante es la incorporación del taller alterno de la hermana de Natalie. Sus
+        registros de producción y ventas deben considerarse en la consolidación de información.
+      </p>
 
-        <h4>Registro de Supuestos</h4>
-        <ul>
-          <li>La Gerencia mantendrá disponibilidad semanal para validaciones.</li>
-          <li>El Socio no vetará la solución si las pruebas previas demuestran estabilidad.</li>
-          <li>Ventas conservará su predisposición favorable hacia las herramientas móviles.</li>
-          <li>Los interesados clave participarán en las validaciones de los gates.</li>
-        </ul>
+      <h4>Registro de Incidentes</h4>
+      <p>
+        El incidente crítico es la pérdida del registro histórico de 2024 por borrado accidental. Explica el temor de
+        la Gerencia, justifica los respaldos y exige una transición progresiva sin sustitución abrupta de Excel.
+      </p>
 
-        <h4>Registro de Cambios</h4>
-        <p>
-          El cambio documentado más relevante es la incorporación del taller alterno de la hermana de Natalie. Sus
-          registros de producción y ventas deben considerarse en la consolidación de información.
-        </p>
-
-        <h4>Registro de Incidentes</h4>
-        <p>
-          El incidente crítico es la pérdida del registro histórico de 2024 por borrado accidental. Explica el temor de
-          la Gerencia, justifica los respaldos y exige una transición progresiva sin sustitución abrupta de Excel.
-        </p>
-
-        <h4>Cronograma del Proyecto</h4>
-        <p>
-          El proyecto se desarrolla entre el 21 de septiembre de 2026 y el 26 de abril de 2027. La temporada alta entre
-          septiembre y enero restringe la disponibilidad, por lo que se utiliza un piloto limitado antes del Gate 1 y la
-          capacitación final se programa para marzo de 2027.
-        </p>
-        <div class="gates">
-          <div class="gate"><strong>Gate 1</strong>17/11/2026 · Cimentar</div>
-          <div class="gate"><strong>Gate 2</strong>08/03/2027 · Integrar</div>
-          <div class="gate"><strong>Gate 3</strong>21/04/2027 · Conformidad</div>
-        </div>
-
-        <h4>Registro de Riesgos</h4>
-        <p>
-          El seguimiento se concentra en las objeciones del Socio, la confianza de la Gerencia, la percepción del
-          personal, la disponibilidad para validaciones y el impacto de la temporada alta.
-        </p>
-
-        <h4>Registro de Interesados</h4>
-        <p>Se identifican seis interesados codificados formalmente y un actor complementario:</p>
-        <div class="grid">
-          <div class="mini"><strong>SH-01</strong>Gerencia General — Natalie</div>
-          <div class="mini"><strong>SH-02</strong>Socio / Jefe de Producción</div>
-          <div class="mini"><strong>SH-03</strong>Personal de Ventas</div>
-          <div class="mini"><strong>SH-04</strong>Personal de Empaque / Habilitado</div>
-          <div class="mini"><strong>SH-05</strong>Clientes Mayoristas</div>
-          <div class="mini"><strong>SH-06</strong>Logística / Motorizado</div>
-          <div class="mini">
-            <strong>Actor complementario</strong>Taller Alterno / Proveedores, sin código SH definido en la documentación
-            actual.
-          </div>
-        </div>
-      </article>
-
-      <article class="card">
-        <h3>1.4 Acuerdos</h3>
-        <div class="grid">
-          <div class="mini acuerdo">
-            <strong>Expectativa de negocio</strong>
-            <p>
-              La iniciativa debe contribuir a recuperar el día completo semanal dedicado a conciliaciones. El crecimiento
-              esperado del 50 % en ventas es una expectativa comercial de la Gerencia, no un resultado garantizado por el
-              proyecto.
-            </p>
-          </div>
-          <div class="mini acuerdo">
-            <strong>Restricción de interfaz</strong>
-            <p>
-              La solución debe poder utilizarse y consultarse desde dispositivos móviles. La Gerencia prioriza el celular
-              sobre la computadora.
-            </p>
-          </div>
-          <div class="mini acuerdo">
-            <strong>Transición segura</strong>
-            <p>
-              La solución no reemplazará abruptamente el Excel. Se mantendrá una etapa de coexistencia para proteger la
-              información y reducir la resistencia.
-            </p>
-          </div>
-        </div>
-      </article>
-
-      <article class="card">
-        <h3>1.5 Factores Ambientales de la Empresa</h3>
-        <div class="grid">
-          <div class="mini">
-            <strong>Cultura y toma de decisiones</strong>
-            <p>
-              Estructura horizontal de 19 personas. Natalie concentra las decisiones; en su ausencia, el Socio asume
-              autoridad operativa. El liderazgo es pragmático y orientado a resultados.
-            </p>
-          </div>
-          <div class="mini">
-            <strong>Infraestructura y conectividad</strong>
-            <p>
-              Tres laptops, seis celulares y zonas muertas de conectividad. Las comunicaciones y demostraciones no deben
-              depender exclusivamente del Wi-Fi del taller.
-            </p>
-          </div>
-          <div class="mini">
-            <strong>Adopción tecnológica</strong>
-            <p>
-              Gerencia: adoptante con reservas. Socio: bloqueador condicional. Ventas: promotor digital. Empaque:
-              conocimiento insuficiente del proyecto.
-            </p>
-          </div>
-          <div class="mini">
-            <strong>Condiciones operativas</strong>
-            <p>
-              Taller principal y alterno; ventas mayoristas y minoristas; temporada minorista intensa entre septiembre y
-              enero.
-            </p>
-          </div>
-        </div>
-        <div class="note">
-          <strong>Línea base documentada:</strong> un día semanal de conciliación, nueve pedidos incompletos al mes, doble
-          envío en dos de cada diez pedidos y sobrecosto aproximado de S/ 19 a S/ 24 por incidente.
-        </div>
-      </article>
-
-      <article class="card">
-        <h3>1.6 Activos de los Procesos de la Organización</h3>
-        <ul>
-          <li>Cuadernos físicos de inventario.</li>
-          <li>Archivos Excel de ventas almacenados en Google Drive.</li>
-          <li>Aproximadamente ocho meses de historial disponible.</li>
-          <li>Registros Excel independientes del taller alterno.</li>
-          <li>WhatsApp como canal habitual con proveedores, clientes y motorizado.</li>
-          <li>Google Drive como repositorio compartido.</li>
-          <li>Conocimiento operativo tácito concentrado en la Gerencia.</li>
-        </ul>
-        <p>Estos activos permiten mantener canales familiares y reducir la resistencia durante la transición.</p>
-      </article>
-    </section>
-
-    <section class="panel" id="herramientas" role="tabpanel" aria-labelledby="tab-herramientas" tabindex="0" hidden>
-      <h2>2. Herramientas y técnicas</h2>
-      <p class="sub">Métodos empleados para analizar, clasificar y planificar la participación.</p>
-
-      <article class="card">
-        <h3>2.1 Recopilación de datos: estudios comparativos</h3>
-        <p>El estudio utiliza la comparación de alternativas ya documentada:</p>
-        <div class="grid">
-          <div class="mini"><strong>BI a medida</strong>Base de datos relacional, ETL y dashboard Power BI.</div>
-          <div class="mini"><strong>Odoo Community directo</strong>Implementación del ERP desde el inicio.</div>
-          <div class="mini"><strong>Ecosistema no-code</strong>Sheets y AppSheet como solución móvil ligera.</div>
-          <div class="mini positivo">
-            <strong>Transformación por fases</strong>Piloto inicial, Odoo y analítica con gates de aprobación.
-          </div>
-        </div>
-        <p>
-          Para el involucramiento, la comparación muestra que el enfoque progresivo reduce la fricción inicial, permite
-          validar conectividad y datos, evita exponer al Socio a versiones inestables y da a la Gerencia capacidad de
-          aprobación antes de cada transición.
-        </p>
-        <p>También se comparan los hallazgos de las tres sesiones para confirmar expectativas, restricciones y actitudes.</p>
-      </article>
-
-      <article class="card">
-        <h3>2.2 Análisis de datos</h3>
-        <h4>Análisis de supuestos y restricciones</h4>
-        <p>El supuesto principal es la disponibilidad semanal de la Gerencia. Las restricciones son:</p>
-        <ul>
-          <li>No interrumpir la producción.</li>
-          <li>No reemplazar abruptamente Excel.</li>
-          <li>Operar y presentar resultados en celulares.</li>
-          <li>Trabajar bajo conectividad inestable.</li>
-          <li>Considerar la temporada alta.</li>
-          <li>Presentar al Socio únicamente versiones verificadas.</li>
-          <li>Conservar y proteger los datos existentes.</li>
-        </ul>
-
-        <h4>Análisis de causa raíz</h4>
-        <p>La causa raíz del riesgo de involucramiento es la fragmentación de la información:</p>
-        <ul>
-          <li>La Gerencia no conoce con precisión la ganancia mensual porque los datos están aislados.</li>
-          <li>El Socio no sabe anticipadamente qué producir por falta de comunicación estandarizada.</li>
-          <li>Ventas no puede confirmar existencias sin consultar manualmente a la Gerencia.</li>
-          <li>Empaque recibe información sin un flujo integrado.</li>
-          <li>Los errores generan pedidos incompletos y dobles envíos.</li>
-        </ul>
-        <p>
-          La resistencia no se interpreta solamente como rechazo tecnológico, sino como consecuencia de la pérdida previa
-          de datos, la ausencia de procedimientos y la falta de confianza en la información.
-        </p>
-      </article>
-
-      <article class="card">
-        <h3>2.3 Toma de decisiones: priorización y clasificación</h3>
-        <div class="grid">
-          <div class="mini riesgo">
-            <strong>Prioridad 1 · Gestionar de cerca</strong>
-            Gerencia General y Socio de Producción. Concentran el poder de decisión y el riesgo de bloqueo.
-          </div>
-          <div class="mini acuerdo">
-            <strong>Prioridad 2 · Mantener informados</strong>
-            Personal de Ventas, Personal de Empaque y Clientes Mayoristas. Son relevantes para la adopción o la percepción
-            de mejora.
-          </div>
-          <div class="mini positivo">
-            <strong>Prioridad 3 · Monitorear</strong>
-            Motorizado, Taller Alterno y Proveedores. Su impacto es indirecto y no requieren participación continua en las
-            decisiones.
-          </div>
-        </div>
-      </article>
-
-      <article class="card">
-        <h3>2.4 Representación de datos</h3>
-        <h4>Mapeo mental</h4>
-        <p>El proyecto se ubica en el centro y los interesados se organizan en tres ramas:</p>
-        <div class="mapa">
-          <div class="rama">
-            <h4>Dirección y decisión</h4>
-            <p>
-              <strong>Gerencia:</strong> patrocinio, validación, temor a perder datos, preferencia móvil y ahorro de tiempo.
-            </p>
-            <p><strong>Socio:</strong> autoridad operativa, continuidad del taller y resistencia ante errores.</p>
-          </div>
-          <div class="rama">
-            <h4>Uso y adopción</h4>
-            <p><strong>Ventas:</strong> consulta móvil, registro, stock, metas y predisposición tecnológica.</p>
-            <p><strong>Empaque:</strong> claridad de órdenes, reducción de reprocesos e inducción.</p>
-          </div>
-          <div class="rama">
-            <h4>Impacto indirecto</h4>
-            <p><strong>Clientes:</strong> exactitud y pedidos completos.</p>
-            <p><strong>Motorizado:</strong> reducción de dobles viajes.</p>
-            <p><strong>Taller alterno/proveedores:</strong> coordinación y consolidación de registros.</p>
-          </div>
-        </div>
-
-        <h4>Matriz de evaluación de la participación</h4>
-        <div class="table-wrap">
-          <table>
-            <thead><tr><th>Interesado</th><th>Nivel actual</th><th>Nivel deseado</th><th>Estrategia</th></tr></thead>
-            <tbody>
-              <tr><td>Gerencia General</td><td>Partidario con reservas</td><td>Líder</td><td>Gestionar de cerca</td></tr>
-              <tr><td>Socio de Producción</td><td>Reacio</td><td>Partidario</td><td>Gestionar de cerca</td></tr>
-              <tr><td>Personal de Ventas</td><td>Partidario</td><td>Partidario</td><td>Mantener y consolidar</td></tr>
-              <tr><td>Personal de Empaque</td><td>Desconocedor</td><td>Partidario informado</td><td>Mantener informado</td></tr>
-              <tr><td>Clientes Mayoristas</td><td>Neutral</td><td>Partidario indirecto</td><td>Mantener informados</td></tr>
-              <tr><td>Motorizado</td><td>Neutral</td><td>Partidario indirecto</td><td>Monitorear</td></tr>
-              <tr><td>Taller Alterno / Proveedores</td><td>Neutral</td><td>Neutral</td><td>Monitorear</td></tr>
-            </tbody>
-          </table>
-        </div>
-      </article>
-
-      <article class="card">
-        <h3>2.5 Reuniones</h3>
-        <div class="table-wrap">
-          <table>
-            <thead><tr><th>Reunión</th><th>Modalidad</th><th>Fecha</th><th>Resultado principal</th></tr></thead>
-            <tbody>
-              <tr><td>Sesión 1</td><td>Google Meet</td><td>21/04/2026</td><td>Expectativas, temor a perder datos y preferencia por celular.</td></tr>
-              <tr><td>Sesión 2</td><td>Presencial en el taller</td><td>04/05/2026</td><td>Resistencia del Socio, perfil de Ventas e infraestructura.</td></tr>
-              <tr><td>Sesión 3</td><td>Entrevista de profundización</td><td>14/05/2026</td><td>Métricas de pedidos, dobles envíos y tiempo de conciliación.</td></tr>
-            </tbody>
-          </table>
-        </div>
-        <p>
-          Durante el proyecto se programan reuniones semanales con la Gerencia, conversaciones quincenales o por hito con
-          el Socio, demostraciones por iteración con Ventas, talleres cortos para Empaque y validaciones vinculadas con los
-          gates.
-        </p>
-      </article>
-    </section>
-
-    <section class="panel" id="salidas" role="tabpanel" aria-labelledby="tab-salidas" tabindex="0" hidden>
-      <h2>3. Salidas</h2>
-      <p class="sub">Plan de involucramiento y acciones definidas para cada interesado.</p>
-
-      <article class="card">
-        <h3>3.1 Plan de Involucramiento de los Interesados</h3>
-        <p>
-          El plan establece las acciones para trasladar a cada interesado desde su nivel actual hacia el nivel requerido,
-          mantener a la Gerencia como líder de la adopción y reducir la resistencia del Socio de Producción.
-        </p>
-        <div class="note">
-          <strong>Objetivo:</strong> promover una participación gradual, práctica y centrada en beneficios operativos, de
-          acuerdo con el poder, interés, actitud y capacidad de influencia de cada actor.
-        </div>
-      </article>
-
-      <article class="card">
-        <h3>3.2 Plan de acción</h3>
-        <div class="table-wrap">
-          <table class="acciones">
-            <thead>
-              <tr>
-                <th>Interesado</th><th>Objetivo</th><th>Acciones</th><th>Comunicación</th><th>Frecuencia</th>
-                <th>Responsable</th><th>Evidencia / indicador</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td>Gerencia General</td>
-                <td>Pasar de partidario con reservas a líder.</td>
-                <td>Demostrar ahorro de tiempo, visibilidad de resultados, respaldos y transición segura; solicitar validaciones y decisiones.</td>
-                <td>WhatsApp y reunión presencial o virtual.</td>
-                <td>Semanal.</td>
-                <td>Equipo del proyecto.</td>
-                <td>Participación en al menos 80 % de reuniones; validaciones y percepción positiva sobre la integridad.</td>
-              </tr>
-              <tr>
-                <td>Socio de Producción</td>
-                <td>Pasar de reacio a partidario.</td>
-                <td>Presentar versiones estables, ejecutar pruebas previas, mostrar continuidad e involucrarlo en validaciones puntuales.</td>
-                <td>Conversación breve presencial.</td>
-                <td>Quincenal o por hito.</td>
-                <td>Líder del proyecto.</td>
-                <td>Reducción progresiva de objeciones y aprobación de pruebas operativas.</td>
-              </tr>
-              <tr>
-                <td>Personal de Ventas</td>
-                <td>Mantener y consolidar su condición de partidario.</td>
-                <td>Realizar demostraciones móviles, pruebas breves y visualización de stock y metas.</td>
-                <td>Celular y demostración en sitio.</td>
-                <td>Por iteración.</td>
-                <td>Equipo funcional.</td>
-                <td>Uso efectivo del sistema en celular desde el piloto.</td>
-              </tr>
-              <tr>
-                <td>Personal de Empaque</td>
-                <td>Pasar de desconocedor a participante informado.</td>
-                <td>Explicar beneficios, mostrar reducción de reprocesos y capacitar en lectura de órdenes.</td>
-                <td>Taller corto presencial.</td>
-                <td>Por necesidad.</td>
-                <td>Equipo del proyecto.</td>
-                <td>Participación en la inducción y comprensión del flujo de órdenes.</td>
-              </tr>
-              <tr>
-                <td>Clientes Mayoristas</td>
-                <td>Mejorar su percepción del servicio.</td>
-                <td>Comunicar mejoras mediante la atención habitual y verificar pedidos completos y exactitud del stock.</td>
-                <td>Atención comercial habitual.</td>
-                <td>Según avance.</td>
-                <td>Gerencia.</td>
-                <td>Disminución de pedidos incompletos respecto de las nueve ocurrencias mensuales.</td>
-              </tr>
-              <tr>
-                <td>Motorizado</td>
-                <td>Favorecer una percepción positiva indirecta.</td>
-                <td>Mejorar la consistencia de pedidos y reducir dobles viajes; no participa en decisiones del sistema.</td>
-                <td>Comunicación operativa habitual.</td>
-                <td>Según operación.</td>
-                <td>Gerencia.</td>
-                <td>Reducción de viajes adicionales y sobrecostos por incidentes.</td>
-              </tr>
-              <tr>
-                <td>Taller Alterno / Proveedores</td>
-                <td>Mantener seguimiento puntual.</td>
-                <td>Considerar sus registros y coordinación dentro de la consolidación de información.</td>
-                <td>Canal habitual de coordinación.</td>
-                <td>No definida en la documentación actual.</td>
-                <td>No definido en la documentación actual.</td>
-                <td>Registros del taller alterno considerados en la integración.</td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-      </article>
-
-      <article class="card">
-        <h3>3.3 Seguimiento del plan</h3>
-        <div class="grid">
-          <div class="mini"><strong>Asistencia</strong>Gerencia y Socio participan en al menos el 80 % de las reuniones programadas.</div>
-          <div class="mini"><strong>Aceptación</strong>Se registran las objeciones del Socio en cada demostración y su evolución.</div>
-          <div class="mini"><strong>Adopción</strong>Ventas utiliza el sistema móvil y Empaque participa en las inducciones.</div>
-          <div class="mini"><strong>Confianza</strong>La Gerencia valida la integridad de la información y las decisiones por gate.</div>
-          <div class="mini"><strong>Resultado operativo</strong>Se mide la disminución frente a la línea base de nueve pedidos incompletos por mes.</div>
-          <div class="mini"><strong>Riesgos</strong>Se observan incidentes de pérdida de datos, rechazo y percepción de vigilancia.</div>
-        </div>
-
-        <h4>Situaciones que requieren revisión</h4>
-        <ul>
-          <li>Incorporación de un nuevo interesado.</li>
-          <li>Cambio en el poder, interés o actitud de un interesado.</li>
-          <li>Presentación de un incidente relevante.</li>
-          <li>Aprobación de un cambio que afecte la operación.</li>
-          <li>Llegada a uno de los gates del proyecto.</li>
-        </ul>
-      </article>
-
-      <div class="note">
-        <strong>Observación de consistencia:</strong> el blog declara seis interesados formales entre SH-01 y SH-06, pero
-        también incluye a Taller Alterno / Proveedores. Este último se mantiene como actor complementario porque la
-        documentación actual no le asigna un código SH.
+      <h4>Cronograma del Proyecto</h4>
+      <p>
+        El proyecto se desarrolla entre el 21 de septiembre de 2026 y el 26 de abril de 2027. La temporada alta entre
+        septiembre y enero restringe la disponibilidad, por lo que se utiliza un piloto limitado antes del Gate 1 y la
+        capacitación final se programa para marzo de 2027.
+      </p>
+      <div class="gates">
+        <div class="gate"><strong>Gate 1</strong>17/11/2026 · Cimentar</div>
+        <div class="gate"><strong>Gate 2</strong>08/03/2027 · Integrar</div>
+        <div class="gate"><strong>Gate 3</strong>21/04/2027 · Conformidad</div>
       </div>
-    </section>
-  </div>
-</Layout>
 
-<script>
-  const barra = document.querySelector<HTMLElement>('.tabs')!;
-  const contenido = document.querySelector<HTMLElement>('.contenido')!;
-  const tabs = Array.from(document.querySelectorAll<HTMLButtonElement>('[role="tab"]'));
-  const panels = Array.from(document.querySelectorAll<HTMLElement>('[role="tabpanel"]'));
+      <h4>Registro de Riesgos</h4>
+      <p>
+        El seguimiento se concentra en las objeciones del Socio, la confianza de la Gerencia, la percepción del
+        personal, la disponibilidad para validaciones y el impacto de la temporada alta.
+      </p>
 
-  function activar(panelId: string, actualizarHash = true) {
-    const elegida = tabs.find((t) => t.dataset.panel === panelId) ?? tabs[0];
+      <h4>Registro de Interesados</h4>
+      <p>Se identifican seis interesados codificados formalmente y un actor complementario:</p>
+      <div class="grid">
+        <div class="mini"><strong>SH-01</strong>Gerencia General — Natalie</div>
+        <div class="mini"><strong>SH-02</strong>Socio / Jefe de Producción</div>
+        <div class="mini"><strong>SH-03</strong>Personal de Ventas</div>
+        <div class="mini"><strong>SH-04</strong>Personal de Empaque / Habilitado</div>
+        <div class="mini"><strong>SH-05</strong>Clientes Mayoristas</div>
+        <div class="mini"><strong>SH-06</strong>Logística / Motorizado</div>
+        <div class="mini">
+          <strong>Actor complementario</strong>Taller Alterno / Proveedores, sin código SH definido en la documentación
+          actual.
+        </div>
+      </div>
+    </article>
 
-    tabs.forEach((t) => {
-      const activa = t === elegida;
-      t.setAttribute('aria-selected', String(activa));
-      t.tabIndex = activa ? 0 : -1;
-    });
-    panels.forEach((p) => {
-      p.hidden = p.id !== elegida.dataset.panel;
-    });
+    <article class="card">
+      <h3>1.4 Acuerdos</h3>
+      <div class="grid">
+        <div class="mini acuerdo">
+          <strong>Expectativa de negocio</strong>
+          <p>
+            La iniciativa debe contribuir a recuperar el día completo semanal dedicado a conciliaciones. El crecimiento
+            esperado del 50 % en ventas es una expectativa comercial de la Gerencia, no un resultado garantizado por el
+            proyecto.
+          </p>
+        </div>
+        <div class="mini acuerdo">
+          <strong>Restricción de interfaz</strong>
+          <p>
+            La solución debe poder utilizarse y consultarse desde dispositivos móviles. La Gerencia prioriza el celular
+            sobre la computadora.
+          </p>
+        </div>
+        <div class="mini acuerdo">
+          <strong>Transición segura</strong>
+          <p>
+            La solución no reemplazará abruptamente el Excel. Se mantendrá una etapa de coexistencia para proteger la
+            información y reducir la resistencia.
+          </p>
+        </div>
+      </div>
+    </article>
 
-    if (!actualizarHash) return;
-    history.replaceState(null, '', `#${elegida.dataset.panel}`);
+    <article class="card">
+      <h3>1.5 Factores Ambientales de la Empresa</h3>
+      <div class="grid">
+        <div class="mini">
+          <strong>Cultura y toma de decisiones</strong>
+          <p>
+            Estructura horizontal de 19 personas. Natalie concentra las decisiones; en su ausencia, el Socio asume
+            autoridad operativa. El liderazgo es pragmático y orientado a resultados.
+          </p>
+        </div>
+        <div class="mini">
+          <strong>Infraestructura y conectividad</strong>
+          <p>
+            Tres laptops, seis celulares y zonas muertas de conectividad. Las comunicaciones y demostraciones no deben
+            depender exclusivamente del Wi-Fi del taller.
+          </p>
+        </div>
+        <div class="mini">
+          <strong>Adopción tecnológica</strong>
+          <p>
+            Gerencia: adoptante con reservas. Socio: bloqueador condicional. Ventas: promotor digital. Empaque:
+            conocimiento insuficiente del proyecto.
+          </p>
+        </div>
+        <div class="mini">
+          <strong>Condiciones operativas</strong>
+          <p>
+            Taller principal y alterno; ventas mayoristas y minoristas; temporada minorista intensa entre septiembre y
+            enero.
+          </p>
+        </div>
+      </div>
+      <div class="note">
+        <strong>Línea base documentada:</strong> un día semanal de conciliación, nueve pedidos incompletos al mes, doble
+        envío en dos de cada diez pedidos y sobrecosto aproximado de S/ 19 a S/ 24 por incidente.
+      </div>
+    </article>
 
-    // Si la barra ya está pegada arriba, se vuelve al inicio del nuevo panel
-    const top = parseFloat(getComputedStyle(barra).top);
-    if (barra.getBoundingClientRect().top <= top + 1) {
-      const inicio = contenido.getBoundingClientRect().top + scrollY - top - barra.offsetHeight;
-      scrollTo({ top: Math.min(scrollY, inicio) });
-    }
-  }
+    <article class="card">
+      <h3>1.6 Activos de los Procesos de la Organización</h3>
+      <ul>
+        <li>Cuadernos físicos de inventario.</li>
+        <li>Archivos Excel de ventas almacenados en Google Drive.</li>
+        <li>Aproximadamente ocho meses de historial disponible.</li>
+        <li>Registros Excel independientes del taller alterno.</li>
+        <li>WhatsApp como canal habitual con proveedores, clientes y motorizado.</li>
+        <li>Google Drive como repositorio compartido.</li>
+        <li>Conocimiento operativo tácito concentrado en la Gerencia.</li>
+      </ul>
+      <p>Estos activos permiten mantener canales familiares y reducir la resistencia durante la transición.</p>
+    </article>
+  </PlanPanel>
 
-  tabs.forEach((tab, i) => {
-    tab.addEventListener('click', () => activar(tab.dataset.panel!));
-    tab.addEventListener('keydown', (e) => {
-      if (!['ArrowLeft', 'ArrowRight', 'Home', 'End'].includes(e.key)) return;
-      e.preventDefault();
+  <PlanPanel id="herramientas" n={2} titulo="Herramientas y técnicas" sub="Métodos empleados para analizar, clasificar y planificar la participación.">
+    <article class="card">
+      <h3>2.1 Recopilación de datos: estudios comparativos</h3>
+      <p>El estudio utiliza la comparación de alternativas ya documentada:</p>
+      <div class="grid">
+        <div class="mini"><strong>BI a medida</strong>Base de datos relacional, ETL y dashboard Power BI.</div>
+        <div class="mini"><strong>Odoo Community directo</strong>Implementación del ERP desde el inicio.</div>
+        <div class="mini"><strong>Ecosistema no-code</strong>Sheets y AppSheet como solución móvil ligera.</div>
+        <div class="mini positivo">
+          <strong>Transformación por fases</strong>Piloto inicial, Odoo y analítica con gates de aprobación.
+        </div>
+      </div>
+      <p>
+        Para el involucramiento, la comparación muestra que el enfoque progresivo reduce la fricción inicial, permite
+        validar conectividad y datos, evita exponer al Socio a versiones inestables y da a la Gerencia capacidad de
+        aprobación antes de cada transición.
+      </p>
+      <p>También se comparan los hallazgos de las tres sesiones para confirmar expectativas, restricciones y actitudes.</p>
+    </article>
 
-      let j = i;
-      if (e.key === 'ArrowRight') j = (i + 1) % tabs.length;
-      if (e.key === 'ArrowLeft') j = (i - 1 + tabs.length) % tabs.length;
-      if (e.key === 'Home') j = 0;
-      if (e.key === 'End') j = tabs.length - 1;
+    <article class="card">
+      <h3>2.2 Análisis de datos</h3>
+      <h4>Análisis de supuestos y restricciones</h4>
+      <p>El supuesto principal es la disponibilidad semanal de la Gerencia. Las restricciones son:</p>
+      <ul>
+        <li>No interrumpir la producción.</li>
+        <li>No reemplazar abruptamente Excel.</li>
+        <li>Operar y presentar resultados en celulares.</li>
+        <li>Trabajar bajo conectividad inestable.</li>
+        <li>Considerar la temporada alta.</li>
+        <li>Presentar al Socio únicamente versiones verificadas.</li>
+        <li>Conservar y proteger los datos existentes.</li>
+      </ul>
 
-      tabs[j].focus();
-      activar(tabs[j].dataset.panel!);
-    });
-  });
+      <h4>Análisis de causa raíz</h4>
+      <p>La causa raíz del riesgo de involucramiento es la fragmentación de la información:</p>
+      <ul>
+        <li>La Gerencia no conoce con precisión la ganancia mensual porque los datos están aislados.</li>
+        <li>El Socio no sabe anticipadamente qué producir por falta de comunicación estandarizada.</li>
+        <li>Ventas no puede confirmar existencias sin consultar manualmente a la Gerencia.</li>
+        <li>Empaque recibe información sin un flujo integrado.</li>
+        <li>Los errores generan pedidos incompletos y dobles envíos.</li>
+      </ul>
+      <p>
+        La resistencia no se interpreta solamente como rechazo tecnológico, sino como consecuencia de la pérdida previa
+        de datos, la ausencia de procedimientos y la falta de confianza en la información.
+      </p>
+    </article>
 
-  const inicial = location.hash.slice(1);
-  activar(panels.some((p) => p.id === inicial) ? inicial : 'entradas', false);
-</script>
+    <article class="card">
+      <h3>2.3 Toma de decisiones: priorización y clasificación</h3>
+      <div class="grid">
+        <div class="mini riesgo">
+          <strong>Prioridad 1 · Gestionar de cerca</strong>
+          Gerencia General y Socio de Producción. Concentran el poder de decisión y el riesgo de bloqueo.
+        </div>
+        <div class="mini acuerdo">
+          <strong>Prioridad 2 · Mantener informados</strong>
+          Personal de Ventas, Personal de Empaque y Clientes Mayoristas. Son relevantes para la adopción o la percepción
+          de mejora.
+        </div>
+        <div class="mini positivo">
+          <strong>Prioridad 3 · Monitorear</strong>
+          Motorizado, Taller Alterno y Proveedores. Su impacto es indirecto y no requieren participación continua en las
+          decisiones.
+        </div>
+      </div>
+    </article>
+
+    <article class="card">
+      <h3>2.4 Representación de datos</h3>
+      <h4>Mapeo mental</h4>
+      <p>El proyecto se ubica en el centro y los interesados se organizan en tres ramas:</p>
+      <div class="mapa">
+        <div class="rama">
+          <h4>Dirección y decisión</h4>
+          <p>
+            <strong>Gerencia:</strong> patrocinio, validación, temor a perder datos, preferencia móvil y ahorro de tiempo.
+          </p>
+          <p><strong>Socio:</strong> autoridad operativa, continuidad del taller y resistencia ante errores.</p>
+        </div>
+        <div class="rama">
+          <h4>Uso y adopción</h4>
+          <p><strong>Ventas:</strong> consulta móvil, registro, stock, metas y predisposición tecnológica.</p>
+          <p><strong>Empaque:</strong> claridad de órdenes, reducción de reprocesos e inducción.</p>
+        </div>
+        <div class="rama">
+          <h4>Impacto indirecto</h4>
+          <p><strong>Clientes:</strong> exactitud y pedidos completos.</p>
+          <p><strong>Motorizado:</strong> reducción de dobles viajes.</p>
+          <p><strong>Taller alterno/proveedores:</strong> coordinación y consolidación de registros.</p>
+        </div>
+      </div>
+
+      <h4>Matriz de evaluación de la participación</h4>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Interesado</th><th>Nivel actual</th><th>Nivel deseado</th><th>Estrategia</th></tr></thead>
+          <tbody>
+            <tr><td>Gerencia General</td><td>Partidario con reservas</td><td>Líder</td><td>Gestionar de cerca</td></tr>
+            <tr><td>Socio de Producción</td><td>Reacio</td><td>Partidario</td><td>Gestionar de cerca</td></tr>
+            <tr><td>Personal de Ventas</td><td>Partidario</td><td>Partidario</td><td>Mantener y consolidar</td></tr>
+            <tr><td>Personal de Empaque</td><td>Desconocedor</td><td>Partidario informado</td><td>Mantener informado</td></tr>
+            <tr><td>Clientes Mayoristas</td><td>Neutral</td><td>Partidario indirecto</td><td>Mantener informados</td></tr>
+            <tr><td>Motorizado</td><td>Neutral</td><td>Partidario indirecto</td><td>Monitorear</td></tr>
+            <tr><td>Taller Alterno / Proveedores</td><td>Neutral</td><td>Neutral</td><td>Monitorear</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </article>
+
+    <article class="card">
+      <h3>2.5 Reuniones</h3>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Reunión</th><th>Modalidad</th><th>Fecha</th><th>Resultado principal</th></tr></thead>
+          <tbody>
+            <tr><td>Sesión 1</td><td>Google Meet</td><td>21/04/2026</td><td>Expectativas, temor a perder datos y preferencia por celular.</td></tr>
+            <tr><td>Sesión 2</td><td>Presencial en el taller</td><td>04/05/2026</td><td>Resistencia del Socio, perfil de Ventas e infraestructura.</td></tr>
+            <tr><td>Sesión 3</td><td>Entrevista de profundización</td><td>14/05/2026</td><td>Métricas de pedidos, dobles envíos y tiempo de conciliación.</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p>
+        Durante el proyecto se programan reuniones semanales con la Gerencia, conversaciones quincenales o por hito con
+        el Socio, demostraciones por iteración con Ventas, talleres cortos para Empaque y validaciones vinculadas con los
+        gates.
+      </p>
+    </article>
+  </PlanPanel>
+
+  <PlanPanel id="salidas" n={3} titulo="Salidas" sub="Plan de involucramiento y acciones definidas para cada interesado.">
+    <article class="card">
+      <h3>3.1 Plan de Involucramiento de los Interesados</h3>
+      <p>
+        El plan establece las acciones para trasladar a cada interesado desde su nivel actual hacia el nivel requerido,
+        mantener a la Gerencia como líder de la adopción y reducir la resistencia del Socio de Producción.
+      </p>
+      <div class="note">
+        <strong>Objetivo:</strong> promover una participación gradual, práctica y centrada en beneficios operativos, de
+        acuerdo con el poder, interés, actitud y capacidad de influencia de cada actor.
+      </div>
+    </article>
+
+    <article class="card">
+      <h3>3.2 Plan de acción</h3>
+      <div class="table-wrap">
+        <table class="acciones">
+          <thead>
+            <tr>
+              <th>Interesado</th><th>Objetivo</th><th>Acciones</th><th>Comunicación</th><th>Frecuencia</th>
+              <th>Responsable</th><th>Evidencia / indicador</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Gerencia General</td>
+              <td>Pasar de partidario con reservas a líder.</td>
+              <td>Demostrar ahorro de tiempo, visibilidad de resultados, respaldos y transición segura; solicitar validaciones y decisiones.</td>
+              <td>WhatsApp y reunión presencial o virtual.</td>
+              <td>Semanal.</td>
+              <td>Equipo del proyecto.</td>
+              <td>Participación en al menos 80 % de reuniones; validaciones y percepción positiva sobre la integridad.</td>
+            </tr>
+            <tr>
+              <td>Socio de Producción</td>
+              <td>Pasar de reacio a partidario.</td>
+              <td>Presentar versiones estables, ejecutar pruebas previas, mostrar continuidad e involucrarlo en validaciones puntuales.</td>
+              <td>Conversación breve presencial.</td>
+              <td>Quincenal o por hito.</td>
+              <td>Líder del proyecto.</td>
+              <td>Reducción progresiva de objeciones y aprobación de pruebas operativas.</td>
+            </tr>
+            <tr>
+              <td>Personal de Ventas</td>
+              <td>Mantener y consolidar su condición de partidario.</td>
+              <td>Realizar demostraciones móviles, pruebas breves y visualización de stock y metas.</td>
+              <td>Celular y demostración en sitio.</td>
+              <td>Por iteración.</td>
+              <td>Equipo funcional.</td>
+              <td>Uso efectivo del sistema en celular desde el piloto.</td>
+            </tr>
+            <tr>
+              <td>Personal de Empaque</td>
+              <td>Pasar de desconocedor a participante informado.</td>
+              <td>Explicar beneficios, mostrar reducción de reprocesos y capacitar en lectura de órdenes.</td>
+              <td>Taller corto presencial.</td>
+              <td>Por necesidad.</td>
+              <td>Equipo del proyecto.</td>
+              <td>Participación en la inducción y comprensión del flujo de órdenes.</td>
+            </tr>
+            <tr>
+              <td>Clientes Mayoristas</td>
+              <td>Mejorar su percepción del servicio.</td>
+              <td>Comunicar mejoras mediante la atención habitual y verificar pedidos completos y exactitud del stock.</td>
+              <td>Atención comercial habitual.</td>
+              <td>Según avance.</td>
+              <td>Gerencia.</td>
+              <td>Disminución de pedidos incompletos respecto de las nueve ocurrencias mensuales.</td>
+            </tr>
+            <tr>
+              <td>Motorizado</td>
+              <td>Favorecer una percepción positiva indirecta.</td>
+              <td>Mejorar la consistencia de pedidos y reducir dobles viajes; no participa en decisiones del sistema.</td>
+              <td>Comunicación operativa habitual.</td>
+              <td>Según operación.</td>
+              <td>Gerencia.</td>
+              <td>Reducción de viajes adicionales y sobrecostos por incidentes.</td>
+            </tr>
+            <tr>
+              <td>Taller Alterno / Proveedores</td>
+              <td>Mantener seguimiento puntual.</td>
+              <td>Considerar sus registros y coordinación dentro de la consolidación de información.</td>
+              <td>Canal habitual de coordinación.</td>
+              <td>No definida en la documentación actual.</td>
+              <td>No definido en la documentación actual.</td>
+              <td>Registros del taller alterno considerados en la integración.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </article>
+
+    <article class="card">
+      <h3>3.3 Seguimiento del plan</h3>
+      <div class="grid">
+        <div class="mini"><strong>Asistencia</strong>Gerencia y Socio participan en al menos el 80 % de las reuniones programadas.</div>
+        <div class="mini"><strong>Aceptación</strong>Se registran las objeciones del Socio en cada demostración y su evolución.</div>
+        <div class="mini"><strong>Adopción</strong>Ventas utiliza el sistema móvil y Empaque participa en las inducciones.</div>
+        <div class="mini"><strong>Confianza</strong>La Gerencia valida la integridad de la información y las decisiones por gate.</div>
+        <div class="mini"><strong>Resultado operativo</strong>Se mide la disminución frente a la línea base de nueve pedidos incompletos por mes.</div>
+        <div class="mini"><strong>Riesgos</strong>Se observan incidentes de pérdida de datos, rechazo y percepción de vigilancia.</div>
+      </div>
+
+      <h4>Situaciones que requieren revisión</h4>
+      <ul>
+        <li>Incorporación de un nuevo interesado.</li>
+        <li>Cambio en el poder, interés o actitud de un interesado.</li>
+        <li>Presentación de un incidente relevante.</li>
+        <li>Aprobación de un cambio que afecte la operación.</li>
+        <li>Llegada a uno de los gates del proyecto.</li>
+      </ul>
+    </article>
+
+    <div class="note">
+      <strong>Observación de consistencia:</strong> el blog declara seis interesados formales entre SH-01 y SH-06, pero
+      también incluye a Taller Alterno / Proveedores. Este último se mantiene como actor complementario porque la
+      documentación actual no le asigna un código SH.
+    </div>
+  </PlanPanel>
+</PlanDireccion>
 
 <style>
-  .crumbs {
-    font-size: 13px;
-    color: var(--muted);
-    margin-bottom: 10px;
-  }
-
-  .crumbs a {
-    color: var(--muted);
-  }
-
-  h1 {
-    margin: 12px 0 8px;
-    padding-left: 12px;
-    border-left: 4px solid var(--d-int);
-  }
-
-  .lead {
-    color: var(--muted);
-    font-size: 16px;
-    max-width: 72ch;
-  }
-
-  .meta {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 6px;
-    margin-top: 12px;
-  }
-
-  .meta span {
-    font-size: 12px;
-    font-weight: 600;
-    padding: 3px 10px;
-    border-radius: 999px;
-    border: 1px solid var(--line);
-    background: var(--surface);
-  }
-
-  /* Barra de pestañas: queda pegada bajo el header (56px) al hacer scroll */
-  .tabs {
-    position: sticky;
-    top: 56px;
-    z-index: 10;
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 8px;
-    margin: 20px 0 0;
-    padding: 10px 0;
-    background: var(--bg);
-    border-bottom: 1px solid var(--line);
-  }
-
-  .tab {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 8px;
-    padding: 9px 12px;
-    border: 1px solid var(--line);
-    border-radius: 10px;
-    background: var(--surface);
-    color: var(--muted);
-    font: inherit;
-    font-weight: 600;
-  }
-
-  .tab:hover {
-    color: var(--text);
-    border-color: var(--d-int);
-  }
-
-  .tab[aria-selected="true"] {
-    background: var(--d-int);
-    border-color: var(--d-int);
-    color: var(--o-int);
-  }
-
-  .tab-num {
-    display: grid;
-    place-items: center;
-    flex: none;
-    width: 24px;
-    height: 24px;
-    border-radius: 50%;
-    font-size: 12px;
-    font-weight: 800;
-    background: color-mix(in srgb, var(--d-int) 15%, var(--surface));
-    color: var(--d-int);
-  }
-
-  .tab[aria-selected="true"] .tab-num {
-    background: var(--o-int);
-    color: var(--d-int);
-  }
-
-  /* El contenido empieza justo bajo la barra */
-  .contenido {
-    margin-top: 0;
-    border-top: 0;
-  }
-
-  .sub {
-    color: var(--muted);
-    margin-top: -4px;
-  }
-
-  .card {
-    margin: 14px 0;
-    padding: 16px 18px;
-    background: var(--surface);
-    border: 1px solid var(--line);
-    border-radius: 12px;
-  }
-
-  .card h3 {
-    margin: 0 0 10px;
-    padding-bottom: 8px;
-    border-bottom: 1px solid var(--line);
-  }
-
-  .card h4 {
-    font-size: 14px;
-    margin: 16px 0 4px;
-  }
-
-  .card p:last-child,
-  .card ul:last-child {
-    margin-bottom: 0;
-  }
-
-  .grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-    gap: 10px;
-    margin: 12px 0;
-  }
-
-  .mini {
-    padding: 12px;
-    font-size: 14px;
-    background: var(--surface2);
-    border: 1px solid var(--line);
-    border-radius: 10px;
-  }
-
-  .mini strong {
-    display: block;
-    margin-bottom: 4px;
-  }
-
-  .mini p {
-    margin: 6px 0 0;
-  }
-
-  .riesgo,
-  .acuerdo,
-  .positivo {
-    border-left: 4px solid var(--c);
-    background: color-mix(in srgb, var(--c) 8%, var(--surface));
-  }
-
-  .riesgo { --c: var(--d-rec); }
-  .acuerdo { --c: var(--d-rie); }
-  .positivo { --c: var(--d-fin); }
-
-  .note {
-    margin: 12px 0;
-    padding: 12px 14px;
-    font-size: 14px;
-    border: 1px solid var(--line);
-    border-left: 4px solid var(--accent);
-    border-radius: 10px;
-    background: color-mix(in srgb, var(--accent) 7%, var(--surface));
-  }
-
   .gates {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
@@ -777,27 +506,18 @@ const secciones = [
     padding: 12px;
     font-size: 14px;
     border: 1px solid var(--line);
-    border-top: 3px solid var(--d-int);
+    border-top: 3px solid var(--plan);
     border-radius: 10px;
     background: var(--surface2);
   }
 
   .rama h4 {
     margin-top: 0;
-    color: var(--d-int);
+    color: var(--plan);
   }
 
   .rama p {
     margin: 6px 0 0;
-  }
-
-  .table-wrap {
-    overflow-x: auto;
-    margin: 12px 0;
-  }
-
-  .table-wrap table {
-    margin: 0;
   }
 
   .acciones {
@@ -809,18 +529,6 @@ const secciones = [
   }
 
   @media (max-width: 860px) {
-    .tab {
-      flex-direction: column;
-      gap: 4px;
-      padding: 6px;
-    }
-
-    .tab-txt {
-      font-size: 12px;
-      line-height: 1.2;
-      text-align: center;
-    }
-
     .gates,
     .mapa {
       grid-template-columns: 1fr;

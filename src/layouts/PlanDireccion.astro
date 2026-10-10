@@ -1,0 +1,135 @@
+---
+import Layout from './Layout.astro';
+import '../css/contenido.css';
+import '../css/plan.css';
+import { planDireccionPorId } from '../data/plan-direccion';
+
+interface Seccion {
+  id: string;
+  texto: string;
+}
+
+interface Props {
+  /** id del plan en PLANES_DIRECCION: de ahí salen el título y el color del dominio */
+  id: string;
+  lead: string;
+  meta?: string[];
+  /** Pestañas; cada id debe coincidir con el de un <PlanPanel> */
+  secciones?: Seccion[];
+  /** Clase extra en el contenedor, para variantes de una página */
+  class?: string;
+}
+
+const {
+  id,
+  lead,
+  meta = [],
+  secciones = [
+    { id: 'entradas', texto: 'Entradas' },
+    { id: 'herramientas', texto: 'Herramientas y técnicas' },
+    { id: 'salidas', texto: 'Salidas' },
+  ],
+  class: clase,
+} = Astro.props;
+
+const plan = planDireccionPorId(id);
+if (!plan) throw new Error(`Plan de dirección desconocido: ${id}`);
+---
+
+<Layout title={plan.nombre}>
+  <div
+    class:list={['plan', clase]}
+    style={`--plan: var(--d-${plan.dominio}); --plan-o: var(--o-${plan.dominio}); --tabs: ${secciones.length}`}
+  >
+    <div class="crumbs"><a href="/">Inicio</a> › Plan de dirección</div>
+
+    <h1 class="titulo">{plan.nombre}</h1>
+    <p class="lead">{lead}</p>
+    {
+      meta.length > 0 && (
+        <div class="meta">
+          {meta.map((m) => (
+            <span>{m}</span>
+          ))}
+        </div>
+      )
+    }
+
+    <slot name="cabecera" />
+
+    <nav class="tabs" role="tablist" aria-label="Secciones del plan">
+      {
+        secciones.map((s, i) => (
+          <button
+            class="tab"
+            id={`tab-${s.id}`}
+            type="button"
+            role="tab"
+            aria-selected={i === 0 ? 'true' : 'false'}
+            aria-controls={s.id}
+            data-panel={s.id}
+            tabindex={i === 0 ? 0 : -1}
+          >
+            <span class="tab-num">{i + 1}</span>
+            <span class="tab-txt">{s.texto}</span>
+          </button>
+        ))
+      }
+    </nav>
+
+    <div class="contenido">
+      <slot />
+    </div>
+  </div>
+</Layout>
+
+<script>
+  const raiz = document.querySelector<HTMLElement>('.plan')!;
+  const barra = raiz.querySelector<HTMLElement>('.tabs')!;
+  const contenido = raiz.querySelector<HTMLElement>('.contenido')!;
+  const tabs = Array.from(barra.querySelectorAll<HTMLButtonElement>('[role="tab"]'));
+  const panels = Array.from(contenido.querySelectorAll<HTMLElement>(':scope > [role="tabpanel"]'));
+
+  function activar(panelId: string, actualizarHash = true) {
+    const elegida = tabs.find((t) => t.dataset.panel === panelId) ?? tabs[0];
+
+    tabs.forEach((t) => {
+      const activa = t === elegida;
+      t.setAttribute('aria-selected', String(activa));
+      t.tabIndex = activa ? 0 : -1;
+    });
+    panels.forEach((p) => {
+      p.hidden = p.id !== elegida.dataset.panel;
+    });
+
+    if (!actualizarHash) return;
+    history.replaceState(null, '', `#${elegida.dataset.panel}`);
+
+    // Si la barra ya está pegada arriba, se vuelve al inicio del nuevo panel
+    const top = parseFloat(getComputedStyle(barra).top);
+    if (barra.getBoundingClientRect().top <= top + 1) {
+      const inicio = contenido.getBoundingClientRect().top + scrollY - top - barra.offsetHeight;
+      scrollTo({ top: Math.min(scrollY, inicio) });
+    }
+  }
+
+  tabs.forEach((tab, i) => {
+    tab.addEventListener('click', () => activar(tab.dataset.panel!));
+    tab.addEventListener('keydown', (e) => {
+      if (!['ArrowLeft', 'ArrowRight', 'Home', 'End'].includes(e.key)) return;
+      e.preventDefault();
+
+      let j = i;
+      if (e.key === 'ArrowRight') j = (i + 1) % tabs.length;
+      if (e.key === 'ArrowLeft') j = (i - 1 + tabs.length) % tabs.length;
+      if (e.key === 'Home') j = 0;
+      if (e.key === 'End') j = tabs.length - 1;
+
+      tabs[j].focus();
+      activar(tabs[j].dataset.panel!);
+    });
+  });
+
+  const inicial = location.hash.slice(1);
+  activar(tabs.some((t) => t.dataset.panel === inicial) ? inicial : tabs[0].dataset.panel!, false);
+</script>

@@ -1,0 +1,245 @@
+/*
+  Base compartida de los planes de dirección (layout PlanDireccion.astro).
+
+  Los selectores van como `:where(.plan) .clase`: pesan lo mismo que una sola clase, así
+  que el <style> de cada página gana con un selector simple (`.card { … }`), y aun así
+  superan a las reglas por etiqueta de reset.css y theme.css.
+
+  Variables que la página puede redefinir:
+    --plan    color del dominio (pestaña activa, borde del título)
+    --plan-o  color del texto sobre --plan
+    --tabs    número de columnas de la barra de pestañas
+*/
+
+/* Cabecera */
+:where(.plan) .crumbs {
+  font-size: 13px;
+  color: var(--muted);
+  margin-bottom: 10px;
+}
+
+:where(.plan) .crumbs a {
+  color: var(--muted);
+}
+
+:where(.plan) .titulo {
+  margin: 12px 0 8px;
+  padding-left: 12px;
+  border-left: 4px solid var(--plan);
+}
+
+:where(.plan) .lead {
+  color: var(--muted);
+  font-size: 16px;
+  max-width: 72ch;
+}
+
+:where(.plan) .meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 12px;
+}
+
+:where(.plan) .meta span {
+  font-size: 12px;
+  font-weight: 600;
+  padding: 3px 10px;
+  border-radius: 999px;
+  border: 1px solid var(--line);
+  background: var(--surface);
+}
+
+/* Barra de pestañas: queda pegada bajo el header (56px) al hacer scroll */
+:where(.plan) .tabs {
+  position: sticky;
+  top: 56px;
+  z-index: 10;
+  display: grid;
+  grid-template-columns: repeat(var(--tabs, 3), 1fr);
+  gap: 8px;
+  margin: 20px 0 0;
+  padding: 10px 0;
+  background: var(--bg);
+  border-bottom: 1px solid var(--line);
+}
+
+:where(.plan) .tab {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 9px 12px;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  background: var(--surface);
+  color: var(--muted);
+  font: inherit;
+  font-weight: 600;
+}
+
+:where(.plan) .tab:hover {
+  color: var(--text);
+  border-color: var(--plan);
+}
+
+:where(.plan) .tab[aria-selected="true"] {
+  background: var(--plan);
+  border-color: var(--plan);
+  color: var(--plan-o);
+}
+
+:where(.plan) .tab-num {
+  display: grid;
+  place-items: center;
+  flex: none;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  font-size: 12px;
+  font-weight: 800;
+  background: color-mix(in srgb, var(--plan) 15%, var(--surface));
+  color: var(--plan);
+}
+
+:where(.plan) .tab[aria-selected="true"] .tab-num {
+  background: var(--plan-o);
+  color: var(--plan);
+}
+
+/* El contenido empieza justo bajo la barra (pisa a contenido.css) */
+.plan .contenido {
+  margin-top: 0;
+  border-top: 0;
+}
+
+/* Contenido de los paneles */
+:where(.plan) .sub {
+  color: var(--muted);
+  margin-top: -4px;
+}
+
+:where(.plan) .card {
+  margin: 14px 0;
+  padding: 16px 18px;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 12px;
+}
+
+:where(.plan) .card h3 {
+  margin: 0 0 10px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid var(--line);
+}
+
+:where(.plan) .card h4 {
+  font-size: 14px;
+  margin: 16px 0 4px;
+}
+
+:where(.plan) .card p:last-child,
+:where(.plan) .card ul:last-child,
+:where(.plan) .card ol:last-child {
+  margin-bottom: 0;
+}
+
+:where(.plan) .grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 10px;
+  margin: 12px 0;
+}
+
+:where(.plan) .mini {
+  padding: 12px;
+  font-size: 14px;
+  background: var(--surface2);
+  border: 1px solid var(--line);
+  border-radius: 10px;
+}
+
+:where(.plan) .mini > strong {
+  display: block;
+  margin-bottom: 4px;
+}
+
+:where(.plan) .mini p {
+  margin: 6px 0 0;
+}
+
+/* Variantes con color: --c lo fija cada variante */
+:where(.plan) :is(.riesgo, .acuerdo, .positivo, .info) {
+  border-left: 4px solid var(--c);
+  background: color-mix(in srgb, var(--c) 8%, var(--surface));
+}
+
+:where(.plan) .riesgo { --c: var(--d-rec); }
+:where(.plan) .acuerdo { --c: var(--d-rie); }
+:where(.plan) .positivo { --c: var(--d-fin); }
+:where(.plan) .info { --c: var(--d-alc); }
+
+:where(.plan) .note {
+  margin: 12px 0;
+  padding: 12px 14px;
+  font-size: 14px;
+  border: 1px solid var(--line);
+  border-left: 4px solid var(--accent);
+  border-radius: 10px;
+  background: color-mix(in srgb, var(--accent) 7%, var(--surface));
+}
+
+:where(.plan) .fuente {
+  font-size: 13px;
+  color: var(--muted);
+}
+
+/* Etiqueta pequeña; el color sale de --c (usar junto a .riesgo, .acuerdo, .positivo o .info) */
+:where(.plan) .badge {
+  display: inline-block;
+  margin-left: 4px;
+  padding: 1px 8px;
+  border-radius: 999px;
+  font-size: 11px;
+  font-weight: 700;
+  white-space: nowrap;
+  color: var(--c, var(--muted));
+  background: color-mix(in srgb, var(--c, var(--muted)) 14%, var(--surface));
+}
+
+:where(.plan) .badge:is(.riesgo, .acuerdo, .positivo, .info) {
+  border-left: 0;
+}
+
+/* Tablas */
+:where(.plan) .table-wrap {
+  overflow-x: auto;
+  margin: 12px 0;
+}
+
+:where(.plan) .table-wrap table {
+  margin: 0;
+}
+
+:where(.plan) table.ancha {
+  min-width: 820px;
+}
+
+:where(.plan) table.ids td:first-child {
+  white-space: nowrap;
+  font-weight: 700;
+}
+
+@media (max-width: 860px) {
+  :where(.plan) .tab {
+    flex-direction: column;
+    gap: 4px;
+    padding: 6px;
+  }
+
+  :where(.plan) .tab-txt {
+    font-size: 12px;
+    line-height: 1.2;
+    text-align: center;
+  }
+}
