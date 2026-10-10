@@ -8,9 +8,18 @@ import MenuButton from './menu-button.vue';
   <span class="ed">PMBOK® 8.ª ed.</span>
   <span class="now">Etapa actual: <b>Ejecución</b></span>
 </header>
+<div class="placeholder">
+</div>
 
-<style>
+<style scoped>
+  .placeholder {
+    height: 56px;
+  }
   header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
     height: 56px;
     background: var(--surface);
     border-bottom: 1px solid var(--line);
