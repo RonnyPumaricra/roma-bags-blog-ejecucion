@@ -1,0 +1,246 @@
+/* Dashboard de monitoreo de las comunicaciones (5.7); complementa monitoreo.css */
+.comunicaciones .barra {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+}
+
+.comunicaciones .conclusion {
+  margin: -6px 0 0;
+  font-weight: 600;
+}
+
+.comunicaciones .kpi .titulo strong {
+  color: var(--text);
+}
+
+/* Paneles plegables */
+.comunicaciones details > summary {
+  margin-bottom: 0;
+  cursor: pointer;
+  list-style: none;
+}
+
+.comunicaciones details > summary::-webkit-details-marker {
+  display: none;
+}
+
+.comunicaciones details > summary h2::before {
+  content: "▸";
+  display: inline-block;
+  margin-right: 8px;
+  color: var(--muted);
+  transition: transform .15s;
+}
+
+.comunicaciones details[open] > summary {
+  margin-bottom: 12px;
+}
+
+.comunicaciones details[open] > summary h2::before {
+  transform: rotate(90deg);
+}
+
+/* Franja de semanas: una celda por informe programado */
+.comunicaciones .franja {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(40px, 1fr));
+  gap: 6px;
+}
+
+.comunicaciones .celda {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 40px;
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  font: inherit;
+  font-size: 13px;
+  font-variant-numeric: tabular-nums;
+  color: var(--muted);
+  background: var(--surface2);
+}
+
+.comunicaciones button.celda:hover {
+  filter: brightness(1.08);
+}
+
+.comunicaciones .celda.cumple {
+  border-color: transparent;
+  background: var(--ok);
+  color: var(--o-fin);
+  font-weight: 700;
+}
+
+.comunicaciones .celda.no_cumple {
+  border-color: transparent;
+  background: var(--bad);
+  color: var(--o-rec);
+  font-weight: 700;
+}
+
+.comunicaciones .celda.vencida {
+  border: 1px dashed var(--warn);
+  color: var(--text);
+}
+
+.comunicaciones .leyenda {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px 16px;
+  margin: 12px 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.comunicaciones .leyenda li {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin: 0;
+}
+
+.comunicaciones .leyenda .celda {
+  min-height: 0;
+  width: 14px;
+  height: 14px;
+  border-radius: 4px;
+}
+
+/* Gates */
+.comunicaciones .gates {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 10px;
+}
+
+.comunicaciones .gate {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 8px;
+  padding: 12px;
+  border: 1px solid var(--line);
+  border-top: 3px solid var(--line);
+  border-radius: 10px;
+  background: var(--surface2);
+}
+
+.comunicaciones .gate.cumple { border-top-color: var(--ok); }
+.comunicaciones .gate.no_cumple { border-top-color: var(--bad); }
+.comunicaciones .gate.vencida { border-top: 1px dashed var(--warn); }
+
+.comunicaciones .gate .cab {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.comunicaciones .gate dl {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 2px 12px;
+  margin: 0;
+  font-size: 13px;
+}
+
+.comunicaciones .gate dt {
+  color: var(--muted);
+}
+
+.comunicaciones .gate dd {
+  margin: 0;
+  font-weight: 600;
+}
+
+.comunicaciones .enlace {
+  padding: 0;
+  border: 0;
+  background: none;
+  font: inherit;
+  font-size: 12px;
+  color: var(--accent);
+}
+
+.comunicaciones .enlace:hover {
+  text-decoration: underline;
+}
+
+.comunicaciones .pasos {
+  margin: 0;
+  padding-left: 20px;
+  font-size: 14px;
+}
+
+.comunicaciones .pasos li + li {
+  margin-top: 6px;
+}
+
+/* Popup del informe */
+.comunicaciones dialog.informe {
+  width: min(820px, calc(100vw - 32px));
+  max-height: calc(100vh - 48px);
+  padding: 0;
+}
+
+.comunicaciones .informe-cab {
+  position: sticky;
+  top: 0;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 10px 16px;
+  padding: 16px 20px 12px;
+  border-bottom: 1px solid var(--line);
+  background: var(--surface);
+}
+
+.comunicaciones .informe-cab h3 {
+  margin: 0 0 2px;
+}
+
+.comunicaciones .informe-cab p {
+  margin: 0;
+}
+
+.comunicaciones .informe-botones {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.comunicaciones .informe-botones .btn {
+  display: inline-flex;
+  align-items: center;
+  min-height: 36px;
+  font-size: 13px;
+  text-decoration: none;
+}
+
+.comunicaciones .informe-cuerpo {
+  padding: 4px 20px 16px;
+}
+
+/* El cuerpo del .md hereda los estilos de .contenido; su título se ajusta al tamaño del popup */
+.informe-cuerpo h1 {
+  font-size: 20px;
+  margin: 16px 0 10px;
+}
+
+.informe-cuerpo h2 {
+  margin-top: 20px;
+}
+
+@media print {
+  html.imprimiendo body > :not(#impresion) {
+    display: none !important;
+  }
+
+  /* Siempre en claro, aunque la página esté en modo oscuro */
+  html:root.imprimiendo {
+    --bg: #fff; --surface: #fff; --surface2: #fff; --text: #1c1c1e; --muted: #6b6b72; --line: #d0d0ca;
+  }
+}

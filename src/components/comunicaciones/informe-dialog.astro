@@ -1,0 +1,36 @@
+---
+import { render, type CollectionEntry } from 'astro:content';
+
+interface Props {
+  entrada: CollectionEntry<'informes'> | CollectionEntry<'gates'>;
+  /** semana-01, gate-1: id del popup, ancla de la URL y nombre del .md */
+  slug: string;
+  titulo: string;
+  /** Línea bajo el título: fecha, estado, evidencia */
+  meta: string;
+  evidencia?: string;
+}
+
+const { entrada, slug, titulo, meta, evidencia } = Astro.props;
+const { Content } = await render(entrada);
+---
+
+<dialog class="informe" id={`informe-${slug}`} data-slug={slug} aria-labelledby={`informe-${slug}-titulo`}>
+  <div class="informe-cab">
+    <div>
+      <h3 id={`informe-${slug}-titulo`}>{titulo}</h3>
+      <p class="muted">
+        {meta}
+        {evidencia && <> · <a href={evidencia} target="_blank" rel="noopener">Evidencia en Drive</a></>}
+      </p>
+    </div>
+    <div class="informe-botones">
+      <button type="button" class="btn sec" data-imprimir>Imprimir / PDF</button>
+      <a class="btn sec" href={`/proceso/5.7/${slug}.md`} download={`${slug}.md`}>Descargar .md</a>
+      <button type="button" class="btn" data-cerrar autofocus>Cerrar</button>
+    </div>
+  </div>
+  <div class="informe-cuerpo">
+    <Content />
+  </div>
+</dialog>

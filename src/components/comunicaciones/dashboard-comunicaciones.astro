@@ -1,0 +1,354 @@
+---
+import { getCollection } from 'astro:content';
+import { formatearFecha } from '../../data/fechas';
+import {
+  DECISIONES, FECHA_CORTE, GATES, KPIS, SEMANAS, asistenciaGate, estadoGate, estadoSemana, faseActual, percepcionGate,
+  registro, resumenKpis, slugGate, slugSemana, valorTexto, type EstadoCelda,
+} from '../../data/monitoreo-comunicaciones';
+import '../monitoreo/monitoreo.css';
+import './comunicaciones.css';
+import InformeDialog from './informe-dialog.astro';
+
+const informes = (await getCollection('informes')).sort((a, b) => a.data.semana - b.data.semana);
+const gates = (await getCollection('gates')).sort((a, b) => a.data.gate - b.data.gate);
+
+// Un número de semana o de gate repetido haría que dos archivos compitan por la misma celda
+for (const [lista, campo] of [[informes.map((i) => i.data.semana), 'semana'], [gates.map((g) => g.data.gate), 'gate']] as const) {
+  const repetido = lista.find((n, i) => lista.indexOf(n) !== i);
+  if (repetido !== undefined) throw new Error(`Hay dos informes con ${campo}: ${repetido} en src/content/comunicaciones`);
+}
+
+const datosInformes = informes.map((i) => i.data);
+const datosGates = gates.map((g) => g.data);
+const resumen = resumenKpis(datosInformes, datosGates);
+const filas = registro(datosInformes, datosGates);
+
+const ESTADO_TEXTO: Record<EstadoCelda, string> = {
+  cumple: 'enviado a tiempo',
+  no_cumple: 'enviado tarde',
+  pendiente: 'aún no corresponde',
+  vencida: 'fecha pasada sin informe',
+};
+
+const semanas = SEMANAS.map((s) => {
+  const entrada = informes.find((i) => i.data.semana === s.semana);
+  return { ...s, entrada, estado: estadoSemana(s.fecha, entrada?.data) };
+});
+
+const gatesVista = GATES.map((g) => {
+  const entrada = gates.find((e) => e.data.gate === g.gate);
+  const perc = entrada ? percepcionGate(entrada.data) : null;
+  return {
+    ...g,
+    entrada,
+    estado: estadoGate(entrada?.data, g.fecha),
+    asistencia: entrada ? asistenciaGate(entrada.data) : null,
+    percepcion: perc,
+  };
+});
+
+const bajo = resumen.filter((r) => r.estado === 'no_cumple').map((r) => r.kpi.id);
+const sinDatos = resumen.filter((r) => r.estado === 'sin_datos').length;
+const conclusion = bajo.length
+  ? `Indicadores bajo la meta: ${bajo.join(', ')}.`
+  : sinDatos === resumen.length
+    ? 'Aún no hay informes: los indicadores se llenarán a medida que se publiquen.'
+    : `Todos los indicadores con datos cumplen su meta; ${sinDatos} esperan registros.`;
+
+const TONO = { cumple: 'ok', no_cumple: 'bad', sin_datos: '' };
+const pct = (v: number) => `${Math.round(v)} %`;
+const esEnlace = (s?: string) => !!s && /^https?:\/\//.test(s);
+---
+
+<div class="monitoreo comunicaciones">
+  <div class="barra">
+    <span class="pill info">Fase {faseActual()}</span>
+    <span class="muted">Corte: {formatearFecha(FECHA_CORTE)} · se recalcula al publicar</span>
+  </div>
+  <p class="conclusion">{conclusion}</p>
+
+  <section class="kpis" aria-label="Indicadores del plan">
+    {
+      resumen.map((r) => (
+        <div class={`kpi ${TONO[r.estado]}`}>
+          <div class="titulo">
+            <strong>{r.kpi.id}</strong> · {r.kpi.nombre}
+          </div>
+          <div class="valor num">{r.valor === null ? '—' : valorTexto(r.kpi, r.valor)}</div>
+          <div class="nota">
+            Meta {r.kpi.metaTexto} · {r.estado === 'sin_datos' ? 'sin registros' : r.base}
+          </div>
+        </div>
+      ))
+    }
+  </section>
+
+  <details class="panel" open>
+    <summary class="panel-h">
+      <div>
+        <h2>Informes semanales (K1)</h2>
+        <p>Del 28/09/2026 al 19/04/2027. Pulsa una semana con informe para abrirlo.</p>
+      </div>
+    </summary>
+    <div class="franja">
+      {
+        semanas.map((s) => {
+          const titulo = `Semana ${s.semana} · ${formatearFecha(s.fecha)} · ${ESTADO_TEXTO[s.estado]}`;
+          return s.entrada ? (
+            <button type="button" class={`celda ${s.estado}`} data-abrir={slugSemana(s.semana)} title={titulo} aria-label={titulo}>
+              {s.semana}
+            </button>
+          ) : (
+            <span class={`celda ${s.estado}`} data-fecha={s.fecha} title={titulo} aria-label={titulo}>
+              {s.semana}
+            </span>
+          );
+        })
+      }
+    </div>
+    <ul class="leyenda muted">
+      <li><span class="celda cumple"></span>A tiempo</li>
+      <li><span class="celda no_cumple"></span>Tarde</li>
+      <li><span class="celda vencida"></span>Fecha pasada sin informe</li>
+      <li><span class="celda pendiente"></span>Aún no corresponde</li>
+    </ul>
+  </details>
+
+  <details class="panel" open>
+    <summary class="panel-h">
+      <div>
+        <h2>Gates (K2 y K6)</h2>
+        <p>En la reunión de cada gate se miden la asistencia y la percepción de la comunicación.</p>
+      </div>
+    </summary>
+    <div class="gates">
+      {
+        gatesVista.map((g) => (
+          <article class={`gate ${g.estado}`} data-fecha={g.entrada ? undefined : g.fecha}>
+            <div class="cab">
+              <strong>
+                {g.id} · {g.fase}
+              </strong>
+              <span class="muted num">{formatearFecha(g.fecha)}</span>
+            </div>
+            {g.entrada ? (
+              <>
+                <span class={`pill ${DECISIONES[g.entrada.data.decision].tono}`}>{DECISIONES[g.entrada.data.decision].texto}</span>
+                <dl>
+                  <dt>Asistencia</dt>
+                  <dd class="num">{pct(g.asistencia!)}</dd>
+                  <dt>Percepción</dt>
+                  <dd class="num">{g.percepcion === null ? 'Sin encuesta' : `${String(Math.round(g.percepcion * 10) / 10).replace('.', ',')} / 5`}</dd>
+                </dl>
+                <button type="button" class="btn sec" data-abrir={slugGate(g.gate)}>
+                  Ver informe
+                </button>
+              </>
+            ) : (
+              <span class="pill estado-gate">{g.estado === 'vencida' ? 'Sin informe' : 'Pendiente'}</span>
+            )}
+          </article>
+        ))
+      }
+    </div>
+  </details>
+
+  <section class="panel">
+    <div class="panel-h">
+      <div>
+        <h2>Registro de comunicaciones</h2>
+        <p>Sale del frontmatter de cada informe; el cumplimiento se calcula con fechas y horas.</p>
+      </div>
+    </div>
+    {
+      filas.length ? (
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr><th>Fecha</th><th>KPI</th><th>Evento</th><th>Detalle</th><th>Cumple</th><th>Evidencia</th></tr>
+            </thead>
+            <tbody>
+              {filas.map((f) => (
+                <tr>
+                  <td class="num">{formatearFecha(f.fecha)}</td>
+                  <td>{f.kpi}</td>
+                  <td>
+                    {f.evento}
+                    <br />
+                    <button type="button" class="enlace" data-abrir={f.origen.slug}>{f.origen.texto}</button>
+                  </td>
+                  <td>{f.detalle}</td>
+                  <td>
+                    {f.cumple === null ? (
+                      <span class="pill">En plazo</span>
+                    ) : (
+                      <span class={`pill ${f.cumple ? 'ok' : 'bad'}`}>{f.cumple ? 'Sí' : 'No'}</span>
+                    )}
+                  </td>
+                  <td>{esEnlace(f.evidencia) ? <a href={f.evidencia} target="_blank" rel="noopener">Abrir</a> : (f.evidencia || '—')}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      ) : (
+        <p class="muted">Aún no hay registros.</p>
+      )
+    }
+  </section>
+
+  <section class="panel">
+    <div class="panel-h">
+      <div>
+        <h2>Cómo se verifica cada indicador</h2>
+        <p>
+          Fórmula, fuente y responsable según la <a href="/plan-direccion/gestion-comunicaciones#salidas">sección 3.10 del Plan de
+          gestión de las comunicaciones</a>.
+        </p>
+      </div>
+    </div>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>ID</th><th>Indicador</th><th>Meta</th><th>Fórmula</th><th>Fuente</th><th>Frecuencia</th><th>Responsable</th></tr>
+        </thead>
+        <tbody>
+          {
+            KPIS.map((k) => (
+              <tr>
+                <td>{k.id}</td>
+                <td><strong>{k.nombre}</strong></td>
+                <td>{k.metaTexto}</td>
+                <td>{k.formula}</td>
+                <td>{k.fuente}</td>
+                <td>{k.frecuencia}</td>
+                <td>{k.responsable}</td>
+              </tr>
+            ))
+          }
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section class="panel">
+    <div class="panel-h">
+      <div>
+        <h2>Cómo se actualiza</h2>
+        <p>El blog solo muestra lo que está en el repositorio; cada informe publicado recalcula los indicadores.</p>
+      </div>
+    </div>
+    <ol class="pasos">
+      <li>
+        <strong>Cada lunes:</strong> copiar <code>src/content/comunicaciones/informes/_plantilla.md</code> como
+        <code>semana-NN.md</code> y llenar <code>semana</code>, <code>fecha_envio</code>, <code>evidencia</code> y el cuerpo del
+        informe enviado por WhatsApp y Drive.
+      </li>
+      <li>
+        <strong>Durante la semana:</strong> agregar en ese archivo las <code>actas</code> (K3), <code>consultas</code> de la
+        Gerencia (K4) e <code>incidentes</code> críticos (K5) con sus fechas y horas.
+      </li>
+      <li>
+        <strong>Tras cada gate:</strong> copiar <code>gates/_plantilla.md</code> como <code>gate-N.md</code> con la decisión, la
+        asistencia (K2) y las respuestas de la mini-encuesta (K6).
+      </li>
+      <li>
+        <strong>Antes de publicar:</strong> <code>pnpm build</code> valida el frontmatter y se detiene indicando el archivo y el
+        campo con error.
+      </li>
+      <li><strong>Publicar:</strong> commit y despliegue del blog.</li>
+    </ol>
+  </section>
+
+  {
+    semanas.map((s) =>
+      s.entrada && (
+        <InformeDialog
+          entrada={s.entrada}
+          slug={slugSemana(s.semana)}
+          titulo={`Informe semanal ${String(s.semana).padStart(2, '0')}`}
+          meta={`Programado ${formatearFecha(s.fecha)} · enviado ${formatearFecha(s.entrada.data.fecha_envio)} (${ESTADO_TEXTO[s.estado]}) · ${s.entrada.data.elaborado_por}`}
+          evidencia={esEnlace(s.entrada.data.evidencia) ? s.entrada.data.evidencia : undefined}
+        />
+      ),
+    )
+  }
+  {
+    gatesVista.map((g) =>
+      g.entrada && (
+        <InformeDialog
+          entrada={g.entrada}
+          slug={slugGate(g.gate)}
+          titulo={`Informe del ${g.id} · ${g.fase}`}
+          meta={`${formatearFecha(g.entrada.data.fecha)} · ${DECISIONES[g.entrada.data.decision].texto} · asistencia ${pct(g.asistencia!)}`}
+          evidencia={esEnlace(g.entrada.data.evidencia) ? g.entrada.data.evidencia : undefined}
+        />
+      ),
+    )
+  }
+</div>
+
+<script>
+  const raiz = document.querySelector<HTMLElement>('.comunicaciones')!;
+  const dialogos = new Map(
+    Array.from(raiz.querySelectorAll<HTMLDialogElement>('dialog.informe'), (d) => [d.dataset.slug!, d]),
+  );
+
+  function abrir(slug: string) {
+    const d = dialogos.get(slug);
+    if (!d) return;
+    dialogos.forEach((o) => o.open && o.close());
+    d.showModal();
+    history.replaceState(null, '', `#${slug}`);
+  }
+
+  raiz.addEventListener('click', (e) => {
+    const boton = (e.target as HTMLElement).closest<HTMLElement>('[data-abrir]');
+    if (boton) abrir(boton.dataset.abrir!);
+  });
+
+  dialogos.forEach((d) => {
+    d.addEventListener('close', () => history.replaceState(null, '', location.pathname + location.search));
+    // Clic en el fondo: el destino es el propio <dialog>, no su contenido
+    d.addEventListener('click', (e) => e.target === d && d.close());
+    d.querySelector('[data-cerrar]')!.addEventListener('click', () => d.close());
+    d.querySelector('[data-imprimir]')!.addEventListener('click', () => imprimir(d));
+  });
+
+  // Se imprime una copia del informe como único hijo visible del body (ver comunicaciones.css)
+  function imprimir(d: HTMLDialogElement) {
+    const copia = document.createElement('div');
+    copia.id = 'impresion';
+    copia.className = 'contenido';
+    copia.append(d.querySelector('.informe-cuerpo')!.cloneNode(true));
+    document.body.append(copia);
+    document.documentElement.classList.add('imprimiendo');
+    const titulo = document.title;
+    document.title = d.dataset.slug!;
+    addEventListener(
+      'afterprint',
+      () => {
+        copia.remove();
+        document.documentElement.classList.remove('imprimiendo');
+        document.title = titulo;
+      },
+      { once: true },
+    );
+    print();
+  }
+
+  // El estado se calcula al publicar; si desde entonces ya pasó la fecha, la celda pasa a "sin informe"
+  const hoy = new Date().toLocaleDateString('en-CA', { timeZone: 'America/Lima' });
+  raiz.querySelectorAll<HTMLElement>('.pendiente[data-fecha]').forEach((el) => {
+    if (el.dataset.fecha! >= hoy) return;
+    el.classList.replace('pendiente', 'vencida');
+    if (el.title) {
+      el.title = el.title.replace('aún no corresponde', 'fecha pasada sin informe');
+      el.setAttribute('aria-label', el.title);
+    }
+    el.querySelector('.estado-gate')?.replaceChildren('Sin informe');
+  });
+
+  const inicial = location.hash.slice(1);
+  if (dialogos.has(inicial)) abrir(inicial);
+</script>

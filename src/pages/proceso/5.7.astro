@@ -1,0 +1,13 @@
+---
+import Proceso from '../../layouts/Proceso.astro';
+import DashboardComunicaciones from '../../components/comunicaciones/dashboard-comunicaciones.astro';
+---
+
+<Proceso frontmatter={{ id: '5.7', editado: '2026-10-10' }}>
+  <p>
+    Dashboard de monitoreo de las comunicaciones basado en el <a href="/plan-direccion/gestion-comunicaciones">Plan de gestión de las comunicaciones</a>:
+    los seis indicadores de la sección 3.10 calculados a partir de los informes semanales y de gate publicados en el
+    repositorio.
+  </p>
+  <DashboardComunicaciones />
+</Proceso>
