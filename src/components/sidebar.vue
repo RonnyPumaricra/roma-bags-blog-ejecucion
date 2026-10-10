@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { computed, onMounted } from 'vue';
 import { LINEAS_BASE } from '../data/lineas-base';
+import { PLANES_DIRECCION } from '../data/plan-direccion';
 import {
   AREAS, DOMINIOS, PROCESOS, procesoPorId,
   type AreaId,
@@ -20,6 +21,9 @@ const enlaces = [
 
 const enLineasBase = computed(() => ruta.value.startsWith('/lineas-base'));
 const lineasBaseAbiertas = computed(() => enLineasBase.value || ui.abiertos.includes('lineas-base'));
+
+const enPlanDireccion = computed(() => ruta.value.startsWith('/plan-direccion'));
+const planDireccionAbierto = computed(() => enPlanDireccion.value || ui.abiertos.includes('plan-direccion'));
 
 const filtrando = computed(() => hayFiltro());
 
@@ -74,6 +78,24 @@ onMounted(hidratar);
         >
           <i class="bar"></i>
           <span class="nm">{{ l.nombre }}</span>
+        </a>
+      </details>
+      <details
+        class="area"
+        :open="planDireccionAbierto"
+        @toggle="abrirGrupo('plan-direccion', ($event.target as HTMLDetailsElement).open)"
+      >
+        <summary>Plan de dirección</summary>
+        <a
+          v-for="p in PLANES_DIRECCION"
+          :key="p.id"
+          class="ti"
+          :class="{ on: ruta === `/plan-direccion/${p.id}` }"
+          :style="{ '--c': `var(--d-${p.dominio})` }"
+          :href="`/plan-direccion/${p.id}`"
+        >
+          <i class="bar"></i>
+          <span class="nm">{{ p.nombre }}</span>
         </a>
       </details>
     </nav>
@@ -171,8 +193,9 @@ aside.oculto {
   background: color-mix(in srgb, var(--accent) 12%, transparent);
 }
 
-.snav summary {
+.snav .area summary {
   padding-left: 10px;
+  font-weight: 600;
 }
 
 .snav summary a {
