@@ -1,0 +1,13 @@
+---
+import Proceso from '../../layouts/Proceso.astro';
+import DashboardInteresados from '../../components/monitoreo/dashboard-interesados.vue';
+---
+
+<Proceso frontmatter={{ id: '5.6', editado: '2026-10-10' }}>
+  <p>
+    Dashboard de monitoreo del involucramiento basado en el <a href="/plan-direccion/involucramiento-interesados">Plan de involucramiento de los interesados</a>: niveles de
+    participación, cumplimiento del plan de acción, validaciones por gate, objeciones del Socio de Producción,
+    resultados frente a la línea base y riesgos.
+  </p>
+  <DashboardInteresados client:load />
+</Proceso>

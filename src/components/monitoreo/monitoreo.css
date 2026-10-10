@@ -1,0 +1,172 @@
+/* Estilos compartidos por los componentes del dashboard de monitoreo */
+.monitoreo {
+  --ok: var(--d-fin);
+  --warn: var(--d-rie);
+  --bad: var(--d-rec);
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin-top: 16px;
+  container-type: inline-size;
+}
+
+.monitoreo .panel {
+  min-width: 0;
+  padding: 16px 18px;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 12px;
+}
+
+.monitoreo .panel-h {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 8px 12px;
+  margin-bottom: 12px;
+}
+
+.monitoreo .panel-h h2 {
+  margin: 0;
+  font-size: 16px;
+}
+
+.monitoreo .panel-h p {
+  margin: 2px 0 0;
+  font-size: 13px;
+  color: var(--muted);
+}
+
+.monitoreo .table-wrap {
+  overflow-x: auto;
+}
+
+.monitoreo .table-wrap table {
+  margin: 0;
+}
+
+.monitoreo td {
+  vertical-align: middle;
+}
+
+.monitoreo .num {
+  font-variant-numeric: tabular-nums;
+}
+
+.monitoreo .muted {
+  color: var(--muted);
+  font-size: 12px;
+}
+
+/* Etiqueta de estado: --c define el color */
+.monitoreo .pill {
+  --c: var(--muted);
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 3px 10px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 600;
+  white-space: nowrap;
+  background: color-mix(in srgb, var(--c) 14%, var(--surface));
+  color: color-mix(in srgb, var(--c) 72%, var(--text));
+}
+
+.monitoreo .pill::before {
+  content: "";
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--c);
+}
+
+.monitoreo .ok { --c: var(--ok); }
+.monitoreo .warn { --c: var(--warn); }
+.monitoreo .bad { --c: var(--bad); }
+.monitoreo .info { --c: var(--d-int); }
+
+.monitoreo .btn {
+  min-height: 40px;
+  padding: 0 14px;
+  border: 1px solid var(--d-int);
+  border-radius: 8px;
+  background: var(--d-int);
+  color: var(--o-int);
+  font: inherit;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.monitoreo .btn.sec {
+  background: var(--surface);
+  color: var(--d-int);
+}
+
+.monitoreo .btn:hover {
+  filter: brightness(1.08);
+}
+
+.monitoreo input,
+.monitoreo select,
+.monitoreo textarea {
+  font: inherit;
+  font-size: 14px;
+  color: var(--text);
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 6px 8px;
+}
+
+.monitoreo :focus-visible {
+  outline: 2px solid var(--d-int);
+  outline-offset: 2px;
+}
+
+/* Formularios en <dialog> */
+.monitoreo dialog {
+  width: min(460px, calc(100vw - 32px));
+  padding: 18px;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  background: var(--surface);
+  color: var(--text);
+}
+
+.monitoreo dialog::backdrop {
+  background: rgb(0 0 0 / .35);
+}
+
+.monitoreo dialog h3 {
+  margin: 0 0 12px;
+  font-size: 16px;
+}
+
+.monitoreo .campos {
+  display: grid;
+  gap: 10px;
+}
+
+.monitoreo .campos label {
+  display: grid;
+  gap: 4px;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.monitoreo .campos label.check {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: 500;
+}
+
+.monitoreo .acciones-dialog {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+  margin-top: 16px;
+}
