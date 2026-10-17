@@ -1,0 +1,48 @@
+---
+import '../css/contenido.css';
+import Layout from './Layout.astro';
+import { formatearFecha } from '../data/fechas';
+
+interface Props {
+  frontmatter: {
+    title: string;
+    /** Fecha de emisión del documento, p. ej. 2026-09-25 */
+    fecha?: Date | string;
+  };
+}
+
+const { title, fecha } = Astro.props.frontmatter;
+---
+
+<Layout title={title}>
+  <div class="crumbs"><a href="/">Inicio</a></div>
+
+  {fecha && <div class="fecha">Emitida el {formatearFecha(fecha)}</div>}
+
+  <h1>{title}</h1>
+
+  <div class="contenido">
+    <slot />
+  </div>
+</Layout>
+
+<style>
+  .crumbs {
+    font-size: 13px;
+    color: var(--muted);
+    margin-bottom: 10px;
+  }
+
+  .crumbs a {
+    color: var(--muted);
+  }
+
+  .fecha {
+    font-size: 13px;
+    color: var(--muted);
+  }
+
+  h1 {
+    margin: 12px 0 8px;
+  }
+</style>

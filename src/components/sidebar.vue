@@ -16,6 +16,7 @@ const procesoActual = computed(() => procesoPorId(ruta.value.replace(/^\/proceso
 
 const enlaces = [
   { href: '/', texto: 'Inicio' },
+  { href: '/acta-constitucion', texto: 'Acta de constitución' },
   { href: '/mapa', texto: 'Mapa de procesos' },
 ];
 
