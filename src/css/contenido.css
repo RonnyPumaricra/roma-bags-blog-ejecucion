@@ -51,6 +51,31 @@
   background: var(--bg);
 }
 
+/* Galería de evidencias: miniaturas con pie de foto; cada una enlaza a la imagen completa */
+.contenido .galeria {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 14px;
+  margin-bottom: 12px;
+}
+
+.contenido .galeria figure {
+  margin: 0;
+}
+
+.contenido .galeria img {
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+  object-position: top;
+  margin: 0 0 6px;
+}
+
+.contenido .galeria figcaption {
+  font-size: 13px;
+  color: var(--muted);
+}
+
 /* Listas de documentos: cada elemento es una tarjeta con la extensión del archivo */
 .contenido ul:has(> li > a[href^="/documentos/"]) {
   list-style: none;
