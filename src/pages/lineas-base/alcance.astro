@@ -1,0 +1,61 @@
+---
+import LineaBase from '../../layouts/LineaBase.astro';
+import Edt from '../../components/edt.astro';
+---
+
+<LineaBase frontmatter={{ id: 'alcance' }}>
+  <h2>Enunciado del alcance</h2>
+
+  <p>
+    <strong>Incluido:</strong> diagnóstico AS-IS/TO-BE, conectividad, base piloto temporal, gobierno y limpieza de datos,
+    Odoo Community para inventario, ventas y despachos, conciliación y migración, pruebas por rol, reportes gerenciales,
+    capacitación, salida a producción, monitoreo y transferencia al Comité de Datos.
+  </p>
+
+  <p>
+    <strong>Excluido:</strong> recuperación de registros perdidos del 2024, contabilidad formal, facturación electrónica,
+    integración SUNAT, e-commerce, automatización de maquinaria y mantenimiento evolutivo posterior al cierre.
+  </p>
+
+  <h2>Estructura de desglose del trabajo (EDT)</h2>
+
+  <p>
+    El proyecto <strong>Transformación Digital Roma Bag's</strong> se desglosa por entregables en cinco ramas y 17
+    paquetes de trabajo, que agrupan las 92 actividades e hitos del cronograma en Project.
+  </p>
+
+  <Edt />
+
+  <h2>Criterios de aceptación por gate</h2>
+
+  <table>
+    <thead>
+      <tr><th>Gate</th><th>Fecha</th><th>Criterios</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>Gate 1 · Cimentar</td><td>17/11/2026</td><td>Conectividad verificada; comité y responsables designados; diccionario, SOP y respaldo aprobados; catálogo depurado; captura piloto y consulta móvil comprobadas; coexistencia con Excel documentada.</td></tr>
+      <tr><td>Gate 2 · Integrar</td><td>08/03/2027</td><td>Odoo en pruebas con datos conciliados, flujo y permisos verificados, UAT firmadas por Ventas, Producción y Gerencia, sin defectos críticos abiertos y plan de corte aprobado.</td></tr>
+      <tr><td>Gate 3 · Conformidad</td><td>21/04/2027</td><td>Odoo como fuente oficial, monitoreo y auditoría de calidad, reportes en uso real, capacitación, criterios de aceptación e informe final verificados; conformidad firmada.</td></tr>
+    </tbody>
+  </table>
+
+  <h2>Requisitos</h2>
+
+  <table>
+    <thead>
+      <tr><th>ID</th><th>Requisito</th><th>Criterio de aceptación</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>REQ-01</td><td>Fuente única de inventario y ventas</td><td>Registro consistente y fuente oficial Odoo tras el corte.</td></tr>
+      <tr><td>REQ-02</td><td>Consulta móvil de stock</td><td>Consulta cronometrada en menos de 2 minutos.</td></tr>
+      <tr><td>REQ-03</td><td>Conciliación semanal ágil</td><td>Comparar tiempo real frente a línea base de 1 día semanal.</td></tr>
+      <tr><td>REQ-04</td><td>Despacho completo y trazable</td><td>Casos UAT de ventas, stock y despacho; tras la salida en vivo, 5 % o menos de registros incompletos en la muestra revisada.</td></tr>
+      <tr><td>REQ-05</td><td>Reportes móviles de stock, calidad de datos y rentabilidad operativa</td><td>Gerencia valida cifras, fuentes y acceso por rol.</td></tr>
+      <tr><td>REQ-06</td><td>Operación en celulares y dos talleres</td><td>Pruebas de conectividad y flujo por ubicación.</td></tr>
+      <tr><td>REQ-07</td><td>Coexistencia controlada y corte del piloto</td><td>Un responsable de fuente oficial; piloto bloqueado tras la salida.</td></tr>
+      <tr><td>REQ-08</td><td>Respaldo, seguridad y permisos</td><td>Respaldo verificable y acceso probado por rol.</td></tr>
+      <tr><td>REQ-09</td><td>Datos depurados, conciliados y preservados</td><td>Conteos y saldos conciliados; originales de 2026 preservados.</td></tr>
+      <tr><td>REQ-10</td><td>Adopción y transferencia de control</td><td>Capacitación por rol, evidencias de uso y responsables firmados.</td></tr>
+    </tbody>
+  </table>
+</LineaBase>

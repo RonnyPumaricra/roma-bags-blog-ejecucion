@@ -1,0 +1,344 @@
+---
+import { FASES, PROYECTO, PROYECTO_DETALLE, TOTAL_ACTIVIDADES, TOTAL_PAQUETES } from '../data/edt';
+---
+
+<figure class="edt" aria-label="Estructura de desglose del trabajo">
+  <div class="nodo raiz">
+    <span class="cod">1</span>
+    <strong>{PROYECTO}</strong>
+    <small>{PROYECTO_DETALLE} · {TOTAL_PAQUETES} paquetes · {TOTAL_ACTIVIDADES} actividades</small>
+  </div>
+
+  <ul class="fases">
+    {
+      FASES.map((fase) => (
+        <li>
+          <div class="nodo fase">
+            <span class="cod">{fase.id}</span>
+            <strong>{fase.nombre}</strong>
+            <small>{fase.detalle}</small>
+          </div>
+          <ul class="paquetes">
+            {fase.paquetes.map((paquete) => (
+              <li>
+                <details class="nodo paquete">
+                  <summary>
+                    <span class="cod">{paquete.id}</span>
+                    <strong>{paquete.nombre}</strong>
+                    <small>
+                      {paquete.actividades.length} {paquete.actividades.length === 1 ? 'actividad' : 'actividades'}
+                    </small>
+                  </summary>
+                  <p class="entregable">{paquete.entregable}</p>
+                  <p class="responsable">Responsable: {paquete.responsable}</p>
+                  <ol>
+                    {paquete.actividades.map((a) => (
+                      <li class:list={{ hito: a.hito }}>
+                        <span class="cod">{a.codigo}</span>
+                        <span>
+                          {a.hito && <span class="rombo" title="Hito">◆ </span>}
+                          {a.nombre}
+                        </span>
+                      </li>
+                    ))}
+                  </ol>
+                </details>
+              </li>
+            ))}
+          </ul>
+        </li>
+      ))
+    }
+  </ul>
+
+  <figcaption><span class="rombo">◆</span> hito · Toca un paquete para ver sus actividades del cronograma.</figcaption>
+</figure>
+
+<style>
+  .edt {
+    --g: 12px; /* separación entre columnas */
+    --t: 14px; /* sangría de las ramas */
+    --linea: 1.5px solid var(--muted);
+    margin: 12px 0 18px;
+  }
+
+  .edt ul,
+  .edt ol {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  .nodo {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    padding: 8px 10px;
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    background: var(--surface);
+    line-height: 1.3;
+  }
+
+  .nodo strong {
+    font-size: 13px;
+  }
+
+  .nodo small {
+    font-size: 11.5px;
+    color: var(--muted);
+  }
+
+  .cod {
+    font-size: 10.5px;
+    font-weight: 800;
+    letter-spacing: 0.03em;
+    color: var(--muted);
+    font-variant-numeric: tabular-nums;
+  }
+
+  .raiz {
+    max-width: 340px;
+    margin: 0 auto;
+    text-align: center;
+    background: var(--d-alc);
+    border-color: var(--d-alc);
+    color: var(--o-alc);
+    position: relative;
+  }
+
+  .raiz strong {
+    font-size: 15px;
+  }
+
+  .raiz small,
+  .raiz .cod {
+    color: inherit;
+    opacity: 0.85;
+  }
+
+  .fase {
+    border: 1.5px solid var(--d-alc);
+  }
+
+  .fase .cod {
+    color: var(--d-alc);
+  }
+
+  /* Paquete desplegable */
+  .paquete summary {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    cursor: pointer;
+    list-style: none;
+    position: relative;
+    padding-right: 16px;
+  }
+
+  .paquete summary::-webkit-details-marker {
+    display: none;
+  }
+
+  .paquete summary::after {
+    content: '+';
+    position: absolute;
+    top: -2px;
+    right: 0;
+    font-weight: 700;
+    color: var(--muted);
+  }
+
+  .paquete[open] summary::after {
+    content: '−';
+  }
+
+  .paquete[open] {
+    border-color: var(--d-alc);
+  }
+
+  .paquete:hover {
+    border-color: var(--d-alc);
+  }
+
+  .entregable,
+  .responsable {
+    font-size: 12px;
+    margin: 8px 0 0;
+  }
+
+  .responsable {
+    margin-top: 2px;
+    color: var(--muted);
+  }
+
+  .paquete ol {
+    margin-top: 8px;
+    padding-top: 6px;
+    border-top: 1px solid var(--line);
+    display: grid;
+    gap: 5px;
+  }
+
+  .paquete ol li {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 6px;
+    font-size: 12px;
+    line-height: 1.35;
+  }
+
+  .paquete ol .cod {
+    padding-top: 1px;
+  }
+
+  .hito {
+    font-weight: 600;
+  }
+
+  .rombo {
+    color: var(--d-rie);
+  }
+
+  figcaption {
+    margin-top: 14px;
+    font-size: 12.5px;
+    color: var(--muted);
+    text-align: center;
+  }
+
+  /* Ramas de fase → paquetes: árbol con línea vertical a la izquierda */
+  .paquetes > li,
+  .fases > li {
+    position: relative;
+  }
+
+  .paquetes {
+    margin-left: 10px;
+  }
+
+  .paquetes > li {
+    padding: 8px 0 0 var(--t);
+  }
+
+  .paquetes > li::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    border-left: var(--linea);
+  }
+
+  .paquetes > li:last-child::before {
+    bottom: auto;
+    height: 26px;
+  }
+
+  .paquetes > li::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 26px;
+    width: calc(var(--t) - 2px);
+    border-top: var(--linea);
+  }
+
+  /* Escritorio: la raíz se abre en las cinco fases, como un organigrama */
+  @media (min-width: 861px) {
+    .raiz::after {
+      content: '';
+      position: absolute;
+      left: 50%;
+      top: 100%;
+      height: 14px;
+      border-left: var(--linea);
+    }
+
+    .fases {
+      display: grid;
+      grid-template-columns: repeat(5, minmax(0, 1fr));
+      gap: 0 var(--g);
+      margin-top: 14px;
+      align-items: start;
+    }
+
+    .fases > li {
+      padding-top: 14px;
+    }
+
+    /* Barra horizontal que une las fases y bajada a cada una */
+    .fases > li::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: calc(var(--g) / -2);
+      right: calc(var(--g) / -2);
+      border-top: var(--linea);
+    }
+
+    .fases > li:first-child::before {
+      left: 50%;
+    }
+
+    .fases > li:last-child::before {
+      right: 50%;
+    }
+
+    .fases > li::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 50%;
+      height: 14px;
+      border-left: var(--linea);
+    }
+
+    .fase {
+      min-height: 100px;
+    }
+  }
+
+  /* Móvil: el mismo árbol con sangría, sin desplazamiento horizontal */
+  @media (max-width: 860px) {
+    .raiz {
+      margin: 0;
+      text-align: left;
+    }
+
+    .fases {
+      margin-left: 10px;
+    }
+
+    .fases > li {
+      padding: 12px 0 0 var(--t);
+    }
+
+    .fases > li::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 0;
+      bottom: 0;
+      border-left: var(--linea);
+    }
+
+    .fases > li:last-child::before {
+      bottom: auto;
+      height: 34px;
+    }
+
+    .fases > li::after {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 34px;
+      width: calc(var(--t) - 2px);
+      border-top: var(--linea);
+    }
+
+    figcaption {
+      text-align: left;
+    }
+  }
+</style>
