@@ -39,4 +39,4 @@ Las actividades de seguimiento de 1.1 son recurrentes: su ventana no equivale a 
 
 ## Documentos
 
-- [Matriz de actividades, esfuerzo y costos (92 actividades e hitos).csv](/documentos/lineas-base/matriz-costos.csv)
+- [Cronograma del proyecto (92 actividades e hitos).mpp](/documentos/lineas-base/cronograma.mpp)
