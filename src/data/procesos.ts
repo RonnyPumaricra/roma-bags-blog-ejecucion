@@ -43,15 +43,15 @@ type Fila = [string, string, AreaId, DominioId, Estado, number, number];
 
 const FILAS: Fila[] = [
   ['1.4', 'Gestionar la Ejecución del Proyecto', 'eje', 'gob', 'ok', 170, 70],
-  ['1.5', 'Gestionar el Aseguramiento de la Calidad', 'eje', 'gob', 'cur', 50, 170],
-  ['1.6', 'Gestionar el Conocimiento del Proyecto', 'eje', 'gob', 'ok', 290, 170],
+  ['1.5', 'Gestionar el Aseguramiento de la Calidad', 'eje', 'gob', 'pen', 50, 170],
+  ['1.6', 'Gestionar el Conocimiento del Proyecto', 'eje', 'gob', 'pen', 290, 170],
   ['7.5', 'Implementar la Respuesta a los Riesgos', 'eje', 'rie', 'pen', 170, 280],
   ['5.4', 'Gestionar el Involucramiento de los/las Interesados/as', 'eje', 'int', 'pen', 50, 384],
   ['5.5', 'Gestionar las Comunicaciones', 'eje', 'int', 'pen', 50, 464],
   ['6.3', 'Adquirir Recursos', 'eje', 'rec', 'pen', 290, 384],
   ['6.4', 'Liderar al Equipo', 'eje', 'rec', 'pen', 290, 464],
 
-  ['1.7', 'Monitorear y Controlar el Desempeño del Proyecto', 'mon', 'gob', 'cur', 730, 282],
+  ['1.7', 'Monitorear y Controlar el Desempeño del Proyecto', 'mon', 'gob', 'pen', 730, 282],
   ['1.8', 'Evaluar e Implementar Cambios', 'mon', 'gob', 'pen', 730, 362],
   ['2.5', 'Monitorear y Controlar el Alcance', 'mon', 'alc', 'pen', 600, 70],
   ['2.6', 'Validar el Alcance', 'mon', 'alc', 'pen', 600, 150],
