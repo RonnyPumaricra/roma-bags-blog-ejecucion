@@ -1,0 +1,127 @@
+---
+import { getCollection } from 'astro:content';
+import {
+  KPIS, ejesPentagono, estadoKpi, formatoValor, ultimoSnapshot, valoresKpi,
+} from '../../data/monitoreo-alcance';
+import '../monitoreo/monitoreo.css';
+import './alcance.css';
+
+const snapshots = (await getCollection('alcance')).sort((a, b) => a.data.semana - b.data.semana);
+const ultimo = ultimoSnapshot(snapshots);
+const kpis26 = KPIS.filter((k) => k.proceso === '2.6');
+const valores = ultimo ? valoresKpi(ultimo.data) : null;
+const ejes = ultimo ? ejesPentagono(ultimo.data) : [];
+
+// Geometría del pentágono: 5 ejes a -90°, -18°, 54°, 126°, 198° (empezando arriba, en sentido horario)
+const CX = 140;
+const CY = 140;
+const R = 108;
+const ANGULOS = [0, 1, 2, 3, 4].map((i) => -90 + i * 72);
+const puntoEn = (angDeg: number, radio: number) => {
+  const rad = (angDeg * Math.PI) / 180;
+  return { x: CX + radio * Math.cos(rad), y: CY + radio * Math.sin(rad) };
+};
+const anillo = (radio: number) => ANGULOS.map((a) => puntoEn(a, radio)).map((p) => `${p.x.toFixed(1)},${p.y.toFixed(1)}`).join(' ');
+const ejesSvg = ANGULOS.map((a) => puntoEn(a, R));
+const puntosDato = ejes.map((e, i) => puntoEn(ANGULOS[i], (Math.max(0, Math.min(100, e.valor)) / 100) * R));
+const poligonoDato = puntosDato.map((p) => `${p.x.toFixed(1)},${p.y.toFixed(1)}`).join(' ');
+const etiquetas = ejes.map((e, i) => ({ ...puntoEn(ANGULOS[i], R + 26), eje: e.eje }));
+---
+
+<div class="monitoreo alcance">
+  <section class="panel">
+    <div class="panel-h">
+      <div>
+        <h2>Indicadores de alcance · 2.6 Validar el Alcance</h2>
+        <p>Calculados a partir del último snapshot semanal publicado en <code>src/content/alcance</code>.</p>
+      </div>
+    </div>
+
+    <section class="kpis" aria-label="Indicadores de validación del alcance">
+      {
+        kpis26.map((k) => {
+          const valor = valores ? valores[k.id] : null;
+          const estado = estadoKpi(k, valor);
+          const tono = { cumple: 'ok', no_cumple: 'bad', sin_datos: '' }[estado];
+          return (
+            <div class={`kpi ${tono}`}>
+              <div class="titulo">{k.nombre}</div>
+              <div class="valor num">{valor === null ? '—' : formatoValor(k, valor)}</div>
+              <div class="nota">Meta {k.metaTexto}</div>
+            </div>
+          );
+        })
+      }
+    </section>
+  </section>
+
+  <section class="panel">
+    <div class="panel-h">
+      <div>
+        <h2>Pentágono de validación del alcance</h2>
+        <p>Los cinco indicadores de 2.6, normalizados de 0 a 100 (100 = en el borde, cumplimiento total).</p>
+      </div>
+    </div>
+
+    <div class="pentagono-wrap">
+      <div class="grafico-wrap">
+        <svg class="grafico" viewBox="0 0 280 300" role="img" aria-label="Pentágono de los cinco indicadores de validación del alcance" style="min-width:260px">
+          {[0.2, 0.4, 0.6, 0.8, 1].map((f) => <polygon points={anillo(R * f)} class="anillo-pentagono" />)}
+          {ejesSvg.map((p) => <line x1={CX} y1={CY} x2={p.x} y2={p.y} class="eje-pentagono" />)}
+          {ejes.length > 0 && <polygon points={poligonoDato} class="area-pentagono" />}
+          {puntosDato.map((p, i) => (
+            <circle cx={p.x} cy={p.y} r={4} class="punto-pentagono">
+              <title>{`${ejes[i].eje}: ${Math.round(ejes[i].valor * 10) / 10} %`}</title>
+            </circle>
+          ))}
+          {etiquetas.map((e) => (
+            <text
+              x={e.x}
+              y={e.y}
+              text-anchor={e.x < CX - 10 ? 'end' : e.x > CX + 10 ? 'start' : 'middle'}
+              class="eje-texto"
+            >
+              {e.eje}
+            </text>
+          ))}
+        </svg>
+      </div>
+
+      <ul class="lista-ejes">
+        {
+          ejes.map((e) => (
+            <li>
+              <span class="nombre-eje">{e.eje}</span>
+              <span class="valor-eje num">{Math.round(e.valor * 10) / 10} %</span>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </section>
+
+  <section class="panel">
+    <div class="panel-h">
+      <div>
+        <h2>Cómo se calcula cada indicador</h2>
+      </div>
+    </div>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Indicador</th><th>Meta</th><th>Fórmula</th><th>Fuente</th></tr></thead>
+        <tbody>
+          {
+            kpis26.map((k) => (
+              <tr>
+                <td><strong>{k.nombre}</strong></td>
+                <td>{k.metaTexto}</td>
+                <td>{k.formula}</td>
+                <td>{k.fuente}</td>
+              </tr>
+            ))
+          }
+        </tbody>
+      </table>
+    </div>
+  </section>
+</div>

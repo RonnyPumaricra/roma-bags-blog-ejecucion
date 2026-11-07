@@ -56,4 +56,34 @@ const gates = defineCollection({
   }),
 });
 
-export const collections = { informes, gates };
+// Alcance (procesos 2.5 y 2.6). Un snapshot acumulado por semana: cada campo es el total acumulado a esa
+// fecha, no el delta de la semana. Permite dibujar el Scope Burnup Chart y calcular los 12 indicadores sin
+// recalcular históricos cada vez que se agrega una semana nueva.
+const alcance = defineCollection({
+  loader: glob({ pattern: '[^_]*.md', base: './src/content/alcance' }),
+  schema: z.object({
+    semana: z.number().int().min(1).max(30),
+    // EDT-1.3.01 etc.: cumplimiento físico y adherencia a la EDT (línea base: 92 actividades)
+    edtCompletadas: z.number().int().min(0),
+    edtAgregadas: z.number().int().min(0),
+    // REQ-01 a REQ-10: índice de volatilidad de requisitos
+    requisitosModificados: z.number().int().min(0),
+    // CCB: solicitudes de cambio
+    cambiosSolicitados: z.number().int().min(0),
+    cambiosAprobados: z.number().int().min(0),
+    cambiosResueltos: z.number().int().min(0),
+    costoCambiosAprobados: z.number().min(0),
+    // Hitos de alcance (línea base: 7 hitos del cronograma)
+    hitosAlcanzados: z.number().int().min(0),
+    // Validación del alcance: entregables, QA y trazabilidad
+    entregablesInspeccionados: z.number().int().min(0),
+    entregablesValidados: z.number().int().min(0),
+    verificacionesQAaprobadas: z.number().int().min(0),
+    aceptacionesPrimeraInspeccion: z.number().int().min(0),
+    noConformidades: z.number().int().min(0),
+    trazabilidadCubierta: z.number().int().min(0),
+    evidencia,
+  }),
+});
+
+export const collections = { informes, gates, alcance };
