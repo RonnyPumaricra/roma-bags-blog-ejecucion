@@ -53,8 +53,8 @@ const FILAS: Fila[] = [
 
   ['1.7', 'Monitorear y Controlar el Desempeño del Proyecto', 'mon', 'gob', 'pen', 730, 282],
   ['1.8', 'Evaluar e Implementar Cambios', 'mon', 'gob', 'pen', 730, 362],
-  ['2.5', 'Monitorear y Controlar el Alcance', 'mon', 'alc', 'pen', 600, 70],
-  ['2.6', 'Validar el Alcance', 'mon', 'alc', 'pen', 600, 150],
+  ['2.5', 'Monitorear y Controlar el Alcance', 'mon', 'alc', 'cur', 600, 70],
+  ['2.6', 'Validar el Alcance', 'mon', 'alc', 'cur', 600, 150],
   ['3.3', 'Monitorear y Controlar el Cronograma', 'mon', 'cro', 'pen', 860, 70],
   ['4.4', 'Monitorear y Controlar las Finanzas', 'mon', 'fin', 'pen', 860, 166],
   ['5.6', 'Monitorear el Involucramiento de los/las Interesados/as', 'mon', 'int', 'cur', 600, 494],

@@ -18,9 +18,13 @@ elaborado_por: Líder del proyecto
 
 | ID EDT | Actividad | Avance | Evidencia |
 |---|---|---|---|
-| | | | |
+| 1.1.2 | Aprobar y firmar el acta de constitución | Completado (25/09) | Acta de Constitución firmada |
+| 1.2.1 | Observación directa del flujo venta–stock–despacho | En curso | — |
+| 1.2.2 | Entrevistas a Gerencia, Ventas, Producción y Almacén | En curso | — |
 
 ## 2. Estado del respaldo
+
+Aún no aplica. La política de respaldo, retención y seguridad se define más adelante, dentro de la fase Cimentar.
 
 ## 3. Hitos y gates próximos
 
@@ -32,8 +36,10 @@ Ver registro de la actividad 1.1.6.
 
 ## 5. Acuerdos del comité
 
--
+- Se prioriza completar el diagnóstico AS-IS antes de tomar cualquier decisión técnica sobre Odoo.
+- La Gerencia confirma disponibilidad semanal para validaciones durante todo el proyecto.
 
 ## 6. Próxima semana
 
--
+- Avanzar la auditoría de infraestructura, conectividad y dispositivos del taller (1.2.3).
+- Iniciar el mapeo de zonas muertas de Wi-Fi (1.3.1).

@@ -1,0 +1,153 @@
+---
+import { getCollection } from 'astro:content';
+import { formatearFecha } from '../../data/fechas';
+import {
+  EDT_TOTAL, KPIS, estadoKpi, formatoValor, serieBurnup, ultimoSnapshot, valoresKpi,
+} from '../../data/monitoreo-alcance';
+import { SEMANAS } from '../../data/monitoreo-comunicaciones';
+import '../monitoreo/monitoreo.css';
+import './alcance.css';
+
+const snapshots = (await getCollection('alcance')).sort((a, b) => a.data.semana - b.data.semana);
+const ultimo = ultimoSnapshot(snapshots);
+const kpis25 = KPIS.filter((k) => k.proceso === '2.5');
+const valores = ultimo ? valoresKpi(ultimo.data) : null;
+
+const burnup = serieBurnup(snapshots);
+const TOTAL_SEMANAS = SEMANAS.length;
+
+// Geometría del Scope Burnup Chart (SVG estático; los valores ya están calculados al compilar)
+const M = { izq: 36, der: 12, arriba: 16, abajo: 24 };
+const ANCHO = 680;
+const ALTO = 220;
+const anchoPlot = ANCHO - M.izq - M.der;
+const altoPlot = ALTO - M.arriba - M.abajo;
+
+const xDe = (semana: number) => M.izq + ((semana - 1) / (TOTAL_SEMANAS - 1)) * anchoPlot;
+const yDe = (valor: number) => M.arriba + altoPlot - (valor / EDT_TOTAL) * altoPlot;
+
+const puntosPlanificado = SEMANAS.map((s) => ({ x: xDe(s.semana), y: yDe(Math.round((EDT_TOTAL * s.semana) / TOTAL_SEMANAS)) }));
+const lineaPlanificado = puntosPlanificado.map((p, i) => `${i === 0 ? 'M' : 'L'}${p.x.toFixed(1)},${p.y.toFixed(1)}`).join(' ');
+
+const puntosReal = burnup.filter((p) => p.real !== null).map((p) => ({ semana: p.semana, x: xDe(p.semana), y: yDe(p.real!), valor: p.real! }));
+const lineaReal = puntosReal.map((p, i) => `${i === 0 ? 'M' : 'L'}${p.x.toFixed(1)},${p.y.toFixed(1)}`).join(' ');
+const areaReal = puntosReal.length
+  ? `${lineaReal} L${puntosReal.at(-1)!.x.toFixed(1)},${(M.arriba + altoPlot).toFixed(1)} ` +
+    `L${puntosReal[0].x.toFixed(1)},${(M.arriba + altoPlot).toFixed(1)} Z`
+  : '';
+
+const yBaseLinea = yDe(EDT_TOTAL);
+---
+
+<div class="monitoreo alcance">
+  <section class="panel">
+    <div class="panel-h">
+      <div>
+        <h2>Indicadores de alcance · 2.5 Monitorear y Controlar el Alcance</h2>
+        <p>Calculados a partir del último snapshot semanal publicado en <code>src/content/alcance</code>.</p>
+      </div>
+    </div>
+
+    <section class="kpis" aria-label="Indicadores de monitoreo y control del alcance">
+      {
+        kpis25.map((k) => {
+          const valor = valores ? valores[k.id] : null;
+          const estado = estadoKpi(k, valor);
+          const tono = { cumple: 'ok', no_cumple: 'bad', sin_datos: '' }[estado];
+          return (
+            <div class={`kpi ${tono}`}>
+              <div class="titulo">{k.nombre}</div>
+              <div class="valor num">{valor === null ? '—' : formatoValor(k, valor)}</div>
+              <div class="nota">Meta {k.metaTexto}</div>
+            </div>
+          );
+        })
+      }
+    </section>
+  </section>
+
+  <section class="panel">
+    <div class="panel-h">
+      <div>
+        <h2>Scope Burnup Chart</h2>
+        <p>Línea base (92 actividades repartidas en 30 semanas) frente al avance real acumulado, hasta la semana {puntosReal.at(-1)?.semana ?? 0}.</p>
+      </div>
+    </div>
+
+    <div class="grafico-wrap">
+      <svg class="grafico" viewBox={`0 0 ${ANCHO} ${ALTO}`} role="img" aria-label="Avance acumulado de actividades del EDT frente a la línea base planificada">
+        <line x1={M.izq} y1={yBaseLinea} x2={ANCHO - M.der} y2={yBaseLinea} class="linea-base-total" />
+        <text x={ANCHO - M.der} y={yBaseLinea - 4} text-anchor="end" class="eje-texto">Alcance total: {EDT_TOTAL}</text>
+
+        <path d={lineaPlanificado} class="linea-planificado" />
+        {areaReal && <path d={areaReal} class="area-real" />}
+        {lineaReal && <path d={lineaReal} class="linea-real" />}
+        {
+          puntosReal.map((p) => (
+            <circle cx={p.x} cy={p.y} r={4} class="punto-real">
+              <title>{`Semana ${p.semana}: ${p.valor} de ${EDT_TOTAL} actividades`}</title>
+            </circle>
+          ))
+        }
+
+        <text x={M.izq} y={ALTO - 4} class="eje-texto">Semana 1</text>
+        <text x={ANCHO - M.der} y={ALTO - 4} text-anchor="end" class="eje-texto">Semana {TOTAL_SEMANAS}</text>
+        {
+          puntosReal.length > 0 && (
+            <text x={puntosReal.at(-1)!.x} y={puntosReal.at(-1)!.y - 10} text-anchor="end" class="eje-texto" style="font-weight:700">
+              {puntosReal.at(-1)!.valor}
+            </text>
+          )
+        }
+      </svg>
+    </div>
+    <p class="leyenda-grafico">
+      <span><i class="planificado"></i>Planificado (línea base)</span>
+      <span><i class="real"></i>Real acumulado</span>
+    </p>
+
+    <div class="table-wrap" style="margin-top:12px">
+      <table>
+        <thead><tr><th>Semana</th><th>Fecha</th><th>Planificado</th><th>Real</th><th>Desvío</th></tr></thead>
+        <tbody>
+          {
+            burnup.map((p) => (
+              <tr>
+                <td class="num">{p.semana}</td>
+                <td class="num">{formatearFecha(p.fecha)}</td>
+                <td class="num">{Math.round((EDT_TOTAL * p.semana) / TOTAL_SEMANAS)}</td>
+                <td class="num">{p.real ?? '—'}</td>
+                <td class="num">{p.real === null ? '—' : p.real - Math.round((EDT_TOTAL * p.semana) / TOTAL_SEMANAS)}</td>
+              </tr>
+            ))
+          }
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section class="panel">
+    <div class="panel-h">
+      <div>
+        <h2>Cómo se calcula cada indicador</h2>
+      </div>
+    </div>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Indicador</th><th>Meta</th><th>Fórmula</th><th>Fuente</th></tr></thead>
+        <tbody>
+          {
+            kpis25.map((k) => (
+              <tr>
+                <td><strong>{k.nombre}</strong></td>
+                <td>{k.metaTexto}</td>
+                <td>{k.formula}</td>
+                <td>{k.fuente}</td>
+              </tr>
+            ))
+          }
+        </tbody>
+      </table>
+    </div>
+  </section>
+</div>
