@@ -5,6 +5,7 @@ import {
   DOMINIOS, ESTADOS, NOMBRE_AREA, NOMBRE_DOMINIO, PROCESOS, procesoPorId,
 } from '../data/procesos';
 import { hayFiltro, hidratar, ui, visible } from '../stores/ui';
+import BotonIndice from './boton-indice.vue';
 import StatusIcon from './status-icon.vue';
 
 const zooms = [
@@ -57,9 +58,7 @@ onMounted(() => {
           {{ z.texto }}
         </button>
       </span>
-      <button type="button" class="btn-ghost" @click="ui.indiceOculto = !ui.indiceOculto">
-        {{ ui.indiceOculto ? 'Mostrar índice' : 'Ocultar índice' }}
-      </button>
+      <BotonIndice />
     </div>
 
     <div class="info">
@@ -232,7 +231,6 @@ onMounted(() => {
   color: var(--bg);
 }
 
-.btn-ghost,
 .btn-sm {
   display: inline-flex;
   align-items: center;

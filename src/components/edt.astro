@@ -1,8 +1,16 @@
 ---
+import BotonIndice from './boton-indice.vue';
 import { FASES, PROYECTO, PROYECTO_DETALLE, TOTAL_ACTIVIDADES, TOTAL_PAQUETES } from '../data/edt';
 ---
 
 <figure class="edt" aria-label="Estructura de desglose del trabajo">
+  <figcaption class="herramientas">
+    <span><span class="rombo">◆</span> hito · Toca un paquete para ver sus actividades del cronograma.</span>
+    <span class="sp"></span>
+    <button type="button" class="btn-ghost" data-desplegar>Desplegar todo</button>
+    <BotonIndice client:load />
+  </figcaption>
+
   <div class="nodo raiz">
     <span class="cod">1</span>
     <strong>{PROYECTO}</strong>
@@ -50,16 +58,57 @@ import { FASES, PROYECTO, PROYECTO_DETALLE, TOTAL_ACTIVIDADES, TOTAL_PAQUETES } 
       ))
     }
   </ul>
-
-  <figcaption><span class="rombo">◆</span> hito · Toca un paquete para ver sus actividades del cronograma.</figcaption>
 </figure>
+
+<script>
+  // Abre o cierra todos los paquetes de la EDT a la vez
+  for (const boton of document.querySelectorAll<HTMLButtonElement>('[data-desplegar]')) {
+    const paquetes = boton.closest('.edt')!.querySelectorAll('details');
+    const actualizar = () => {
+      boton.textContent = [...paquetes].every((d) => d.open) ? 'Contraer todo' : 'Desplegar todo';
+    };
+    boton.addEventListener('click', () => {
+      const abrir = ![...paquetes].every((d) => d.open);
+      paquetes.forEach((d) => (d.open = abrir));
+      actualizar();
+    });
+    paquetes.forEach((d) => d.addEventListener('toggle', actualizar));
+  }
+</script>
 
 <style>
   .edt {
     --g: 12px; /* separación entre columnas */
     --t: 14px; /* sangría de las ramas */
     --linea: 1.5px solid var(--muted);
+    max-width: 1400px;
     margin: 12px 0 18px;
+  }
+
+  .herramientas {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    flex-wrap: wrap;
+    margin-bottom: 16px;
+    font-size: 12.5px;
+    color: var(--muted);
+  }
+
+  .sp {
+    flex: 1;
+  }
+
+  .btn-ghost {
+    display: inline-flex;
+    align-items: center;
+    font-size: 12px;
+    font-weight: 600;
+    padding: 3px 10px;
+    border-radius: 8px;
+    border: 1px solid var(--line);
+    background: var(--surface);
+    color: var(--text);
   }
 
   .edt ul,
@@ -81,7 +130,7 @@ import { FASES, PROYECTO, PROYECTO_DETALLE, TOTAL_ACTIVIDADES, TOTAL_PAQUETES } 
   }
 
   .nodo strong {
-    font-size: 13px;
+    font-size: 14px;
   }
 
   .nodo small {
@@ -163,7 +212,7 @@ import { FASES, PROYECTO, PROYECTO_DETALLE, TOTAL_ACTIVIDADES, TOTAL_PAQUETES } 
 
   .entregable,
   .responsable {
-    font-size: 12px;
+    font-size: 13px;
     margin: 8px 0 0;
   }
 
@@ -184,7 +233,7 @@ import { FASES, PROYECTO, PROYECTO_DETALLE, TOTAL_ACTIVIDADES, TOTAL_PAQUETES } 
     display: grid;
     grid-template-columns: auto 1fr;
     gap: 6px;
-    font-size: 12px;
+    font-size: 13px;
     line-height: 1.35;
   }
 
@@ -198,13 +247,6 @@ import { FASES, PROYECTO, PROYECTO_DETALLE, TOTAL_ACTIVIDADES, TOTAL_PAQUETES } 
 
   .rombo {
     color: var(--d-rie);
-  }
-
-  figcaption {
-    margin-top: 14px;
-    font-size: 12.5px;
-    color: var(--muted);
-    text-align: center;
   }
 
   /* Ramas de fase → paquetes: árbol con línea vertical a la izquierda */
@@ -335,10 +377,6 @@ import { FASES, PROYECTO, PROYECTO_DETALLE, TOTAL_ACTIVIDADES, TOTAL_PAQUETES } 
       top: 34px;
       width: calc(var(--t) - 2px);
       border-top: var(--linea);
-    }
-
-    figcaption {
-      text-align: left;
     }
   }
 </style>

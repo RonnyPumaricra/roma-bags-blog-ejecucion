@@ -9,8 +9,11 @@ interface Props {
   frontmatter: {
     id: string;
   };
+  /** Usa todo el ancho disponible para los diagramas; el texto conserva el ancho de lectura */
+  ancho?: boolean;
 }
 
+const { ancho = false } = Astro.props;
 const lineaBase = lineaBasePorId(Astro.props.frontmatter.id);
 if (!lineaBase) throw new Error(`Línea base desconocida en el frontmatter: ${Astro.props.frontmatter.id}`);
 const control = procesoPorId(lineaBase.control)!;
@@ -20,26 +23,34 @@ const enlace = (l: (typeof LINEAS_BASE)[number] | undefined) =>
   l && { href: `/lineas-base/${l.id}`, contexto: 'Líneas base', texto: `Línea base de ${l.nombre.toLowerCase()}` };
 ---
 
-<Layout title={`Línea base de ${lineaBase.nombre.toLowerCase()}`}>
-  <div class="crumbs"><a href="/">Inicio</a> › <a href="/lineas-base">Líneas base</a></div>
+<Layout title={`Línea base de ${lineaBase.nombre.toLowerCase()}`} narrow={!ancho}>
+  <div class:list={{ ancho }}>
+    <div class="crumbs"><a href="/">Inicio</a> › <a href="/lineas-base">Líneas base</a></div>
 
-  <div class="ptop">
-    <span class="badge-lock">Congeladas · {VERSION_LINEAS_BASE}</span>
-    <span class="control">
-      Se controla en: <a href={`/proceso/${control.id}`}>{control.id} {control.nombre}</a>
-    </span>
+    <div class="ptop">
+      <span class="badge-lock">Congeladas · {VERSION_LINEAS_BASE}</span>
+      <span class="control">
+        Se controla en: <a href={`/proceso/${control.id}`}>{control.id} {control.nombre}</a>
+      </span>
+    </div>
+
+    <h1 style={`--c: var(--d-${lineaBase.dominio})`}>Línea base de {lineaBase.nombre.toLowerCase()}</h1>
+
+    <div class="contenido">
+      <slot />
+    </div>
+
+    <Paginacion anterior={enlace(LINEAS_BASE[i - 1])} siguiente={enlace(LINEAS_BASE[i + 1])} />
   </div>
-
-  <h1 style={`--c: var(--d-${lineaBase.dominio})`}>Línea base de {lineaBase.nombre.toLowerCase()}</h1>
-
-  <div class="contenido">
-    <slot />
-  </div>
-
-  <Paginacion anterior={enlace(LINEAS_BASE[i - 1])} siguiente={enlace(LINEAS_BASE[i + 1])} />
 </Layout>
 
 <style>
+  /* Con ancho completo, solo la EDT se expande; el resto mantiene el ancho de la columna normal */
+  .ancho > :global(*:not(.contenido)),
+  .ancho > .contenido > :global(*:not(.edt)) {
+    max-width: 868px;
+  }
+
   .crumbs {
     font-size: 13px;
     color: var(--muted);
