@@ -45,9 +45,9 @@ const enlace = (l: (typeof LINEAS_BASE)[number] | undefined) =>
 </Layout>
 
 <style>
-  /* Con ancho completo, solo la EDT se expande; el resto mantiene el ancho de la columna normal */
+  /* Con ancho completo, solo el árbol (EDT o RBS) se expande; el resto mantiene el ancho de la columna normal */
   .ancho > :global(*:not(.contenido)),
-  .ancho > .contenido > :global(*:not(.edt)) {
+  .ancho > .contenido > :global(*:not(.arbol)) {
     max-width: 868px;
   }
 

@@ -1,0 +1,186 @@
+---
+import LineaBase from '../../layouts/LineaBase.astro';
+import Rbs from '../../components/rbs.astro';
+import {
+  CATEGORIAS,
+  COSTO_DIRECTO,
+  FASES_RBS,
+  ROLES,
+  TOTAL_HORAS,
+  costoCategoria,
+  horasRol,
+  numero,
+  recursosDe,
+  soles,
+} from '../../data/rbs';
+import { FASES } from '../../data/edt';
+
+const nombreFase = (id: string) => FASES.find((f) => f.id === id)!.nombre;
+const horasFase = (f: number) => ROLES.reduce((n, r) => n + r.horas[f], 0);
+const costoEquipo = ROLES.reduce((n, r) => n + horasRol(r) * r.tarifa, 0);
+---
+
+<LineaBase ancho frontmatter={{ id: 'recursos' }}>
+  <p>
+    Recursos que el proyecto necesita para ejecutar la EDT, organizados en una estructura de desglose de recursos (RBS) de
+    cinco categorías. Cada recurso tiene un código <strong>R</strong> que se usa en el diccionario, en la adquisición
+    (<a href="/proceso/6.3">6.3 Adquirir Recursos</a>) y en el control.
+  </p>
+
+  <h2>Resumen por categoría</h2>
+
+  <table>
+    <thead>
+      <tr><th>Código</th><th>Categoría</th><th>Recursos</th><th class="num">Costo directo</th></tr>
+    </thead>
+    <tbody>
+      {
+        CATEGORIAS.map((c) => (
+          <tr>
+            <td>{c.codigo}</td>
+            <td>{c.nombre}</td>
+            <td>{recursosDe(c).filter((r) => !r.proyeccion).length}</td>
+            <td class="num">{soles(costoCategoria(c))}</td>
+          </tr>
+        ))
+      }
+      <tr>
+        <td></td>
+        <td colspan="2"><strong>Costos directos</strong></td>
+        <td class="num"><strong>{soles(COSTO_DIRECTO)}</strong></td>
+      </tr>
+    </tbody>
+  </table>
+
+  <p>
+    Cuadra con los costos directos de la <a href="/lineas-base/costos">línea base de costos</a>. Los recursos
+    existentes y los que aporta Roma Bag's figuran con costo cero porque no generan gasto al proyecto.
+  </p>
+
+  <h2>Estructura de desglose de recursos (RBS)</h2>
+
+  <Rbs />
+
+  <h2>Diccionario de recursos</h2>
+
+  <p>
+    <strong>Origen:</strong> <em>Equipo consultor</em>, aportado por UNTELS; <em>Contraparte</em>, personal o espacio de
+    Roma Bag's; <em>Existente</em>, ya disponible en la empresa; <em>Adquirido</em>, comprado con cargo al BAC;{' '}
+    <em>Gratuito</em>, sin costo de licencia; <em>Proyección</em>, previsto tras el cierre y fuera del BAC.
+  </p>
+
+  {
+    CATEGORIAS.map((c) => (
+      <>
+        <h3>
+          {c.codigo} {c.nombre}
+        </h3>
+        <table class="diccionario">
+          <thead>
+            <tr>
+              <th>Código</th>
+              <th>Recurso</th>
+              <th>Descripción</th>
+              <th>Cantidad</th>
+              <th class="num">Costo</th>
+              <th>Origen</th>
+              <th>Uso en EDT</th>
+            </tr>
+          </thead>
+          <tbody>
+            {recursosDe(c).map((r) => (
+              <tr class:list={{ proyeccion: r.proyeccion }}>
+                <td class="cod">{r.codigo}</td>
+                <td>
+                  <strong>{r.nombre}</strong>
+                </td>
+                <td>{r.descripcion}</td>
+                <td>{r.cantidad}</td>
+                <td class="num">{r.costo ? soles(r.costo) : '—'}</td>
+                <td>{r.proyeccion ? <span class="tag">Proyección · fuera del BAC</span> : r.origen}</td>
+                <td>{r.uso}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </>
+    ))
+  }
+
+  <h2>Dedicación del equipo por fase</h2>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Rol</th>
+        {FASES_RBS.map((f) => <th class="num" title={nombreFase(f)}>{f}</th>)}
+        <th class="num">Horas</th>
+        <th class="num">Tarifa</th>
+        <th class="num">Costo</th>
+      </tr>
+    </thead>
+    <tbody>
+      {
+        ROLES.map((r) => (
+          <tr>
+            <td>{r.nombre}</td>
+            {r.horas.map((h) => <td class="num">{h || '—'}</td>)}
+            <td class="num"><strong>{numero(horasRol(r))}</strong></td>
+            <td class="num">{soles(r.tarifa)}</td>
+            <td class="num">{soles(horasRol(r) * r.tarifa)}</td>
+          </tr>
+        ))
+      }
+      <tr>
+        <td><strong>Total</strong></td>
+        {FASES_RBS.map((_, f) => <td class="num"><strong>{horasFase(f)}</strong></td>)}
+        <td class="num"><strong>{numero(TOTAL_HORAS)}</strong></td>
+        <td></td>
+        <td class="num"><strong>{soles(costoEquipo)}</strong></td>
+      </tr>
+    </tbody>
+  </table>
+
+  <p>
+    Fases: {FASES_RBS.map((f) => `${f} ${nombreFase(f)}`).join(' · ')}.
+  </p>
+
+  <h2>Documentos</h2>
+
+  <ul>
+    <li><a href="/documentos/lineas-base/matriz-costos.csv">Matriz de costos (horas, tarifas y materiales).csv</a></li>
+    <li><a href="/documentos/acta-constitucion/acta-constitucion.pdf">Acta de constitución (restricciones de recursos).pdf</a></li>
+  </ul>
+</LineaBase>
+
+<style>
+  .diccionario {
+    font-size: 13px;
+  }
+
+  :global(.contenido) .num {
+    text-align: right;
+    white-space: nowrap;
+  }
+
+  .cod {
+    font-size: 12px;
+    font-weight: 700;
+    white-space: nowrap;
+    font-variant-numeric: tabular-nums;
+  }
+
+  .proyeccion td {
+    background: color-mix(in srgb, var(--d-rec) 7%, transparent);
+  }
+
+  .tag {
+    display: inline-block;
+    font-size: 11px;
+    font-weight: 700;
+    padding: 2px 6px;
+    border-radius: 6px;
+    color: var(--d-rec);
+    background: color-mix(in srgb, var(--d-rec) 13%, transparent);
+  }
+</style>

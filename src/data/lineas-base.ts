@@ -1,6 +1,6 @@
 import type { DominioId } from './procesos';
 
-export type LineaBaseId = 'alcance' | 'cronograma' | 'costos';
+export type LineaBaseId = 'alcance' | 'cronograma' | 'costos' | 'recursos';
 
 export interface LineaBase {
   id: LineaBaseId;
@@ -16,6 +16,7 @@ export const LINEAS_BASE: LineaBase[] = [
   { id: 'alcance', nombre: 'Alcance', dominio: 'alc', control: '2.5' },
   { id: 'cronograma', nombre: 'Cronograma', dominio: 'cro', control: '3.3' },
   { id: 'costos', nombre: 'Costos', dominio: 'fin', control: '4.4' },
+  { id: 'recursos', nombre: 'Recursos', dominio: 'rec', control: '6.5' },
 ];
 
 export const lineaBasePorId = (id: string) => LINEAS_BASE.find((l) => l.id === id);

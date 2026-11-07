@@ -1,0 +1,81 @@
+---
+import '../css/arbol.css';
+import BotonIndice from './boton-indice.vue';
+import { CATEGORIAS, TOTAL_HORAS, TOTAL_RECURSOS, costoCategoria, numero, soles } from '../data/rbs';
+import { PROYECTO } from '../data/edt';
+---
+
+<figure class="arbol" style="--c: var(--d-rec); --oc: var(--o-rec)" aria-label="Estructura de desglose de recursos">
+  <figcaption class="herramientas">
+    <span><span class="proy">◇</span> proyección fuera del BAC · Toca un grupo para ver sus recursos.</span>
+    <span class="sp"></span>
+    <button type="button" class="btn-ghost" data-desplegar>Desplegar todo</button>
+    <BotonIndice client:load />
+  </figcaption>
+
+  <div class="nodo raiz">
+    <span class="cod">R</span>
+    <strong>{PROYECTO}</strong>
+    <small>{CATEGORIAS.length} categorías · {TOTAL_RECURSOS} recursos · {numero(TOTAL_HORAS)} h de equipo</small>
+  </div>
+
+  <ul class="ramas">
+    {
+      CATEGORIAS.map((categoria) => (
+        <li>
+          <div class="nodo rama">
+            <span class="cod">{categoria.codigo}</span>
+            <strong>{categoria.nombre}</strong>
+            <small>
+              {categoria.descripcion} · {soles(costoCategoria(categoria))}
+            </small>
+          </div>
+          <ul class="hojas">
+            {categoria.grupos.map((grupo) => (
+              <li>
+                <details class="nodo hoja">
+                  <summary>
+                    <span class="cod">{grupo.codigo}</span>
+                    <strong>{grupo.nombre}</strong>
+                    <small>
+                      {grupo.recursos.length} {grupo.recursos.length === 1 ? 'recurso' : 'recursos'}
+                    </small>
+                  </summary>
+                  <ol>
+                    {grupo.recursos.map((r) => (
+                      <li>
+                        <span class="cod">{r.codigo}</span>
+                        <span>
+                          {r.proyeccion && <span class="proy" title="Proyección fuera del BAC">◇ </span>}
+                          {r.nombre}
+                          <small class="cant">{r.cantidad}</small>
+                        </span>
+                      </li>
+                    ))}
+                  </ol>
+                </details>
+              </li>
+            ))}
+          </ul>
+        </li>
+      ))
+    }
+  </ul>
+</figure>
+
+<script>
+  import '../scripts/desplegar-arbol';
+</script>
+
+<style>
+  .proy {
+    color: var(--d-rec);
+    font-weight: 700;
+  }
+
+  .cant {
+    display: block;
+    font-size: 11.5px;
+    color: var(--muted);
+  }
+</style>
